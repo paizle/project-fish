@@ -1,11 +1,9 @@
+import './Wizard.scss'
+
 import AppLayout from '@/Layouts/AppLayout';
 import { Head } from '@inertiajs/react';
 
-import { Link } from '@inertiajs/react';
-
-import './Wizard.scss'
-
-import InteractiveNewBrunswickMap from '@/Components/InteractiveNewBrunswickMap/InteractiveNewBrunswickMap';
+import WizardCard from '@/Components/WizardCard/WizardCard'
 
 const images = {
     'Upper Saint John': '/images/upper-saint-john-map.png',
@@ -18,8 +16,18 @@ export default function Index({ locations }) {
         <AppLayout>
             <Head title="Project: FISH" />
 
-            <div className="p-8">
-                <InteractiveNewBrunswickMap locations={locations} />
+            <div className="my-8 flex flex-wrap justify-center gap-2">
+                {locations.map((location) => images[location.name]
+                    ?
+                        <WizardCard 
+                            key={location.id}
+                            href={route('wizard.location.page', location.id)}
+                            imageSrc={images[location.name]}
+                        >
+                            {location.name}
+                        </WizardCard>
+                    : null
+                )}
             </div>
 
         </AppLayout>

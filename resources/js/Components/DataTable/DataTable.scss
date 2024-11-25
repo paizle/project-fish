@@ -18,6 +18,7 @@
         tr {
             th {
                 text-align: left;
+                @apply table-heading;
             }
         }
     }
@@ -26,7 +27,7 @@
         tr {
             &:nth-child(odd) {
                 td {
-                    background-color: rgb(var(--off-white));
+                    background-color: var(--contrast-with-white);
                 }
             }
         }

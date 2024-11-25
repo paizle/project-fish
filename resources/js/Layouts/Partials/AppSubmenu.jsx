@@ -18,6 +18,12 @@ export default function AuthenticatedSubmenu() {
                 Profile
             </NavLink>
             <NavLink
+                href={route('admin')}
+                active={route().current('admin')}
+            >
+                Admin
+            </NavLink>
+            <NavLink
                 href={route('fishLimits.page')}
                 active={route().current('fishLimits.page')}
             >

@@ -2,8 +2,23 @@ import AppLayout from '@/Layouts/AppLayout';
 import { Head } from '@inertiajs/react';
 
 import AdminSubmenu from './Partials/AdminSubmenu';
+import PieChartCompleteness from '@/Components/PieChartCompleteness/PieChartCompleteness';
 
-export default function Edit() {
+export default function Edit({locations}) {
+
+    const sectionStatus = {
+        'Upper Saint John': {
+            hasData: true,
+        },
+        'Southwest': {
+            hasData: true,
+        }
+    }
+
+    const locationsHavingData = locations.filter((location) => {
+        return sectionStatus?.[location.name]?.hasData
+    })
+
     return (
         <AppLayout
             header={
@@ -17,17 +32,23 @@ export default function Edit() {
             <Head title="Project: FISH" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-                        * one *
-                    </div>
+                <div className="box mx-8">
+                    <h1>Progress of Data Mining sections from the PDF</h1>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-                        * two *
+                    <h3>Locations with Data: {locationsHavingData.length} of {locations.length}</h3>
+                    
+                    <div className="flex justify-center">
+                        <div className="flex">
+                            <PieChartCompleteness complete={locationsHavingData} incomplete={locations.filter((e) => !locationsHavingData.includes(e))} />
+                            <div>
+                                <h4>Next Section to complete: <strong>Lower Saint John</strong></h4>
+                            </div>
+                        </div>
                     </div>
-
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-                        * three *
+                    <h3>Data to be verified: {locationsHavingData.length} of {locationsHavingData.length}</h3>
+                    <div className="flex justify-center">
+                    
+                    <PieChartCompleteness complete={[]} incomplete={locationsHavingData} />
                     </div>
                 </div>
             </div>

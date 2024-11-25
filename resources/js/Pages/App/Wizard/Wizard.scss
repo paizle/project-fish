@@ -1,9 +1,11 @@
+@use '/resources/css/app.scss';
+
 .data-grid {
     display: grid;
 
     .header {
         display: contents;
-        font-weight: bold;
+        @apply table-heading;
         em {
             font-size: 1em;
         }
@@ -21,7 +23,7 @@
         + * + * + * + *, 
         + * + * + * + * + *,
         + * + * + * + * + * + * {
-            background-color: rgb(var(--off-white));
+            background-color: var(--contrast-with-white);
         }
     }
 

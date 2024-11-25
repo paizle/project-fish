@@ -26,6 +26,7 @@ export default function Locations({data}) {
                     <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                         <DataTable data={data} schema={{
                             'Location': 'name',
+                            'Description': 'description',
                             'Created': 'created_at',
                             'Updated': 'updated_at'
                         }} />

@@ -3,9 +3,93 @@
 @tailwind utilities;
 
 :root {
-    --off-white: 236, 254, 255;
+    --rgb-off-white: 244, 244, 244;
+    --off-white: rgb(--var(var(--rgb-off-white)));
     --yellow-highlighter: 253, 255, 50;
     --box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
+    --rgb-headers-tabs-accents: 26, 43, 72;
+    --headers-tabs-accents: rgb(var(--rgb-headers-tabs-accents));
+    --text-heading: var(--headers-tabs-accents);
+    --rgb-highlight: 112, 185, 176;
+    --highlight: rgb(var(--rgb-highlight));
+    --rgb-white: 255, 255, 255;
+    --white: rgb(var(--rgb-white));
+    --rgb-grey: #F4F4F4;
+    --grey: rgb(var(--rgb-grey));
+    --rgb-text-soft: 125, 135, 153;
+    --text-soft: rgb(var(--rgb-text-soft));
+    --rgb-hover: 52, 184, 217;
+    --hover: rgb(var(--rgb-hover));
+    --rgb-highlight-actionable: 244, 208, 63;
+    --highlight-actionable: rgb(var(var(--rgb-highlight-actionable)));
+    --contrast-with-white: rgb(var(--rgb-highlight), .1);
+}
+
+input::autofill {
+    background-color: var(--highlight-actionable);
+}
+
+body {
+    color: var(--text-soft);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
+    color: var(--text-heading);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @apply my-4;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.75em;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+.MainNav {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--off-white);
+}
+
+.NavLink {
+    color: var(--text-heading);
+    border-color: transparent;
+    &.active {
+        border-color: var(--highlight);
+    }
+    &:hover {
+        border-color: var(--hover);
+    }
+}
+
+.table-heading {
+    color: var(--text-heading);
+    font-weight: bold;
 }
 
 .button {
@@ -13,7 +97,7 @@
 }
 
 .box {
-    @apply bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800;
+    @apply bg-white p-4 shadow rounded-md sm:p-8 dark:bg-gray-800;
 }
 
 .gradient-background {

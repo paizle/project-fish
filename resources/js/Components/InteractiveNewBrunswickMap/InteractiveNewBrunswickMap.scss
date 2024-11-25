@@ -47,7 +47,7 @@
 
                 em {
                     display: block;
-                    max-height: 0;
+                    max-height: 0px;
                     transition: 1000ms;
                     overflow: hidden;
                     opacity: 0;
@@ -55,7 +55,7 @@
 
                 &.highlighted em, &:hover em {
                     opacity: 1;
-                    max-height: 1000px;
+                    max-height: 300px;
                 }
 
                 &.highlighted h3, &:hover h3 {

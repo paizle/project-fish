@@ -30,5 +30,8 @@
         "tailwindcss": "^3.2.1",
         "vite": "^5.0",
         "vite-plugin-svgr": "^4.3.0"
+    },
+    "dependencies": {
+        "@nivo/pie": "^0.88.0"
     }
 }
