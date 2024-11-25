@@ -1,0 +1,19 @@
+
+.NewBrunswickMap {
+
+    & > svg {
+        position: relative;
+
+        .location {
+            cursor: pointer;
+            transition: 300ms ease;
+            position: relative;
+            z-index: 100;
+            opacity: .3;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    
+}

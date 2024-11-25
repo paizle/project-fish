@@ -1,0 +1,32 @@
+.Filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: left;
+
+    position: relative;
+
+    header {
+        position: absolute;
+        left: 0;
+        top: -1em;
+        background-color: inherit;
+        font-weight: 900;
+        padding: 0 .5em .5em .5em;
+        @apply rounded-md;
+
+    }
+
+    @apply p-4 flex items-center gap-4 rounded-md border border-transparent bg-gray-100;
+
+    select {
+        max-width: 120px;
+    }
+
+    label {
+        font-weight: bold;
+        select {
+            font-weight: normal;
+            margin-left: .5em;
+        }
+    }
+}

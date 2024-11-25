@@ -1,0 +1,32 @@
+.data-grid {
+    display: grid;
+
+    .header {
+        display: contents;
+        font-weight: bold;
+        em {
+            font-size: 1em;
+        }
+    }
+
+    .row-header {
+        grid-column: 1 / -1;
+    }
+
+    .row-start:nth-child(2n + 1) {
+        &, 
+        + *, 
+        + * + *, 
+        + * + * + *, 
+        + * + * + * + *, 
+        + * + * + * + * + *,
+        + * + * + * + * + * + * {
+            background-color: rgb(var(--off-white));
+        }
+    }
+
+    em {
+        font-size: .8em;
+    }
+}
+

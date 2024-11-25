@@ -1,0 +1,19 @@
+.Tooltip {
+    position: relative;
+    [popover] {
+        pointer-events: none;
+        margin: 0;
+        border-radius: .5em;
+        padding: .25em .5em;
+        background-color: rgb(var(--yellow-highlighter));
+        font-weight: bold;
+        transition: opacity 500ms ease;
+        display: block;
+        opacity: 0;
+        box-shadow: var(--box-shadow);
+        &:popover-open {
+            pointer-events: all;
+            opacity: 1;
+        }
+    }
+}

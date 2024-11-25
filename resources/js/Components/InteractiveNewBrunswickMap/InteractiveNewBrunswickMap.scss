@@ -1,0 +1,72 @@
+.InteractiveNewBrunswickMap {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    .NewBrunswickMap {
+        flex-grow: 1;
+        > svg {
+            width: 100%;
+        }
+    }
+    .locations {
+        flex-basis: 10%;
+        flex-grow: 1;
+        transition: 300ms ease;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        ul {
+            li {
+                text-align: center;
+                position: relative;
+                h3 {
+                    display: inline-block;
+                    position: relative;
+                    font-size: 1.25em;
+                    margin: .5em 0;
+                    font-weight: bold;
+                    
+                    &:after {
+                        visibility: hidden;
+                        transition: 300ms ease;
+                        content: '';
+                        border: 1px solid black;
+                        width: 0%;
+                        position: absolute;
+                        bottom: 0;
+                        left: 50%;
+                        transform-origin: 0 50%;
+                        transform: translateX(-50%);
+                    }
+                    
+                }
+
+                em {
+                    display: block;
+                    max-height: 0;
+                    transition: 1000ms;
+                    overflow: hidden;
+                    opacity: 0;
+                }
+
+                &.highlighted em, &:hover em {
+                    opacity: 1;
+                    max-height: 1000px;
+                }
+
+                &.highlighted h3, &:hover h3 {
+                    &:after {
+                        visibility: visible;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        
+        
+    }
+}
