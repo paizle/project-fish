@@ -7,9 +7,6 @@
     --off-white: rgb(--var(var(--rgb-off-white)));
     --yellow-highlighter: 253, 255, 50;
     --box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
-    --rgb-headers-tabs-accents: 26, 43, 72;
-    --headers-tabs-accents: rgb(var(--rgb-headers-tabs-accents));
-    --text-heading: var(--headers-tabs-accents);
     --rgb-highlight: 112, 185, 176;
     --highlight: rgb(var(--rgb-highlight));
     --rgb-white: 255, 255, 255;
@@ -22,15 +19,50 @@
     --hover: rgb(var(--rgb-hover));
     --rgb-highlight-actionable: 244, 208, 63;
     --highlight-actionable: rgb(var(var(--rgb-highlight-actionable)));
-    --contrast-with-white: rgb(var(--rgb-highlight), .1);
+    --contrast-with-white-rgb: 235, 243, 242;
+    --contrast-with-white: rgb(var(--contrast-with-white-rgb));
+
+    
+    --primary-text-rgb: 26, 43, 72;
+    --secondary-text-rgb: 125, 135, 153;
+    --primary-text-color: rgb(var(--primary-text-rgb));
+    --secondary-text-color: rgb(var(--secondary-text-rgb));
+
+    --headers-tabs-accents: var(--primary-text-color);
+    
+    --text-heading: var(--headers-tabs-accents);
+    
+    --icon-color-rgb: 112, 185, 176;
+    --icon-color: rgb(var(--icon-color-rgb));
+
+    --overlay-color: var(--off-white);
 }
 
 input::autofill {
     background-color: var(--highlight-actionable);
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    color: var(--text-soft);
+    color: var(--primary-text-color);
+    font-family: "Poppins", sans-serif;
+}
+
+
+.light-text {
+    font-weight: 400;
+}
+
+.bold-text {
+    font-weight: 700;
+}
+
+.regular-text {
+    font-weight: 500;
 }
 
 h1,
@@ -54,21 +86,26 @@ h6 {
 
 h1 {
     font-size: 2em;
-    font-weight: bold;
+    @apply bold-text;
 }
 
 h2 {
     font-size: 1.75em;
-    font-weight: bold;
+    @apply bold-text;
 }
 
 h3 {
     font-size: 1.5em;
-    font-weight: bold;
+    @apply bold-text;
 }
 
 h4 {
     font-size: 1.25em;
+    @apply regular-text;
+}
+
+label {
+    @apply regular-text;
 }
 
 .MainNav {
@@ -89,7 +126,7 @@ h4 {
 
 .table-heading {
     color: var(--text-heading);
-    font-weight: bold;
+    @apply bold-text;
 }
 
 .button {

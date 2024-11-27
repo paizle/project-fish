@@ -1,10 +1,9 @@
+
+import './FishLimits.scss'
 import React from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-
 import DataTable from '@/Components/DataTable/DataTable';
-
-import './FishLimits.scss'
 
 export default function FishLimits({
     fishLimits,
@@ -34,10 +33,8 @@ export default function FishLimits({
         
         axios.post(route('fishLimits.data'), {filters: newFilters})
             .then((response) => {
-                console.log(response.data.fishLimits)
                 setData(response.data.fishLimits)
                 console.log(response.data.fishLimits)
-                
             })
             .catch((error) => {
                 console.error('Error:', error.response ? error.response.data : error.message); // Handle error
@@ -48,9 +45,9 @@ export default function FishLimits({
         <AuthenticatedLayout header={null}>
             <Head title="Project: FISH - Fishing Limits" />
 
-            <div className="px-2">
+            <div className="FishLimits px-2">
                 <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="box">
+                    <div className="box my-8">
                         
                         <div className="Filters">
                             <header>Filters: </header>

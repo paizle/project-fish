@@ -34,7 +34,7 @@ export default function DataSubmenu() {
 
             <NavLink
                 href={route('data.water-categories')}
-                active={route().current('data.waterCategories')}
+                active={route().current('data.water-categories')}
             >
                 Water Categories
             </NavLink>
@@ -44,13 +44,6 @@ export default function DataSubmenu() {
                 active={route().current('data.waters')}
             >
                 Waters
-            </NavLink>
-
-            <NavLink
-                href={route('data.limits')}
-                active={route().current('data.limits')}
-            >
-                Limits
             </NavLink>
         </>
     )

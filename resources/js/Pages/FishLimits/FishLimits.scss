@@ -1,32 +1,41 @@
-.Filters {
-    display: flex;
-    flex-wrap: wrap;
-    justify-items: left;
+@use '/resources/css/app.scss';
 
-    position: relative;
+.FishLimits {
+    .Filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-items: left;
+        position: relative;
+        background-color: var(--contrast-with-white);
 
-    header {
-        position: absolute;
-        left: 0;
-        top: -1em;
-        background-color: inherit;
-        font-weight: 900;
-        padding: 0 .5em .5em .5em;
-        @apply rounded-md;
+        margin: 1em 0;
 
-    }
+        @apply p-4 flex items-center gap-4 rounded-md border border-transparent;
+        
+        header {
+            position: absolute;
+            left: 0;
+            top: -1em;
+            background-color: inherit;
+            font-weight: 400;
+            padding: 0 .5em .5em .5em;
+            color: var(--headers-tabs-accents);
 
-    @apply p-4 flex items-center gap-4 rounded-md border border-transparent bg-gray-100;
-
-    select {
-        max-width: 120px;
-    }
-
-    label {
-        font-weight: bold;
-        select {
-            font-weight: normal;
-            margin-left: .5em;
+            @apply bold-text rounded-md;
         }
+
+        select {
+            max-width: 120px;
+        }
+
+        label {
+            select {
+                margin-left: .5em;
+            }
+        }
+    }
+
+    .DataTable {
+        margin: 2em 0;
     }
 }

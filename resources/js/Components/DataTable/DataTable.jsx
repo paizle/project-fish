@@ -22,11 +22,20 @@ export default function DataTable({
             <tbody>
                 {renderTBody(children, data, schema, uniqueKey)}
             </tbody>
+            <tfoot>
+                {data.length 
+                    ? null
+                    : (<tr><td colSpan="100%" className="no-data">(no data)</td></tr>)
+                }
+            </tfoot>
         </table>
     );
 }
 
 function renderTBody(children, data, schema, uniqueKey) {
+
+    
+
     switch (typeof children) {
         case 'function': return data.map((row) => children(row))
 
