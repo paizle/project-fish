@@ -4,7 +4,7 @@ use App\Http\Controllers\LimitsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WizardController;
-use App\Http\Controllers\UiController;
+use App\Http\Controllers\PublicAppController;
 use App\Http\Controllers\FishDataController;
 
 use Illuminate\Foundation\Application;
@@ -56,6 +56,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/fish-limits', [LimitsController::class, 'index'])->name('fishLimits.page');
     Route::post('/fish-limits-data', [LimitsController::class, 'fishLimitsData'])->name('fishLimits.data');
-
 });
+
+Route::get('/public-app', [PublicAppController::class, 'index'])->name('publicApp.page');
+Route::get('/public-app/limitsByLocation/{id}', [PublicAppController::class, 'limitsByLocation'])->name('publicApp.limitsByLocation.rest');
+Route::get('/public-app/limitsByWater/{id}', [PublicAppController::class, 'limitsByWater'])->name('publicApp.limitsByWater.rest');
+
+
 require __DIR__.'/auth.php';

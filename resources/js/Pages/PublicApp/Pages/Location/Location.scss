@@ -1,0 +1,58 @@
+.Location {
+
+    display: contents;
+    
+    .autocomplete {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        
+        header {
+            input {
+                font-size: 2rem;
+                
+                &::placeholder {
+                    font-weight: 300;
+                }
+                width: 100%;
+                @media (min-width: 920px) {
+                    width: 20em;    
+                }
+
+            }
+            label {
+                display: flex;
+                flex-direction: column;
+                font-size: 2rem;
+            }
+        }
+        
+        .results {
+            overflow: hidden;
+            max-height: 20em;
+            transition: 800ms ease;
+            &.has-results {
+                overflow-y: auto;
+            }
+            li {
+                line-height: 1;
+                padding: 2px 0 2px 2px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                .InternalLink {
+                    padding: 2px 0;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+    
+    
+}
+
+.BreadCrumb {
+    &.depth-2 {
+        @media (min-width: 920px) {
+            padding-top: 6em;
+        }
+    }
+}

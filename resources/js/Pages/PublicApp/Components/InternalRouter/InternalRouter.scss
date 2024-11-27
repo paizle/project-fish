@@ -1,0 +1,43 @@
+.BreadCrumb {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1em 0 0 0;
+    transition: 300ms ease;
+
+    @media (min-width: 920px) {
+        font-size: 2rem;    
+    }
+
+    > div {
+        transition: 300ms ease;
+        
+        &:before {
+            content: '>';
+            margin: 0 .5em;
+            border-bottom: none;
+        }
+        &:first-child {
+            &:before {
+                content: '';
+                margin: 0;
+            }
+        }
+
+        &:last-child {
+            font-weight: bold;
+            border-bottom: none;
+            .InternalLink {
+                border-bottom: none;
+                cursor: auto;
+            }
+        }
+        .InternalLink {
+            border-bottom: 1px solid black;
+        }
+    }
+}
+
+.InternalLink {
+    font-size: inherit;
+}

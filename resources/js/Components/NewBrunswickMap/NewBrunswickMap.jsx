@@ -14,12 +14,13 @@ export const pathSelectorToLocationName = {
 }
 
 export default function NewBrunswickMap({
+    mapRef = null,
     onMouseEnterLocation = () => null, 
     onMouseLeaveLocation = () => null,
     onClickLocation = () => null
 }) {
 
-    const svgRef = React.createRef(null)
+    const svgRef = mapRef || React.createRef(null)
 
     React.useEffect(() => {
         if (svgRef.current) {
