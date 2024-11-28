@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Http\\Controllers\\AdminController' => $baseDir . '/app/Http/Controllers/AdminController.php',
     'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => $baseDir . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
     'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => $baseDir . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
@@ -23,8 +24,18 @@ return array(
     'App\\Http\\Middleware\\HandleInertiaRequests' => $baseDir . '/app/Http/Middleware/HandleInertiaRequests.php',
     'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',
     'App\\Http\\Requests\\ProfileUpdateRequest' => $baseDir . '/app/Http/Requests/ProfileUpdateRequest.php',
+    'App\\Models\\Boundary' => $baseDir . '/app/Models/Boundary.php',
+    'App\\Models\\Fish' => $baseDir . '/app/Models/Fish.php',
+    'App\\Models\\FishCategory' => $baseDir . '/app/Models/FishCategory.php',
+    'App\\Models\\FishLimit' => $baseDir . '/app/Models/FishLimit.php',
+    'App\\Models\\FishingMethod' => $baseDir . '/app/Models/FishingMethod.php',
+    'App\\Models\\Location' => $baseDir . '/app/Models/Location.php',
+    'App\\Models\\TidalCategory' => $baseDir . '/app/Models/TidalCategory.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+    'App\\Models\\Water' => $baseDir . '/app/Models/Water.php',
+    'App\\Models\\WatersCategory' => $baseDir . '/app/Models/WatersCategory.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
+    'App\\Util\\Indexer' => $baseDir . '/app/Util/Indexer.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Brick\\Math\\BigDecimal' => $vendorDir . '/brick/math/src/BigDecimal.php',
     'Brick\\Math\\BigInteger' => $vendorDir . '/brick/math/src/BigInteger.php',

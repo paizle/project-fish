@@ -530,6 +530,7 @@ class ComposerStaticInitdd4928cbccee4e34a7bc1c38484272d0
     );
 
     public static $classMap = array (
+        'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
         'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
@@ -547,8 +548,18 @@ class ComposerStaticInitdd4928cbccee4e34a7bc1c38484272d0
         'App\\Http\\Middleware\\HandleInertiaRequests' => __DIR__ . '/../..' . '/app/Http/Middleware/HandleInertiaRequests.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
+        'App\\Models\\Boundary' => __DIR__ . '/../..' . '/app/Models/Boundary.php',
+        'App\\Models\\Fish' => __DIR__ . '/../..' . '/app/Models/Fish.php',
+        'App\\Models\\FishCategory' => __DIR__ . '/../..' . '/app/Models/FishCategory.php',
+        'App\\Models\\FishLimit' => __DIR__ . '/../..' . '/app/Models/FishLimit.php',
+        'App\\Models\\FishingMethod' => __DIR__ . '/../..' . '/app/Models/FishingMethod.php',
+        'App\\Models\\Location' => __DIR__ . '/../..' . '/app/Models/Location.php',
+        'App\\Models\\TidalCategory' => __DIR__ . '/../..' . '/app/Models/TidalCategory.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\Water' => __DIR__ . '/../..' . '/app/Models/Water.php',
+        'App\\Models\\WatersCategory' => __DIR__ . '/../..' . '/app/Models/WatersCategory.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
+        'App\\Util\\Indexer' => __DIR__ . '/../..' . '/app/Util/Indexer.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
