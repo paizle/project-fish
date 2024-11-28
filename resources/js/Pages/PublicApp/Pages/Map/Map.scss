@@ -1,5 +1,8 @@
 .Map {
-    display: contents;
+    display: flex;
+
+    position: relative;
+
     .NewBrunswickMap {
         flex-grow: 1;
         display: flex;

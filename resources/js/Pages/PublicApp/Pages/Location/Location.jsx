@@ -34,9 +34,9 @@ export default function Location({children, id, route, ...rest}) {
         if (resultsRef.current) {
             const size = 28
             if (waterName && filteredResults.length === 0) {
-                resultsRef.current.style.height = size + 'px'
+                //resultsRef.current.style.height = size + 'px'
             } else {
-                resultsRef.current.style.height = filteredResults.length * size + 'px'
+                //resultsRef.current.style.height = filteredResults.length * size + 'px'
             }
             
         }

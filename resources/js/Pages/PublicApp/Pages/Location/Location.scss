@@ -1,12 +1,17 @@
 .Location {
 
-    display: contents;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+
     
     .autocomplete {
-        display: grid;
+        display: flex;
+        flex-direction: column;
         grid-template-rows: auto 1fr;
         
         header {
+            flex-grow: 0;
             input {
                 font-size: 2rem;
                 
@@ -27,8 +32,7 @@
         }
         
         .results {
-            overflow: hidden;
-            max-height: 20em;
+            flex-grow: 1;
             transition: 800ms ease;
             &.has-results {
                 overflow-y: auto;

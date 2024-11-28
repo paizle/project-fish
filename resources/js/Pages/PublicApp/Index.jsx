@@ -25,7 +25,7 @@ export default function Index({ locations }) {
         <InternalRouterProvider config={internalRouterConfig}>
 
             <PublicAppLayout>
-                <Head title="Project: FISH" />
+                { /* <Head title="Project: FISH" /> */ }
                 <header>
                     <PublicAppMenu />
                     <BreadCrumb />

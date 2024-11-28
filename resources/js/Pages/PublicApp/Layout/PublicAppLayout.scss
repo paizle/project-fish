@@ -1,35 +1,37 @@
 @use '/resources/css/app.scss';
 
-html, body {
-    overflow: hidden;
-}
 
 .PublicAppLayout {
 
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100vw;
     height: 100vh;
 
     @apply bg-gray-100 dark:bg-gray-900;
     
 
     display: grid;
+    grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
+
+    grid-template-areas: 
+        'header'
+        'main';
 
     .PublicAppMenu {
         @apply border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800;
         display: none;
     }
 
-    main {
-        overflow: auto;
+    > header {
+        grid-area: header;
+    }
 
+    main {
+        grid-area: main;
+        overflow: auto;
         display: flex;
-        align-items: center;
+        align-items: stretch;
         justify-content: center;
-        height: 100%;
+        padding: 1em;
     }
 }
 
