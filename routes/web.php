@@ -43,7 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/data/boundaries', [FishDataController::class, 'boundaries'])->name('data.boundaries');
     Route::get('/data/water-categories', [FishDataController::class, 'waterCategories'])->name('data.water-categories');
     Route::get('/data/waters', [FishDataController::class, 'waters'])->name('data.waters');
-
 });
 
 Route::middleware('auth')->group(function () {
@@ -61,6 +60,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/public-app', [PublicAppController::class, 'index'])->name('publicApp.page');
 Route::get('/public-app/limitsByLocation/{id}', [PublicAppController::class, 'limitsByLocation'])->name('publicApp.limitsByLocation.rest');
 Route::get('/public-app/limitsByWater/{id}', [PublicAppController::class, 'limitsByWater'])->name('publicApp.limitsByWater.rest');
-
 
 require __DIR__.'/auth.php';

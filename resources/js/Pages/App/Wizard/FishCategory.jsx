@@ -1,4 +1,4 @@
-import AppLayout from '@/Layouts/AppLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import BreadCrumb from './Partials/BreadCrumb/Breadcrumb';
@@ -10,7 +10,7 @@ import './Wizard.scss'
 export default function FishCategory({ fishLimits, wizardBreadcrumb }) {
 
     return (
-        <AppLayout>
+        <AuthenticatedLayout>
             <Head title="Project: FISH" />
 
             <BreadCrumb breadCrumb={wizardBreadcrumb} />
@@ -46,7 +46,7 @@ export default function FishCategory({ fishLimits, wizardBreadcrumb }) {
                     ))}
                 </div>
             </div>
-        </AppLayout>
+        </AuthenticatedLayout>
     );
 }
 

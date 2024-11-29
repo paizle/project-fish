@@ -1,7 +1,6 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
-import AuthenticatedSubmenu from './Partials/AppSubmenu';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
@@ -25,7 +24,43 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <AuthenticatedSubmenu />
+                                <NavLink
+                                    href={route('dashboard')}
+                                    active={route().current('dashboard')}
+                                >
+                                    Dashboard
+                                </NavLink>
+                                <NavLink
+                                    href={route('profile.edit')}
+                                    active={route().current('profile.edit')}
+                                >
+                                    Profile
+                                </NavLink>
+                                <NavLink
+                                    href={route('admin')}
+                                    active={route().current('admin')}
+                                >
+                                    Admin
+                                </NavLink>
+                                <NavLink
+                                    href={route('fishLimits.page')}
+                                    active={route().current('fishLimits.page')}
+                                >
+                                    Fish Limits Data
+                                </NavLink>
+                                <NavLink
+                                    href={route('data.index')}
+                                    active={route().current('data.index') || route().current('data.*')}
+                                >
+                                    Other Data
+                                </NavLink>
+                                
+                                <NavLink
+                                    href={route('wizard.page')}
+                                    active={route().current('wizard.*')}
+                                >
+                                    Wizard
+                                </NavLink>
                             </div>
                         </div>
 
@@ -129,6 +164,37 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('profile.edit')}
+                            active={route().current('profile.edit')}
+                        >
+                            Profile
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('admin')}
+                            active={route().current('admin')}
+                        >
+                            Admin
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('fishLimits.page')}
+                            active={route().current('fishLimits.page')}
+                        >
+                            Fish Limits Data
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('data.index')}
+                            active={route().current('data.index') || route().current('data.*')}
+                        >
+                            Other Data
+                        </ResponsiveNavLink>
+                        
+                        <ResponsiveNavLink
+                            href={route('wizard.page')}
+                            active={route().current('wizard.*')}
+                        >
+                            Wizard
                         </ResponsiveNavLink>
                     </div>
 

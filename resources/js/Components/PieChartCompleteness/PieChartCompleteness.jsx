@@ -26,7 +26,7 @@ export default function PieChartCompleteness({ complete, incomplete }) {
       
       <ResponsivePie
         data={data}
-        margin={{ top: 40, right: 80, bottom: 40, left: 80 }}
+        margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
         innerRadius={0.1} // Shrink donut hole on hover
         padAngle={1.5}
         cornerRadius={4}
