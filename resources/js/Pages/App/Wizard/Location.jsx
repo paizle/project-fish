@@ -1,4 +1,4 @@
-import AppLayout from '@/Layouts/AppLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import WizardCard from '@/Components/WizardCard/WizardCard'
 
@@ -12,7 +12,7 @@ const images = {
 export default function Location({ watersCategories, location, wizardBreadcrumb}) {
 
     return (
-        <AppLayout>
+        <AuthenticatedLayout>
             <Head title="Project: FISH" />
                 <BreadCrumb breadCrumb={wizardBreadcrumb} />
 
@@ -28,6 +28,6 @@ export default function Location({ watersCategories, location, wizardBreadcrumb}
                     ))}
                 </div>
                 
-        </AppLayout>
+        </AuthenticatedLayout>
     );
 }

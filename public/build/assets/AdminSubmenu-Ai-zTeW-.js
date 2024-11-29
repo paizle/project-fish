@@ -1,0 +1,1 @@
+import{j as r}from"./app-BpWuXxNQ.js";import"./Dropdown-ktfcWO_3.js";import{N as t}from"./NavLink-Dvwc3jR-.js";import"./transition-CwbFQGqY.js";function o(){return r.jsx(r.Fragment,{children:r.jsx(t,{href:route("admin"),active:route().current("admin"),children:"Admin"})})}export{o as default};

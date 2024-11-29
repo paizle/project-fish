@@ -1,7 +1,5 @@
-import AppLayout from '@/Layouts/AppLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-
-import AdminSubmenu from './Partials/AdminSubmenu';
 import PieChartCompleteness from '@/Components/PieChartCompleteness/PieChartCompleteness';
 
 export default function Edit({locations}) {
@@ -20,15 +18,7 @@ export default function Edit({locations}) {
     })
 
     return (
-        <AppLayout
-            header={
-                <div className="flex">
-                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <AdminSubmenu />
-                    </div>
-                </div>
-            }
-        >
+        <AuthenticatedLayout>
             <Head title="Project: FISH" />
 
             <div className="py-12">
@@ -38,11 +28,11 @@ export default function Edit({locations}) {
                     <h3>Locations with Data: {locationsHavingData.length} of {locations.length}</h3>
                     
                     <div className="flex justify-center">
-                        <div className="flex">
+                        <div className="flex flex-wrap">
                             <PieChartCompleteness complete={locationsHavingData} incomplete={locations.filter((e) => !locationsHavingData.includes(e))} />
-                            <div>
-                                <h4>Next Section to complete: <strong>Lower Saint John</strong></h4>
-                            </div>
+                            
+                            <h4><span>Next Section to complete: </span><strong>Lower Saint John</strong></h4>
+                            
                         </div>
                     </div>
                     <h3>Data to be verified: {locationsHavingData.length} of {locationsHavingData.length}</h3>
@@ -52,6 +42,6 @@ export default function Edit({locations}) {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </AuthenticatedLayout>
     );
 }
