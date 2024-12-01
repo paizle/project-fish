@@ -16,11 +16,11 @@
     }
 
     .row-start:nth-child(2n + 1) {
-        &, 
-        + *, 
-        + * + *, 
-        + * + * + *, 
-        + * + * + * + *, 
+        &,
+        + *,
+        + * + *,
+        + * + * + *,
+        + * + * + * + *,
         + * + * + * + * + *,
         + * + * + * + * + * + * {
             background-color: var(--contrast-with-white);
@@ -28,7 +28,6 @@
     }
 
     em {
-        font-size: .8em;
+        font-size: 0.8em;
     }
 }
-

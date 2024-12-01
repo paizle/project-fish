@@ -2,8 +2,7 @@
     display: flex;
 
     position: relative;
-    
-    
+
     .NewBrunswickMap {
         flex-grow: 1;
         display: flex;
@@ -36,9 +35,9 @@
                     display: inline-block;
                     position: relative;
                     font-size: 1.25em;
-                    margin:  0;
+                    margin: 0;
                     font-weight: bold;
-                    
+
                     &:after {
                         visibility: hidden;
                         transition: 300ms ease;
@@ -51,7 +50,6 @@
                         transform-origin: 0 50%;
                         transform: translateX(-50%);
                     }
-                    
                 }
 
                 em {
@@ -62,12 +60,14 @@
                     opacity: 0;
                 }
 
-                &.highlighted em, &:hover em {
+                &.highlighted em,
+                &:hover em {
                     opacity: 1;
                     max-height: 500px;
                 }
 
-                &.highlighted h3, &:hover h3 {
+                &.highlighted h3,
+                &:hover h3 {
                     &:after {
                         visibility: visible;
                         width: 100%;
@@ -75,7 +75,5 @@
                 }
             }
         }
-        
-        
     }
 }

@@ -1,29 +1,26 @@
 .Location {
-
     display: flex;
     align-items: stretch;
     justify-content: center;
 
-    
     .autocomplete {
         display: flex;
         flex-direction: column;
         grid-template-rows: auto 1fr;
-        
+
         header {
             flex-grow: 0;
             input {
                 font-size: 1rem;
-                
+
                 &::placeholder {
                     font-weight: 300;
                 }
                 width: 100%;
                 @media (min-width: 920px) {
                     width: 20em;
-                    font-size: 2rem; 
+                    font-size: 2rem;
                 }
-
             }
             label {
                 display: flex;
@@ -31,7 +28,7 @@
                 font-size: 2rem;
             }
         }
-        
+
         .results {
             flex-grow: 1;
             transition: 800ms ease;

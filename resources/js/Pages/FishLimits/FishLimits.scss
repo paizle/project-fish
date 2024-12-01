@@ -10,15 +10,15 @@
 
         margin: 1em 0;
 
-        @apply p-4 flex items-center gap-4 rounded-md border border-transparent;
-        
+        @apply flex items-center gap-4 rounded-md border border-transparent p-4;
+
         header {
             position: absolute;
             left: 0;
             top: -1em;
             background-color: inherit;
             font-weight: 400;
-            padding: 0 .5em .5em .5em;
+            padding: 0 0.5em 0.5em 0.5em;
             color: var(--headers-tabs-accents);
 
             @apply bold-text rounded-md;
@@ -30,7 +30,7 @@
 
         label {
             select {
-                margin-left: .5em;
+                margin-left: 0.5em;
             }
         }
     }

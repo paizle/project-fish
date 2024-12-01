@@ -1,6 +1,4 @@
-
 .NewBrunswickMap {
-
     & > svg {
         aspect-ratio: 93 / 90;
         display: inline-block;
@@ -14,11 +12,11 @@
             transition: 300ms ease;
             position: relative;
             z-index: 100;
-            opacity: .2;
-            &:hover, &.active {
+            opacity: 0.2;
+            &:hover,
+            &.active {
                 opacity: 1;
             }
         }
     }
-    
 }

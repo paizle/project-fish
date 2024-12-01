@@ -1,18 +1,15 @@
 @use '/resources/css/app.scss';
 
-
 .PublicAppLayout {
-
     height: 100%;
 
     @apply bg-gray-100 dark:bg-gray-900;
-    
 
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
 
-    grid-template-areas: 
+    grid-template-areas:
         'header'
         'main';
 
@@ -35,9 +32,6 @@
     }
 }
 
-
-
-
 .data-grid {
     display: grid;
 
@@ -54,11 +48,11 @@
     }
 
     .row-start:nth-child(2n + 1) {
-        &, 
-        + *, 
-        + * + *, 
-        + * + * + *, 
-        + * + * + * + *, 
+        &,
+        + *,
+        + * + *,
+        + * + * + *,
+        + * + * + * + *,
         + * + * + * + * + *,
         + * + * + * + * + * + * {
             background-color: var(--contrast-with-white);
@@ -66,7 +60,6 @@
     }
 
     em {
-        font-size: .8em;
+        font-size: 0.8em;
     }
 }
-

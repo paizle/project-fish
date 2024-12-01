@@ -50,11 +50,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </NavLink>
                                 <NavLink
                                     href={route('data.index')}
-                                    active={route().current('data.index') || route().current('data.*')}
+                                    active={
+                                        route().current('data.index') ||
+                                        route().current('data.*')
+                                    }
                                 >
                                     Other Data
                                 </NavLink>
-                                
+
                                 <NavLink
                                     href={route('public-app.page')}
                                     active={route().current('public-app.*')}
@@ -186,11 +189,14 @@ export default function AuthenticatedLayout({ header, children }) {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route('data.index')}
-                            active={route().current('data.index') || route().current('data.*')}
+                            active={
+                                route().current('data.index') ||
+                                route().current('data.*')
+                            }
                         >
                             Other Data
                         </ResponsiveNavLink>
-                        
+
                         <ResponsiveNavLink
                             href={route('public-app.page')}
                             active={route().current('public-app.*')}

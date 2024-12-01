@@ -1,49 +1,55 @@
-import './Water.scss'
-import React from "react"
+import React from 'react';
+import './Water.scss';
 
-import { InternalLink, useInternalRouting } from '../../Components/InternalRouter/InternalRouter';
+import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter';
 
 import DataTable from '@/Components/DataTable/DataTable';
 
-import { format } from "date-fns"
-import mySQLTimestampToDate from '@/Util/mySQLTimestampToDate'
-import config from '@/Util/config'
+import config from '@/Util/config';
+import mySQLTimestampToDate from '@/Util/mySQLTimestampToDate';
+import { format } from 'date-fns';
 
-export default function Water({children, id, route, ...rest}) {
-
-    const [results, setResults] = React.useState([])
+export default function Water({ children, id, route, ...rest }) {
+    const [results, setResults] = React.useState([]);
 
     React.useEffect(() => {
-        console.log({route})
+        console.log({ route });
 
-        axios.get(route(id, ''))
-            .then((result) => {
-                setResults(result.data.limits ?? [])
-            })
-    }, [])
+        axios.get(route(id, '')).then((result) => {
+            setResults(result.data.limits ?? []);
+        });
+    }, []);
 
-    const internalRouting = useInternalRouting()
+    const internalRouting = useInternalRouting();
     React.useEffect(() => {
-        internalRouting.setLoading(false)
-    }, [])
+        internalRouting.setLoading(false);
+    }, []);
 
-
-    const test = results
+    const test = results;
 
     return (
         <div className="Water">
-
-            <DataTable data={results} uniqueKey="id" schema={{
-                    'Fish': (row) => row.fish?.name ?? '(all)',
-                    'Season Start': (row) => format(mySQLTimestampToDate(row.season_start), config.displayDayMonthFormat),
-                    'Season End': (row) => format(mySQLTimestampToDate(row.season_end), config.displayDayMonthFormat),
-                    'Tidal': (row) => row.tidal_category_id ?? '(all)',
-                    'Limit': (row) => row.bag_limit ?? 'Unlimited',
+            <DataTable
+                data={results}
+                uniqueKey="id"
+                schema={{
+                    Fish: (row) => row.fish?.name ?? '(all)',
+                    'Season Start': (row) =>
+                        format(
+                            mySQLTimestampToDate(row.season_start),
+                            config.displayDayMonthFormat,
+                        ),
+                    'Season End': (row) =>
+                        format(
+                            mySQLTimestampToDate(row.season_end),
+                            config.displayDayMonthFormat,
+                        ),
+                    Tidal: (row) => row.tidal_category_id ?? '(all)',
+                    Limit: (row) => row.bag_limit ?? 'Unlimited',
                     'Min Size': (row) => row.minimum_size ?? 'N/A',
                     'Max Size': (row) => row.maximum_size ?? 'N/A',
                 }}
             />
-
         </div>
-    )
+    );
 }

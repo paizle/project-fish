@@ -2,18 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
     --rgb-off-white: 244, 244, 244;
     --rbg-overlays: var(--rgb-off-white);
     --off-white: rgb(--var(var(--rgb-off-white)));
     --yellow-highlighter: 253, 255, 50;
-    --box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
+    --box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
     --rgb-highlight: 112, 185, 176;
     --highlight: rgb(var(--rgb-highlight));
     --rgb-white: 255, 255, 255;
     --white: rgb(var(--rgb-white));
-    --rgb-grey: #F4F4F4;
+    --rgb-grey: #f4f4f4;
     --grey: rgb(var(--rgb-grey));
     --rgb-text-soft: 125, 135, 153;
     --text-soft: rgb(var(--rgb-text-soft));
@@ -24,16 +25,15 @@
     --contrast-with-white-rgb: 235, 243, 242;
     --contrast-with-white: rgb(var(--contrast-with-white-rgb));
 
-    
     --primary-text-rgb: 26, 43, 72;
     --secondary-text-rgb: 125, 135, 153;
     --primary-text-color: rgb(var(--primary-text-rgb));
     --secondary-text-color: rgb(var(--secondary-text-rgb));
 
     --headers-tabs-accents: var(--primary-text-color);
-    
+
     --text-heading: var(--headers-tabs-accents);
-    
+
     --icon-color-rgb: 112, 185, 176;
     --icon-color: rgb(var(--icon-color-rgb));
 
@@ -44,16 +44,16 @@ input::autofill {
     background-color: var(--highlight-actionable);
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
 }
 
 body {
     color: var(--primary-text-color);
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
-
 
 .light-text {
     font-weight: 400;
@@ -136,17 +136,28 @@ label {
 }
 
 .box {
-    @apply bg-white p-4 shadow rounded-md sm:p-8 dark:bg-gray-800;
+    @apply rounded-md bg-white p-4 shadow sm:p-8 dark:bg-gray-800;
 }
 
 .gradient-background {
-    background-color:hsla(0,100%,50%,1);
-    background-image:
-        radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
-        radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
-        radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
-        radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
-        radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
-        radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
+    background-color: hsla(0, 100%, 50%, 1);
+    background-image: radial-gradient(
+            at 40% 20%,
+            hsla(28, 100%, 74%, 1) 0px,
+            transparent 50%
+        ),
+        radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 1) 0px, transparent 50%),
+        radial-gradient(
+            at 80% 50%,
+            hsla(340, 100%, 76%, 1) 0px,
+            transparent 50%
+        ),
+        radial-gradient(at 0% 100%, hsla(22, 100%, 77%, 1) 0px, transparent 50%),
+        radial-gradient(
+            at 80% 100%,
+            hsla(242, 100%, 70%, 1) 0px,
+            transparent 50%
+        ),
+        radial-gradient(at 0% 0%, hsla(343, 100%, 76%, 1) 0px, transparent 50%);
 }

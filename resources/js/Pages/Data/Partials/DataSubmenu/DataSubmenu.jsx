@@ -1,11 +1,9 @@
-import './DataSubmenu.scss'
 import NavLink from '@/Components/NavLink';
+import './DataSubmenu.scss';
 
 export default function DataSubmenu() {
-
     return (
         <div className="DataSubmenu">
-                          
             <NavLink
                 href={route('data.locations')}
                 active={route().current('data.locations')}
@@ -48,5 +46,5 @@ export default function DataSubmenu() {
                 Waters
             </NavLink>
         </div>
-    )
+    );
 }

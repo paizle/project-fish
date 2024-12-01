@@ -1,14 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { Link } from '@inertiajs/react';
 import BreadCrumb from './Partials/BreadCrumb/Breadcrumb';
-import DataTable from '@/Components/DataTable/DataTable';
-import Tooltip from '@/Components/Tooltip/Tooltip';
 
-import './Wizard.scss'
+import './Wizard.scss';
 
 export default function FishCategory({ fishLimits, wizardBreadcrumb }) {
-
     return (
         <AuthenticatedLayout>
             <Head title="Project: FISH" />
@@ -16,10 +12,17 @@ export default function FishCategory({ fishLimits, wizardBreadcrumb }) {
             <BreadCrumb breadCrumb={wizardBreadcrumb} />
 
             <div className="box mx-4">
-
-                <div className="data-grid" style={{'grid-template-columns': 'auto auto auto auto auto auto auto'}}>
+                <div
+                    className="data-grid"
+                    style={{
+                        'grid-template-columns':
+                            'auto auto auto auto auto auto auto',
+                    }}
+                >
                     <div className="header">
-                        <div>Fish (<em>method</em>)</div>
+                        <div>
+                            Fish (<em>method</em>)
+                        </div>
                         <div>Water Body</div>
                         <div>Season Start</div>
                         <div>Season End</div>
@@ -31,10 +34,9 @@ export default function FishCategory({ fishLimits, wizardBreadcrumb }) {
                         <>
                             <div class="row-start">
                                 {fishLimit.fish.name}
-                                {fishLimit.fishing_method 
-                                    ? <em>{` (${fishLimit.fishing_method.name})`}</em>
-                                    : null
-                                }
+                                {fishLimit.fishing_method ? (
+                                    <em>{` (${fishLimit.fishing_method.name})`}</em>
+                                ) : null}
                             </div>
                             <div>{renderWaters(fishLimit)}</div>
                             <div>{fishLimit.season_start || ''}</div>
@@ -51,45 +53,61 @@ export default function FishCategory({ fishLimits, wizardBreadcrumb }) {
 }
 
 function renderWaters(fishLimit) {
-
-    let result = null
+    let result = null;
 
     if (fishLimit.water) {
         if (fishLimit.boundary) {
             if (fishLimit.tidal_category) {
-                return <>
-                    {fishLimit.water.name} <em>{fishLimit.boundary.name}, {fishLimit.tidal_category.name}</em>
-                </>
+                return (
+                    <>
+                        {fishLimit.water.name}{' '}
+                        <em>
+                            {fishLimit.boundary.name},{' '}
+                            {fishLimit.tidal_category.name}
+                        </em>
+                    </>
+                );
             } else {
-                return <>
-                    {fishLimit.water.name} <em>({fishLimit.boundary.name})</em>
-                </>
+                return (
+                    <>
+                        {fishLimit.water.name}{' '}
+                        <em>({fishLimit.boundary.name})</em>
+                    </>
+                );
             }
         } else {
-            return <>
-                {fishLimit.water.name}
-            </>
+            return <>{fishLimit.water.name}</>;
         }
     } else {
         if (fishLimit.boundary) {
             if (fishLimit.tidal_category) {
-                return <>
-                    <em>{fishLimit.boundary.name}, {fishLimit.tidal_category.name}</em>
-                </>
+                return (
+                    <>
+                        <em>
+                            {fishLimit.boundary.name},{' '}
+                            {fishLimit.tidal_category.name}
+                        </em>
+                    </>
+                );
             } else {
-                return <>
-                    <em>{fishLimit.boundary.name}</em>
-                </>
+                return (
+                    <>
+                        <em>{fishLimit.boundary.name}</em>
+                    </>
+                );
             }
         } else {
             if (fishLimit.tidal_category) {
-                return <><em>{fishLimit.tidal_category.name}</em></>
+                return (
+                    <>
+                        <em>{fishLimit.tidal_category.name}</em>
+                    </>
+                );
             }
         }
     }
-    
 
-    return <strong>All</strong>
+    return <strong>All</strong>;
 }
 
 function renderRow(limit) {
@@ -102,5 +120,5 @@ function renderRow(limit) {
             <div>5</div>
             <div> 6</div>
         </>
-    )
+    );
 }

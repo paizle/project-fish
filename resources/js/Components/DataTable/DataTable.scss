@@ -1,12 +1,11 @@
 @use '/resources/css/app.scss';
 
 .DataTable {
-
     width: 100%;
 
-    th, td {
-        padding: 0 .25em;
-        
+    th,
+    td {
+        padding: 0 0.25em;
     }
 
     thead {
@@ -44,5 +43,4 @@
         text-align: center;
         padding: 1em 0;
     }
-    
 }

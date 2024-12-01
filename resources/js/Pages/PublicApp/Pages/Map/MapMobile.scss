@@ -14,9 +14,8 @@
     .container {
         display: flex;
         flex-basis: 100%;
-        
     }
-    
+
     &.portrait {
         flex-direction: column;
         .NewBrunswickMap {
@@ -47,8 +46,6 @@
             }
         }
     }
-    
-
 
     .NewBrunswickMap {
         padding: 50% 0;
@@ -73,9 +70,9 @@
                     display: inline-block;
                     position: relative;
                     font-size: 1.25em;
-                    margin: .5em 0;
+                    margin: 0.5em 0;
                     font-weight: bold;
-                    
+
                     &:after {
                         visibility: hidden;
                         transition: 300ms ease;
@@ -88,7 +85,6 @@
                         transform-origin: 0 50%;
                         transform: translateX(-50%);
                     }
-                    
                 }
 
                 em {
@@ -99,12 +95,14 @@
                     opacity: 0;
                 }
 
-                &.highlighted em, &:hover em {
+                &.highlighted em,
+                &:hover em {
                     opacity: 1;
                     max-height: 300px;
                 }
 
-                &.highlighted h3, &:hover h3 {
+                &.highlighted h3,
+                &:hover h3 {
                     &:after {
                         visibility: visible;
                         width: 100%;
@@ -112,7 +110,5 @@
                 }
             }
         }
-        
-        
     }
 }
