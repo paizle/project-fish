@@ -57,8 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/fish-limits-data', [LimitsController::class, 'fishLimitsData'])->name('fishLimits.data');
 });
 
-Route::get('/public-app', [PublicAppController::class, 'index'])->name('publicApp.page');
-Route::get('/public-app/limitsByLocation/{id}', [PublicAppController::class, 'limitsByLocation'])->name('publicApp.limitsByLocation.rest');
-Route::get('/public-app/limitsByWater/{id}', [PublicAppController::class, 'limitsByWater'])->name('publicApp.limitsByWater.rest');
+Route::get('/public-app', [PublicAppController::class, 'index'])->name('public-app.page');
+Route::get('/public-app/limitsByLocation/{id}', [PublicAppController::class, 'limitsByLocation'])->name('public-app.limitsByLocation.rest');
+Route::get('/public-app/limitsByWater/{id}', [PublicAppController::class, 'limitsByWater'])->name('public-app.limitsByWater.rest');
 
 require __DIR__.'/auth.php';

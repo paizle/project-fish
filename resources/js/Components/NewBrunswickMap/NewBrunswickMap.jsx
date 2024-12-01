@@ -14,30 +14,13 @@ export const pathSelectorToLocationName = {
 }
 
 export default function NewBrunswickMap({
-    mapRef = null,
-    onMouseEnterLocation = () => null, 
-    onMouseLeaveLocation = () => null,
-    onClickLocation = () => null
+    containerRef = null,
 }) {
 
-    const svgRef = mapRef || React.createRef(null)
-
-    React.useEffect(() => {
-        if (svgRef.current) {
-            const svg = svgRef.current.querySelector('svg')
-
-            Object.keys(pathSelectorToLocationName).forEach((key) => {
-                const locationPath = svg.querySelector('#' + key)
-                locationPath.classList.add('location')
-                locationPath.addEventListener('mouseenter', (event) => onMouseEnterLocation(event, key))
-                locationPath.addEventListener('mouseleave', (event) => onMouseLeaveLocation(event, key))    
-                locationPath.addEventListener('click', (event) => onClickLocation(event, key))
-            })
-        }
-    }, [svgRef.current])
+    const containerRefLocal = containerRef || React.createRef(null)
 
     return (
-        <div ref={svgRef} className="NewBrunswickMap" >
+        <div ref={containerRefLocal} className="NewBrunswickMap" >
             <NewBrunswickMapSvg />
         </div>
     )

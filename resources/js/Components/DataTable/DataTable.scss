@@ -14,6 +14,12 @@
             th {
                 text-align: left;
                 @apply table-heading;
+                &:first-child {
+                    padding-left: 0;
+                }
+                &:last-child {
+                    padding-right: 0;
+                }
             }
         }
     }
@@ -24,6 +30,12 @@
                 td {
                     background-color: var(--contrast-with-white);
                 }
+            }
+            td:first-child {
+                padding-left: 0;
+            }
+            td:last-child {
+                padding-right: 0;
             }
         }
     }

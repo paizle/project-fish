@@ -19,8 +19,8 @@ export default function Locations({data}) {
                         <DataTable data={data} schema={{
                             'Name': 'name',
                             'Description': 'description',
-                            'Created': (row) => format(mySQLTimestampToDate(row.created_at), config.displayDateFormat),
-                            'Updated': (row) => format(mySQLTimestampToDate(row.updated_at), config.displayDateFormat),
+                            'Created': (row) => format(mySQLTimestampToDate(row.created_at), config.displayDateYearFormat),
+                            'Updated': (row) => format(mySQLTimestampToDate(row.updated_at), config.displayDateYearFormat),
                         }} />
                     </div>
 

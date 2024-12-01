@@ -18,8 +18,8 @@ export default function WaterCategories({data}) {
                     <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                         <DataTable data={data} schema={{
                             'Name': 'name',
-                            'Created': (row) => format(mySQLTimestampToDate(row.created_at), config.displayDateFormat),
-                            'Updated': (row) => format(mySQLTimestampToDate(row.updated_at), config.displayDateFormat),
+                            'Created': (row) => format(mySQLTimestampToDate(row.created_at), config.displayDateYearFormat),
+                            'Updated': (row) => format(mySQLTimestampToDate(row.updated_at), config.displayDateYearFormat),
                         }} />
                     </div>
 

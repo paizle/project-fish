@@ -34,8 +34,6 @@ export default function DataTable({
 
 function renderTBody(children, data, schema, uniqueKey) {
 
-    
-
     switch (typeof children) {
         case 'function': return data.map((row) => children(row))
 

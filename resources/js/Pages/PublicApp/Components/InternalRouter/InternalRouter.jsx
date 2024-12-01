@@ -12,9 +12,12 @@ export function InternalRouterProvider({config, children = {}}) {
 
     const [currentViewParams, setCurrentViewParams] = React.useState(null)
 
+    const [loading, setLoading] = React.useState(true)
+
     const setView = (viewName, viewParams) => {
         setCurrentView(viewName)
         setCurrentViewParams(viewParams)
+        setLoading(true)
     }
 
     const updateBreadCrumb = (position, internalLinkOptions) => {
@@ -34,6 +37,8 @@ export function InternalRouterProvider({config, children = {}}) {
         setView,
         breadCrumb,
         updateBreadCrumb,
+        loading,
+        setLoading
     }
 
     return (

@@ -1,7 +1,7 @@
 import './Location.scss'
 import React from "react"
 
-import { InternalLink, BreadCrumb } from '../../Components/InternalRouter/InternalRouter';
+import { InternalLink, useInternalRouting } from '../../Components/InternalRouter/InternalRouter';
 
 export default function Location({children, id, route, ...rest}) {
 
@@ -12,6 +12,8 @@ export default function Location({children, id, route, ...rest}) {
     const [waterName, setWaterName] = React.useState('')
 
     const resultsRef = React.useRef(null)
+
+    
 
     const changeWaterName = (e) => {
         const value = e.target.value 
@@ -42,8 +44,6 @@ export default function Location({children, id, route, ...rest}) {
         }
     }, [filteredResults, waterName])
 
-    console.log(results)
-
     React.useEffect(() => {
         console.log({route})
 
@@ -55,6 +55,11 @@ export default function Location({children, id, route, ...rest}) {
             })
 
         //const test = route(id)
+    }, [])
+
+    const internalRouting = useInternalRouting()
+    React.useEffect(() => {
+        internalRouting.setLoading(false)
     }, [])
 
 

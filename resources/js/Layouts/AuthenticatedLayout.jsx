@@ -56,8 +56,9 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </NavLink>
                                 
                                 <NavLink
-                                    href={route('wizard.page')}
-                                    active={route().current('wizard.*')}
+                                    href={route('public-app.page')}
+                                    active={route().current('public-app.*')}
+                                    target="_blank"
                                 >
                                     Wizard
                                 </NavLink>
@@ -191,8 +192,9 @@ export default function AuthenticatedLayout({ header, children }) {
                         </ResponsiveNavLink>
                         
                         <ResponsiveNavLink
-                            href={route('wizard.page')}
-                            active={route().current('wizard.*')}
+                            href={route('public-app.page')}
+                            active={route().current('public-app.*')}
+                            target="_blank"
                         >
                             Wizard
                         </ResponsiveNavLink>
