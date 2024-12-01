@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "@nivo/pie": "^0.88.0",
-        "date-fns": "^4.1.0"
+        "date-fns": "^4.1.0",
+        "lodash": "^4.17.21"
     }
 }

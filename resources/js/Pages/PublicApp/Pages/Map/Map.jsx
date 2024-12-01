@@ -8,15 +8,18 @@ import NewBrunswickMapMobile from "@/Components/NewBrunswickMap/NewBrunswickMapM
 
 import MapWeb from './MapWeb'
 import MapMobile from './MapMobile'
+import useScreenOrientation from '@/Hooks/useScreenOrientation';
 
-export default function Map({locations, isPortrait}) {
+export default function Map({locations, isPortrait, isMobile}) {
 
     const internalRouting = useInternalRouting()
     React.useEffect(() => {
         internalRouting.setLoading(false)
     }, [])
 
-    return isPortrait
+    const screenOrientation = useScreenOrientation()
+
+    return screenOrientation.isPortrait
         ? <MapMobile locations={locations} />
         : <MapWeb locations={locations} />
     

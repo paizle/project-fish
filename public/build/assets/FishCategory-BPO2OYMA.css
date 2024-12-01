@@ -1,0 +1,1 @@
+.Tooltip{position:relative}.Tooltip [popover]{pointer-events:none;margin:0;border-radius:.5em;padding:.25em .5em;background-color:rgb(var(--yellow-highlighter));font-weight:700;transition:opacity .5s ease;display:block;opacity:0;box-shadow:var(--box-shadow)}.Tooltip [popover]:popover-open{pointer-events:all;opacity:1}
