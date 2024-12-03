@@ -3,8 +3,8 @@ import './DataTable.scss';
 export default function DataTable({
     className = '',
     children,
-    data,
-    schema,
+    data = [],
+    schema = {},
     uniqueKey = 'id',
     ...props
 }) {
