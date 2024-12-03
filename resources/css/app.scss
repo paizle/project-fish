@@ -2,7 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+$headers-tabs-accents: #1A2B48;          
+$highlights-icons: #70B9B0;
+$background: #FFFFFF;                  
+$card-backgrounds-dividers:#F4F4F4;
+$text-secondary-elements: #7D8799;
+$hover-effects: #34B8D9;
+$highlight-actionable: #F4D03F;
+
 :root {
+
+    --headers-tabs-accents: #{$headers-tabs-accents};
+    --highlights-icons: #{$highlights-icons};
+    --background: #{$background};
+    --card-backgrounds-dividers: #{$card-backgrounds-dividers};
+    --text-secondary-elements: #{$text-secondary-elements};
+    --hover-effects: #{$hover-effects};
+    --highlight-actionable: #{$highlight-actionable};
+    --highlight-actionable-transparent: #{rgba($highlight-actionable, .7)};
+
     --rgb-off-white: 244, 244, 244;
     --rbg-overlays: var(--rgb-off-white);
     --off-white: rgb(--var(var(--rgb-off-white)));
@@ -21,7 +41,7 @@
     --rgb-hover: 52, 184, 217;
     --hover: rgb(var(--rgb-hover));
     --rgb-highlight-actionable: 244, 208, 63;
-    --highlight-actionable: rgb(var(var(--rgb-highlight-actionable)));
+
     --contrast-with-white-rgb: 235, 243, 242;
     --contrast-with-white: rgb(var(--contrast-with-white-rgb));
 
@@ -30,7 +50,6 @@
     --primary-text-color: rgb(var(--primary-text-rgb));
     --secondary-text-color: rgb(var(--secondary-text-rgb));
 
-    --headers-tabs-accents: var(--primary-text-color);
 
     --text-heading: var(--headers-tabs-accents);
 
@@ -38,6 +57,13 @@
     --icon-color: rgb(var(--icon-color-rgb));
 
     --overlay-color: var(--off-white);
+}
+
+a {
+    text-decoration: underline;
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 input::autofill {
@@ -110,21 +136,54 @@ label {
     @apply regular-text;
 }
 
-.MainNav {
+.main-navigation {
     background-color: var(--white);
     border-bottom: 1px solid var(--off-white);
+
+    .NavLink {
+        text-decoration: none;
+        color: var(--text-heading);
+        border-color: transparent;
+        &.active {
+            border-color: var(--highlight);
+        }
+        &:hover {
+            border-color: var(--hover);
+        }
+    } 
 }
 
-.NavLink {
-    color: var(--text-heading);
-    border-color: transparent;
-    &.active {
-        border-color: var(--highlight);
+.sub-navigation {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    gap: 1em;
+    padding: 0 0 0.5em 0;
+    margin: 0 1em;
+
+    @apply -my-4 md:my-0 md:mx-4;
+
+    > * {
+        flex-shrink: 0;
     }
-    &:hover {
-        border-color: var(--hover);
-    }
+    
+    .NavLink {
+        display: inline-block;
+        padding: 1.5em 0;
+        text-decoration: none;
+        color: var(--text-heading);
+        border-color: transparent;
+        &.active {
+            border-color: var(--highlight);
+        }
+        &:hover {
+            border-color: var(--hover);
+        }
+    
+    } 
 }
+
+
 
 .table-heading {
     color: var(--text-heading);

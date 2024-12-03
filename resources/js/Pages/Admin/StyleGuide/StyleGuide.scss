@@ -1,0 +1,31 @@
+@use '/resources/css/app.scss';
+
+
+.StyleGuide {
+    .colors {
+        .color {
+            display: flex;
+            align-items: center;
+            gap: .5em;
+
+            .color-box {
+                display: inline-block;
+                width: 1em;
+                height: 1em;
+                border: 1px solid var(--headers-tabs-accents);
+            }
+        }
+    }
+    dl {
+        dt, dd {
+            display: inline;
+        }
+        dd {
+            margin-left: .5em;
+            &::after {
+                content: '';
+                display: block;
+            }
+        }
+    }
+}

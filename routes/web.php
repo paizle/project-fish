@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/data-health', [AdminController::class, 'dataHealth'])->name('admin.data-health');
+    Route::get('/admin/style-guide', [AdminController::class, 'styleGuide'])->name('admin.style-guide');
 });
 
 Route::middleware('auth')->group(function () {

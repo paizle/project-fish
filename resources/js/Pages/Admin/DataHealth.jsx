@@ -1,6 +1,7 @@
 import PieChartCompleteness from '@/Components/PieChartCompleteness/PieChartCompleteness';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import AdminSubMenu from './partials/AdminSubMenu'
 
 export default function Edit({ locations }) {
     const sectionStatus = {
@@ -17,7 +18,11 @@ export default function Edit({ locations }) {
     });
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout
+            header={
+                <AdminSubMenu />
+            }
+        >
             <Head title="Project: FISH" />
 
             <div className="py-12">

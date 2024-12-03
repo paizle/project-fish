@@ -1,0 +1,14 @@
+.NewIndicator {
+    position: relative;
+    .text-content {
+        position: absolute;
+        top: -1.3em;
+        right: -1em;
+        transform-origin: 50%;
+        transform: rotate(-5deg) translateX(50%);
+        background-color: var(--highlight-actionable-transparent);
+        font-size: .8em;
+        border-radius: .25rem;
+        padding: .1em .5em;
+    }
+}
