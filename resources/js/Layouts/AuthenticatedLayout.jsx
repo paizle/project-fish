@@ -235,7 +235,7 @@ export default function AuthenticatedLayout({ header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow dark:bg-gray-800">
+                <header className="main-header bg-white shadow dark:bg-gray-800">
                     <div>
                         {header}
                     </div>

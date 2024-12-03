@@ -1,1 +1,0 @@
-import{j as e}from"./app-BFTgLSvR.js";function r({text:t="new",children:n}){return e.jsxs("div",{className:"NewIndicator",children:[n,e.jsx("div",{className:"text-content",children:t})]})}export{r as N};
