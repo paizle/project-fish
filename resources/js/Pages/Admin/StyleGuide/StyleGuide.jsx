@@ -1,5 +1,5 @@
 import './StyleGuide.scss'
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import AdminSubMenu from '../partials/AdminSubMenu'
 

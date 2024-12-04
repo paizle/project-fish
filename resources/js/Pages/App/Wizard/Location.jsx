@@ -1,5 +1,5 @@
 import WizardCard from '@/Components/WizardCard/WizardCard';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 import BreadCrumb from './Partials/BreadCrumb/Breadcrumb';

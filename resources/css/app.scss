@@ -136,68 +136,6 @@ label {
     @apply regular-text;
 }
 
-.main-navigation {
-    background-color: var(--white);
-    border-bottom: 1px solid var(--off-white);
-
-    h1, h2, h3 {
-        padding: 1em 0;
-    }
-
-    .NavLink {
-        text-decoration: none;
-        color: var(--text-heading);
-        border-color: transparent;
-        &.active {
-            border-color: var(--highlight);
-        }
-        &:hover {
-            border-color: var(--hover);
-        }
-    } 
-}
-
-header.main-header {
-    h1, h2, h3 {
-        padding: 1em 0;
-        margin: 0 1em;
-    }
-}
-
-.sub-navigation {
-    overflow-x: auto;
-    overflow-y: hidden;
-    display: flex;
-    gap: 1em;
-    padding: 0 0 0.5em 0;
-    margin: 0 1em;
-
-    
-
-    @apply -my-4 md:my-0 md:mx-4;
-
-    > * {
-        flex-shrink: 0;
-    }
-
-    .NavLink {
-        display: inline-block;
-        padding: 1.5em 0;
-        text-decoration: none;
-        color: var(--text-heading);
-        border-color: transparent;
-        &.active {
-            border-color: var(--highlight);
-        }
-        &:hover {
-            border-color: var(--hover);
-        }
-    
-    } 
-}
-
-
-
 .table-heading {
     color: var(--text-heading);
     @apply bold-text;

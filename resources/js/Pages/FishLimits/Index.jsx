@@ -1,5 +1,5 @@
 import DataTable from '@/Components/DataTable/DataTable';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import React from 'react';
 import './FishLimits.scss';

@@ -1,5 +1,5 @@
 import DataTable from '@/Components/DataTable/DataTable';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import config from '@/Util/config';
 import mySQLTimestampToDate from '@/Util/mySQLTimestampToDate';
 import { Head } from '@inertiajs/react';
