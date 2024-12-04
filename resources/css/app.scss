@@ -4,59 +4,42 @@
 
 
 
-$headers-tabs-accents: #1A2B48;          
-$highlights-icons: #70B9B0;
-$background: #FFFFFF;                  
-$card-backgrounds-dividers:#F4F4F4;
-$text-secondary-elements: #7D8799;
-$hover-effects: #34B8D9;
-$highlight-actionable: #F4D03F;
+$heading-color: #1A2B48; // headers, tabs, and accents
+$icon-color: #70B9B0; // highlights and icons
+$background-color: #FFFFFF; // background
+$card-background-color:#F4F4F4; //card backgrounds and dividers
+$text-color: #7D8799; // text or secondary elements
+$hover-color: #34B8D9; // hover-effects
+$actionable-color: #F4D03F; // highlight actionable items
 
 :root {
 
-    --headers-tabs-accents: #{$headers-tabs-accents};
-    --highlights-icons: #{$highlights-icons};
-    --background: #{$background};
-    --card-backgrounds-dividers: #{$card-backgrounds-dividers};
-    --text-secondary-elements: #{$text-secondary-elements};
-    --hover-effects: #{$hover-effects};
-    --highlight-actionable: #{$highlight-actionable};
-    --highlight-actionable-transparent: #{rgba($highlight-actionable, .7)};
+    --heading-color: #{$heading-color};
+    --border-color: var(--heading-color);
 
-    --rgb-off-white: 244, 244, 244;
-    --rbg-overlays: var(--rgb-off-white);
-    --off-white: rgb(--var(var(--rgb-off-white)));
+    --icon-color: #{$icon-color};
+    --highlight-color: #{$icon-color};
+    --highlight-color-transparent: #{rgba($icon-color, .2)};
+
+    --background-color: #{$background-color};
+
+    --card-background-color: #{$card-background-color};
+    --divider-color: var(--card-background-color);
+    --off-white: var(--card-background-color);
+
+    --text-color: #{$text-color};
+
+    --hover-color: #{$hover-color};
+
+    --actionable-color: #{$actionable-color};
+    --actionable-color-translucent: #{rgba($actionable-color, .7)};
+
     --yellow-highlighter: 253, 255, 50;
+    
     --box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
         rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
         rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
-    --rgb-highlight: 112, 185, 176;
-    --highlight: rgb(var(--rgb-highlight));
-    --rgb-white: 255, 255, 255;
-    --white: rgb(var(--rgb-white));
-    --rgb-grey: #f4f4f4;
-    --grey: rgb(var(--rgb-grey));
-    --rgb-text-soft: 125, 135, 153;
-    --text-soft: rgb(var(--rgb-text-soft));
-    --rgb-hover: 52, 184, 217;
-    --hover: rgb(var(--rgb-hover));
-    --rgb-highlight-actionable: 244, 208, 63;
-
-    --contrast-with-white-rgb: 235, 243, 242;
-    --contrast-with-white: rgb(var(--contrast-with-white-rgb));
-
-    --primary-text-rgb: 26, 43, 72;
-    --secondary-text-rgb: 125, 135, 153;
-    --primary-text-color: rgb(var(--primary-text-rgb));
-    --secondary-text-color: rgb(var(--secondary-text-rgb));
-
-
-    --text-heading: var(--headers-tabs-accents);
-
-    --icon-color-rgb: 112, 185, 176;
-    --icon-color: rgb(var(--icon-color-rgb));
-
-    --overlay-color: var(--off-white);
+    
 }
 
 a {
@@ -67,7 +50,7 @@ a {
 }
 
 input::autofill {
-    background-color: var(--highlight-actionable);
+    background-color: var(--actionable-color);
 }
 
 html,
@@ -77,7 +60,7 @@ body {
 }
 
 body {
-    color: var(--primary-text-color);
+    color: var(--text-color);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -100,7 +83,7 @@ h4,
 h5,
 h6,
 label {
-    color: var(--text-heading);
+    color: var(--heading-color);
 }
 
 h1,
@@ -137,7 +120,7 @@ label {
 }
 
 .table-heading {
-    color: var(--text-heading);
+    color: var(--heading-color);
     @apply bold-text;
 }
 

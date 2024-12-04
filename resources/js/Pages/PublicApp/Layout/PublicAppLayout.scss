@@ -3,7 +3,7 @@
 .PublicAppLayout {
     height: 100%;
 
-    @apply bg-gray-100 dark:bg-gray-900;
+    background-color: var(--background-color);
 
     display: grid;
     grid-template-columns: 1fr;
@@ -20,6 +20,13 @@
 
     > header {
         grid-area: header;
+
+        .BreadCrumb {
+            .InternalLink {
+                color: var(--heading-color);
+            }
+        }
+        
     }
 
     main {
@@ -55,7 +62,7 @@
         + * + * + * + *,
         + * + * + * + * + *,
         + * + * + * + * + * + * {
-            background-color: var(--contrast-with-white);
+            background-color: var(--highlight-color-transparent);
         }
     }
 

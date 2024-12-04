@@ -1,5 +1,5 @@
-import React from 'react';
-import './Location.scss';
+import './Location.scss'
+import React from 'react'
 
 import {
     InternalLink,
@@ -48,11 +48,8 @@ export default function Location({ children, id, route, ...rest }) {
         console.log({ route });
 
         axios.get(route(id, '')).then((result) => {
-            //debugger
             setResults(result.data.limits ?? []);
         });
-
-        //const test = route(id)
     }, []);
 
     const internalRouting = useInternalRouting();

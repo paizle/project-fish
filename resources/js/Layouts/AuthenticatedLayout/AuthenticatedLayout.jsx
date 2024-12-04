@@ -1,7 +1,7 @@
 import './AuthenticatedLayout.scss'
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
+import NavLink from '@/Components/NavLink/NavLink';
 import NewIndicator from '@/Components/NewIndicator/NewIndicator';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
@@ -57,7 +57,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="hidden space-x-8 sm:-my-px sm:ms-2 md:ms-10 sm:flex">
                             {navigation.map(({content, ...rest}) => (
-                                <NavLink {...rest}>
+                                <NavLink className="nav-item" {...rest}>
                                     {content}
                                 </NavLink>
                             ))}

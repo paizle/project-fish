@@ -6,7 +6,7 @@
         flex-wrap: wrap;
         justify-items: left;
         position: relative;
-        background-color: var(--contrast-with-white);
+        background-color: var(--highlight-color-transparent);
 
         margin: 1em 0;
 
@@ -19,7 +19,7 @@
             background-color: inherit;
             font-weight: 400;
             padding: 0 0.5em 0.5em 0.5em;
-            color: var(--headers-tabs-accents);
+            color: var(--heading-color);
 
             @apply bold-text rounded-md;
         }

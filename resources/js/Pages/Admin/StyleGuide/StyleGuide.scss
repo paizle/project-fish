@@ -1,6 +1,5 @@
 @use '/resources/css/app.scss';
 
-
 .StyleGuide {
     .colors {
         .color {
@@ -12,7 +11,7 @@
                 display: inline-block;
                 width: 1em;
                 height: 1em;
-                border: 1px solid var(--headers-tabs-accents);
+                border: 1px solid var(--border-color);
             }
         }
     }

@@ -28,11 +28,11 @@ export default function StyleGuide() {
 
                         <div className="color">
                             headers, tabs, and accents - #1A2B48
-                            <span className="color-box" style={{backgroundColor: 'var(--headers-tabs-accents)'}}></span>
+                            <span className="color-box" style={{backgroundColor: 'var(--heading-color)'}}></span>
                         </div>
                         <div className="color">
                             highlights and icons: - #70B9B0
-                            <span className="color-box" style={{backgroundColor: 'var(--highlights-icons)'}}></span>
+                            <span className="color-box" style={{backgroundColor: 'var(--icon-color)'}}></span>
                         </div>
                         <div className="color">
                             background - #FFFFFF
@@ -40,19 +40,19 @@ export default function StyleGuide() {
                         </div>
                         <div className="color">
                             card backgrounds and dividers - #F4F4F4
-                            <span className="color-box" style={{backgroundColor: 'var(--card-backgrounds-dividers)'}}></span>
+                            <span className="color-box" style={{backgroundColor: 'var(--card-background-color)'}}></span>
                         </div>
                         <div className="color">
                             text or secondary elements- #7D8799
-                            <span className="color-box" style={{backgroundColor: 'var(--text-secondary-elements)'}}></span>
+                            <span className="color-box" style={{backgroundColor: 'var(--text-color)'}}></span>
                         </div>
                         <div className="color">
                             hover effects - #34B8D9
-                            <span className="color-box" style={{backgroundColor: 'var(--hover-effects)'}}></span>
+                            <span className="color-box" style={{backgroundColor: 'var(--hover-color)'}}></span>
                         </div>
                         <div className="color">
                             highlight actionable items - #F4D03F
-                            <span className="color-box" style={{backgroundColor: 'var(--highlight-actionable)'}}></span>
+                            <span className="color-box" style={{backgroundColor: 'var(--actionable-color)'}}></span>
                         </div>
                     </section>
 
