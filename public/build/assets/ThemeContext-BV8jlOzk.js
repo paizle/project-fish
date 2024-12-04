@@ -1,1 +1,0 @@
-import{r as e,j as m}from"./app-DqTgDFDI.js";const t=e.createContext(),a=({children:o})=>{const[r,s]=e.useState("light"),n=()=>{s(h=>h==="light"?"dark":"light")};return m.jsx(t.Provider,{value:{theme:r,toggleTheme:n},children:o})},c=()=>e.useContext(t);export{a as ThemeProvider,c as useTheme};
