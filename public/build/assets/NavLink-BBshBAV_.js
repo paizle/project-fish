@@ -1,1 +1,0 @@
-import{j as i,b as s}from"./app-DqTgDFDI.js";function l({active:e=!1,className:t="",children:n,...a}){return i.jsx(s,{...a,className:t+" NavLink inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none "+(e?"active text-gray-900":null),children:n})}export{l as N};

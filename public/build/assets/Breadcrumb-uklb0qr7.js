@@ -1,0 +1,1 @@
+import{j as s,b as r}from"./app-B8YuG-FI.js";function c({breadCrumb:a}){return s.jsxs("div",{className:"BreadCrumb",children:[s.jsx(r,{href:route("wizard.page"),className:"item",children:"Choose Location"}),Object.keys(a).map((e,i,t)=>i===t.length-1?s.jsx("div",{className:"item",children:e},e):s.jsx(r,{href:a[e],className:"item",children:e},e))]})}export{c as default};
