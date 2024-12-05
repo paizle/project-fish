@@ -54,14 +54,17 @@ input::autofill {
 }
 
 html,
-body {
+body,
+#app {
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 body {
     color: var(--text-color);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;    
+    background-color: var(--card-background-color);
 }
 
 .light-text {
@@ -129,7 +132,9 @@ label {
 }
 
 .box {
-    @apply rounded-md bg-white p-4 shadow sm:p-8 dark:bg-gray-800;
+    @apply bg-white p-4 shadow sm:p-8;
+    background-color: var(--background-color);
+    border-radius: .35rem;
 }
 
 .gradient-background {

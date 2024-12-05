@@ -13,8 +13,9 @@ export default function StyleGuide() {
         >
             <Head title="Project: FISH" />
 
-            <div className="StyleGuide py-12">
-                <div className="box mx-8">
+            <div className="StyleGuide">
+                
+                <div className="box">
                     <h1>Style Guide</h1>
 
                     <section className="block">
