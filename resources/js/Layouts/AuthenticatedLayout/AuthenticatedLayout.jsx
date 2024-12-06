@@ -59,7 +59,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden grow justify-between sm:mx-2 sm:flex sm:gap-2 lg:mx-4 lg:gap-4">
+                            <div className="hidden grow sm:mx-2 sm:flex sm:gap-2 lg:mx-4 lg:gap-6">
                                 {navigation.map(({ content, ...rest }) => (
                                     <NavLink className="nav-item" {...rest}>
                                         {content}
