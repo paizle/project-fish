@@ -9,23 +9,23 @@ export default function Edit({ mustVerifyEmail, status }) {
         <AuthenticatedLayout header={<h1>Profile</h1>}>
             <Head title="Profile" />
 
-                <div className="">
-                    <div className="box my-2">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
-
-                    <div className="box my-2">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
-
-                    <div className="box my-2">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
+            <div className="">
+                <div className="box my-2">
+                    <UpdateProfileInformationForm
+                        mustVerifyEmail={mustVerifyEmail}
+                        status={status}
+                        className="max-w-xl"
+                    />
                 </div>
+
+                <div className="box my-2">
+                    <UpdatePasswordForm className="max-w-xl" />
+                </div>
+
+                <div className="box my-2">
+                    <DeleteUserForm className="max-w-xl" />
+                </div>
+            </div>
         </AuthenticatedLayout>
     );
 }

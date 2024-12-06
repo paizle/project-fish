@@ -47,7 +47,6 @@ export default function FishLimits({
             <Head title="Project: FISH - Fishing Limits" />
 
             <div className="FishLimits">
-                
                 <div className="box">
                     <div className="Filters">
                         <header>Filters: </header>
@@ -75,18 +74,14 @@ export default function FishLimits({
                                 <select
                                     value={filters.fishCategoryId}
                                     name="fishCategoryId"
-                                    onChange={updateFilter(
-                                        'fishCategoryId',
-                                    )}
+                                    onChange={updateFilter('fishCategoryId')}
                                 >
                                     <option value="">(all)</option>
-                                    {Object.keys(fishCategories).map(
-                                        (id) => (
-                                            <option key={id} value={id}>
-                                                {fishCategories[id].name}
-                                            </option>
-                                        ),
-                                    )}
+                                    {Object.keys(fishCategories).map((id) => (
+                                        <option key={id} value={id}>
+                                            {fishCategories[id].name}
+                                        </option>
+                                    ))}
                                 </select>
                             </label>
                         </div>
@@ -131,18 +126,14 @@ export default function FishLimits({
                                 Waters Category:
                                 <select
                                     value={filters.watersCategoryId}
-                                    onChange={updateFilter(
-                                        'watersCategoryId',
-                                    )}
+                                    onChange={updateFilter('watersCategoryId')}
                                 >
                                     <option value="">(all)</option>
-                                    {Object.keys(watersCategories).map(
-                                        (id) => (
-                                            <option key={id} value={id}>
-                                                {watersCategories[id].name}
-                                            </option>
-                                        ),
-                                    )}
+                                    {Object.keys(watersCategories).map((id) => (
+                                        <option key={id} value={id}>
+                                            {watersCategories[id].name}
+                                        </option>
+                                    ))}
                                 </select>
                             </label>
                         </div>
@@ -152,18 +143,14 @@ export default function FishLimits({
                                 Tidal Category:
                                 <select
                                     value={filters.tidalCategoryId}
-                                    onChange={updateFilter(
-                                        'tidalCategoryId',
-                                    )}
+                                    onChange={updateFilter('tidalCategoryId')}
                                 >
                                     <option value="">(all)</option>
-                                    {Object.keys(tidalCategories).map(
-                                        (id) => (
-                                            <option key={id} value={id}>
-                                                {tidalCategories[id].name}
-                                            </option>
-                                        ),
-                                    )}
+                                    {Object.keys(tidalCategories).map((id) => (
+                                        <option key={id} value={id}>
+                                            {tidalCategories[id].name}
+                                        </option>
+                                    ))}
                                 </select>
                             </label>
                         </div>
@@ -193,45 +180,41 @@ export default function FishLimits({
                             Location: filters?.locationId
                                 ? false
                                 : (row) =>
-                                        locations[row.location_id]?.name ??
-                                        '(all)',
+                                      locations[row.location_id]?.name ??
+                                      '(all)',
                             'Fish Category': filters?.fishCategoryId
                                 ? false
                                 : (row) =>
-                                        fishCategories[row.fish_category_id]
-                                            ?.name ?? '(all)',
+                                      fishCategories[row.fish_category_id]
+                                          ?.name ?? '(all)',
                             Fish: filters?.fishId
                                 ? false
-                                : (row) =>
-                                        fishes[row.fish_id]?.name ?? '(all)',
+                                : (row) => fishes[row.fish_id]?.name ?? '(all)',
                             Boundary: filters?.boundaryId
                                 ? false
                                 : (row) =>
-                                        boundaries[row.boundary_id]?.name ??
-                                        '(all)',
+                                      boundaries[row.boundary_id]?.name ??
+                                      '(all)',
                             'Waters Category': filters?.watersCategoryId
                                 ? false
                                 : (row) =>
-                                        watersCategories[
-                                            row.waters_category_id
-                                        ]?.name ?? '(all)',
+                                      watersCategories[row.waters_category_id]
+                                          ?.name ?? '(all)',
                             Tidal: filters?.tidalCategoryId
                                 ? false
                                 : (row) =>
-                                        tidalCategories[row.tidal_category_id]
-                                            ?.name ?? '(all)',
+                                      tidalCategories[row.tidal_category_id]
+                                          ?.name ?? '(all)',
                             Waters: (row) =>
                                 filters?.watersId
                                     ? false
-                                    : (waters[row.water_id]?.name ??
-                                        '(all)'),
+                                    : (waters[row.water_id]?.name ?? '(all)'),
                             Limit: (row) => row.bag_limit ?? 'Unlimited',
                             'Min Size': (row) => row.minimum_size ?? 'N/A',
                             'Max Size': (row) => row.maximum_size ?? 'N/A',
                         }}
                     />
                 </div>
-                
             </div>
         </AuthenticatedLayout>
     );

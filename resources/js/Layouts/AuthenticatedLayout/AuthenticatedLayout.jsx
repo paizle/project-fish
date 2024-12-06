@@ -1,4 +1,3 @@
-import './AuthenticatedLayout.scss'
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink/NavLink';
@@ -6,48 +5,50 @@ import NewIndicator from '@/Components/NewIndicator/NewIndicator';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import './AuthenticatedLayout.scss';
 
 export default function AuthenticatedLayout({ header, children }) {
-
-        
     const navigation = [
         {
             href: route('dashboard'),
             active: route().current('dashboard'),
-            content: "Dashboard"
-        }, {
+            content: 'Dashboard',
+        },
+        {
             href: route('profile.edit'),
             active: route().current('profile.edit'),
-            content: "Profile",
-        }, {
+            content: 'Profile',
+        },
+        {
             href: route('admin.index'),
             active: route().current('admin.*'),
-            content: (<NewIndicator>Admin</NewIndicator>)
-        }, {
+            content: <NewIndicator>Admin</NewIndicator>,
+        },
+        {
             href: route('fishLimits.page'),
             active: route().current('fishLimits.page'),
-            content: "Fish Limits Data",
-        }, {
+            content: 'Fish Limits Data',
+        },
+        {
             href: route('data.index'),
             active: route().current('data.*'),
-            content: "Other Data",
-        }, {
+            content: 'Other Data',
+        },
+        {
             href: route('public-app.page'),
             active: route().current('public-app.*'),
-            target: "_blank",
-            content: "Wizard"
-        }
-    ]
-
+            target: '_blank',
+            content: 'Wizard',
+        },
+    ];
 
     const user = usePage().props.auth.user;
 
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [showingNavigationDropdown, setShowingNavigationDropdown] =
+        useState(false);
 
     return (
         <div className="AuthenticatedLayout">
-            
-
             <header className="main-header">
                 <nav className="main-navigation">
                     <div className="flex h-16 justify-between">
@@ -58,8 +59,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden sm:flex sm:gap-2 lg:gap-4 sm:mx-2 lg:mx-4 grow justify-between ">
-                                {navigation.map(({content, ...rest}) => (
+                            <div className="hidden grow justify-between sm:mx-2 sm:flex sm:gap-2 lg:mx-4 lg:gap-4">
+                                {navigation.map(({ content, ...rest }) => (
                                     <NavLink className="nav-item" {...rest}>
                                         {content}
                                     </NavLink>
@@ -161,7 +162,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         }
                     >
                         <div className="space-y-1 pb-3 pt-2">
-                            {navigation.map(({content, ...rest}) => (
+                            {navigation.map(({ content, ...rest }) => (
                                 <ResponsiveNavLink {...rest}>
                                     {content}
                                 </ResponsiveNavLink>

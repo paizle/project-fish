@@ -1,7 +1,7 @@
 import PieChartCompleteness from '@/Components/PieChartCompleteness/PieChartCompleteness';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import AdminSubMenu from './partials/AdminSubMenu'
+import AdminSubMenu from './partials/AdminSubMenu';
 
 export default function Edit({ locations }) {
     const sectionStatus = {
@@ -18,15 +18,13 @@ export default function Edit({ locations }) {
     });
 
     return (
-        <AuthenticatedLayout header={ <AdminSubMenu /> }
-        >
+        <AuthenticatedLayout header={<AdminSubMenu />}>
             <Head title="Project: FISH" />
 
             <div className="box">
                 <h1>Progress of Data Mining sections from the PDF</h1>
 
                 <div className="">
-
                     <h3>
                         Locations with Data: {locationsHavingData.length} of{' '}
                         {locations.length}

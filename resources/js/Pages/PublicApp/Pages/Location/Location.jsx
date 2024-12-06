@@ -1,5 +1,5 @@
-import './Location.scss'
-import React from 'react'
+import React from 'react';
+import './Location.scss';
 
 import {
     InternalLink,

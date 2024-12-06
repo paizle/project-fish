@@ -2,24 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-$heading-color: #1A2B48; // headers, tabs, and accents
-$icon-color: #70B9B0; // highlights and icons
-$background-color: #FFFFFF; // background
-$card-background-color:#F4F4F4; //card backgrounds and dividers
-$text-color: #7D8799; // text or secondary elements
-$hover-color: #34B8D9; // hover-effects
-$actionable-color: #F4D03F; // highlight actionable items
+$heading-color: #1a2b48; // headers, tabs, and accents
+$icon-color: #70b9b0; // highlights and icons
+$background-color: #ffffff; // background
+$card-background-color: #f4f4f4; //card backgrounds and dividers
+$text-color: #7d8799; // text or secondary elements
+$hover-color: #34b8d9; // hover-effects
+$actionable-color: #f4d03f; // highlight actionable items
 
 :root {
-
     --heading-color: #{$heading-color};
     --border-color: var(--heading-color);
 
     --icon-color: #{$icon-color};
     --highlight-color: #{$icon-color};
-    --highlight-color-transparent: #{rgba($icon-color, .2)};
+    --highlight-color-transparent: #{rgba($icon-color, 0.2)};
 
     --background-color: #{$background-color};
 
@@ -32,14 +29,13 @@ $actionable-color: #F4D03F; // highlight actionable items
     --hover-color: #{$hover-color};
 
     --actionable-color: #{$actionable-color};
-    --actionable-color-translucent: #{rgba($actionable-color, .7)};
+    --actionable-color-translucent: #{rgba($actionable-color, 0.7)};
 
     --yellow-highlighter: 253, 255, 50;
-    
+
     --box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
         rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
         rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
-    
 }
 
 a {
@@ -63,7 +59,7 @@ body,
 
 body {
     color: var(--text-color);
-    font-family: 'Poppins', sans-serif;    
+    font-family: 'Poppins', sans-serif;
     background-color: var(--card-background-color);
 }
 
@@ -134,7 +130,7 @@ label {
 .box {
     @apply bg-white p-4 shadow sm:p-8;
     background-color: var(--background-color);
-    border-radius: .35rem;
+    border-radius: 0.35rem;
 }
 
 .gradient-background {

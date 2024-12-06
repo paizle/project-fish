@@ -1,5 +1,5 @@
-import './NavLink.scss'
 import { Link } from '@inertiajs/react';
+import './NavLink.scss';
 
 export default function NavLink({
     active = false,
@@ -12,8 +12,8 @@ export default function NavLink({
             {...props}
             className={
                 className +
-                ' NavLink inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none '
-                + (active ? 'active text-gray-900' : null)
+                ' NavLink inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none' +
+                (active ? 'active text-gray-900' : null)
             }
         >
             {children}

@@ -5,7 +5,7 @@
         .color {
             display: flex;
             align-items: center;
-            gap: .5em;
+            gap: 0.5em;
 
             .color-box {
                 display: inline-block;
@@ -16,11 +16,12 @@
         }
     }
     dl {
-        dt, dd {
+        dt,
+        dd {
             display: inline;
         }
         dd {
-            margin-left: .5em;
+            margin-left: 0.5em;
             &::after {
                 content: '';
                 display: block;
