@@ -4,11 +4,13 @@
 
     background-color: var(--card-background-color);
     padding: .5rem;
+    height: 100%;
+
+    @apply mx-auto max-w-7xl;
 
     header.main-header {
         
-
-        @apply mx-auto max-w-7xl px-0 sm:px-2 lg:px-6;
+        @apply px-0 sm:px-2 lg:px-6;
         border-radius: .35rem;
         background-color: var(--background-color);
 
@@ -23,8 +25,6 @@
                 margin: 0;
             }
         }
-
-        
 
         h1, h2, h3 {
             @apply text-base md:text-[1.5em];
@@ -56,6 +56,11 @@
     }
 
     main {
-        @apply mx-auto max-w-7xl my-2;
+
+        .box {
+            overflow-x: auto;
+        }
+
+        @apply my-2;
     }
 }
