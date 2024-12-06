@@ -1,1 +1,0 @@
-import{j as e}from"./app-B8YuG-FI.js";function r({text:t="new",children:n}){return e.jsxs("div",{className:"NewIndicator",children:[n,e.jsx("div",{className:"text-content",children:t})]})}export{r as N};
