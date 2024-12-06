@@ -1,0 +1,1 @@
+import{j as e}from"./app-Ew0-Si_t.js";function r({text:t="new",children:n}){return e.jsxs("div",{className:"NewIndicator",children:[n,e.jsx("div",{className:"text-content",children:t})]})}export{r as N};
