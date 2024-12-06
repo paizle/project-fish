@@ -6,6 +6,7 @@
     position: relative;
     padding-bottom: 0px;
     transition: color 300ms ease-in-out;
+    text-align: center;
     &.active {
         border-color: var(--highlight-color);
     }

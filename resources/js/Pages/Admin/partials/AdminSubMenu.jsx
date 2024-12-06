@@ -1,4 +1,4 @@
-import NavLink from '@/Components/NavLink/NavLink'
+import NavLink from '@/Components/NavLink/NavLink';
 import NewIndicator from '@/Components/NewIndicator/NewIndicator';
 
 export default function AdminSubMenu() {
@@ -15,9 +15,10 @@ export default function AdminSubMenu() {
                 href={route('admin.style-guide')}
                 active={route().current('admin.style-guide')}
             >
-                <NewIndicator><div>Style Guide</div></NewIndicator>
+                <NewIndicator>
+                    <div>Style Guide</div>
+                </NewIndicator>
             </NavLink>
-            
         </div>
     );
 }

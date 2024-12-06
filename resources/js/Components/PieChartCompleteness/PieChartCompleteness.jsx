@@ -21,10 +21,10 @@ export default function PieChartCompleteness({ complete, incomplete }) {
     });
 
     return (
-        <div style={{ height: 300, width: 500, textAlign: 'center' }}>
+        <div style={{ height: 300, width: '100%', textAlign: 'center' }}>
             <ResponsivePie
                 data={data}
-                margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+                margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
                 innerRadius={0.1} // Shrink donut hole on hover
                 padAngle={1.5}
                 cornerRadius={4}
