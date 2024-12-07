@@ -30,6 +30,7 @@ $actionable-color: #F4D03F; // highlight actionable items
     --text-color: #{$text-color};
 
     --hover-color: #{$hover-color};
+    --hover-color-transparent: #{rgba($hover-color, .2)};
 
     --actionable-color: #{$actionable-color};
     --actionable-color-translucent: #{rgba($actionable-color, .7)};
@@ -58,13 +59,20 @@ body,
 #app {
     margin: 0;
     padding: 0;
+}
+
+html,
+body {
+    height: 100vh;
+}
+
+#app {
     height: 100%;
 }
 
 body {
     color: var(--text-color);
     font-family: 'Poppins', sans-serif;
-    
     background-color: var(--card-background-color);
 }
 

@@ -2,13 +2,13 @@
 
 .FishLimits {
     .Filters {
+        position: relative;
         display: flex;
         flex-wrap: wrap;
         justify-items: left;
-        position: relative;
         background-color: var(--highlight-color);
+        margin: 1.5rem 0 1em 0;
 
-        margin: 1em 0;
 
         @apply flex items-center gap-4 rounded-md border border-transparent p-4;
 

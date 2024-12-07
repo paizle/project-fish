@@ -13,7 +13,7 @@ export default function NavLink({
             className={
                 className +
                 ' NavLink inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none' +
-                (active ? ' active' : null)
+                (active ? ' active' : '')
             }
         >
             {children}

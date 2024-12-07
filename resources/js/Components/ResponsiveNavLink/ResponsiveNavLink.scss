@@ -1,0 +1,15 @@
+.ResponsiveNavLink {
+    text-decoration: none;
+    @apply flex w-full items-start border-l-4 py-2 pe-4 ps-3;
+
+    @apply border-transparent;
+
+    &.active {
+        border-color: var(--highlight-color);
+        background-color: var(--highlight-color-transparent);
+    }
+    &:hover:not(.active) {
+        border-color: var(--hover-color);
+        background-color: var(--hover-color-transparent);
+    }
+}

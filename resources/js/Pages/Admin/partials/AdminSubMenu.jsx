@@ -15,9 +15,7 @@ export default function AdminSubMenu() {
                 href={route('admin.style-guide')}
                 active={route().current('admin.style-guide')}
             >
-                <NewIndicator>
-                    <div>Style Guide</div>
-                </NewIndicator>
+                Style Guide
             </NavLink>
         </div>
     );

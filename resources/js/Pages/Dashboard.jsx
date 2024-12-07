@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react';
 
 export default function Dashboard() {
     return (
-        <AuthenticatedLayout header={<h1>Dashboard</h1>}>
+        <AuthenticatedLayout header={<h1 className="hidden sm:block">Dashboard</h1>}>
             <Head title="Dashboard" />
 
             <div className="box">
