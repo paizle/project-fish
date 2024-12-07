@@ -47,7 +47,7 @@ export default function FishLimits({
             <Head title="Project: FISH - Fishing Limits" />
 
             <div className="FishLimits">
-                <div className="box">
+                
                     <div className="Filters">
                         <header>Filters: </header>
                         <div>
@@ -67,7 +67,7 @@ export default function FishLimits({
                                 </select>
                             </label>
                         </div>
-
+                    
                         <div>
                             <label>
                                 Fish Category:
@@ -172,7 +172,7 @@ export default function FishLimits({
                             </label>
                         </div>
                     </div>
-
+                    <div className="box">
                     <DataTable
                         data={data}
                         uniqueKey="id"

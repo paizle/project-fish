@@ -6,7 +6,7 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 
 export default function Edit({ mustVerifyEmail, status }) {
     return (
-        <AuthenticatedLayout header={<h1>Profile</h1>}>
+        <AuthenticatedLayout header={<h1 className="hidden sm:block">Profile</h1>}>
             <Head title="Profile" />
 
             <div className="">

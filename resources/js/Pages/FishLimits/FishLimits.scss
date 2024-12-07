@@ -2,26 +2,27 @@
 
 .FishLimits {
     .Filters {
+        position: relative;
         display: flex;
         flex-wrap: wrap;
         justify-items: left;
-        position: relative;
-        background-color: var(--highlight-color-transparent);
+        background-color: var(--highlight-color);
+        margin: 1.5rem 0 1em 0;
 
-        margin: 1em 0;
 
         @apply flex items-center gap-4 rounded-md border border-transparent p-4;
 
         header {
             position: absolute;
-            left: 0;
-            top: -1em;
+            left: -1px;
+            top: -1.5rem;
+            height: 2rem;
             background-color: inherit;
             font-weight: 400;
             padding: 0 0.5em 0.5em 0.5em;
             color: var(--heading-color);
 
-            @apply bold-text rounded-md;
+            @apply rounded-md;
         }
 
         select {
@@ -34,7 +35,7 @@
             }
         }
     }
-
+    
     .DataTable {
         margin: 2em 0;
     }

@@ -2,7 +2,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink/NavLink';
 import NewIndicator from '@/Components/NewIndicator/NewIndicator';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import './AuthenticatedLayout.scss';
@@ -22,7 +22,7 @@ export default function AuthenticatedLayout({ header, children }) {
         {
             href: route('admin.index'),
             active: route().current('admin.*'),
-            content: <NewIndicator>Admin</NewIndicator>,
+            content: 'Admin',
         },
         {
             href: route('fishLimits.page'),
@@ -51,12 +51,20 @@ export default function AuthenticatedLayout({ header, children }) {
         <div className="AuthenticatedLayout">
             <header className="main-header">
                 <nav className="main-navigation">
-                    <div className="flex h-16 justify-between">
+                    <div className="menu-container">
                         <div className="flex grow">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                                 </Link>
+                            </div>
+
+                            <div className="flex sm:hidden grow mx-4 justify-center">
+                                {navigation.map(({ content, active, ...rest }) => (
+                                    active 
+                                        ? <h1 className="page-title">{content}</h1>
+                                        : null
+                                ))}
                             </div>
 
                             <div className="hidden grow sm:mx-2 sm:flex sm:gap-2 lg:mx-4 lg:gap-6">
@@ -96,11 +104,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link
-                                            href={route('profile.edit')}
-                                        >
-                                            Profile
-                                        </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"
@@ -169,7 +172,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             ))}
                         </div>
 
-                        <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
+                        <div className="border-y border-gray-200 pb-1 pt-4 dark:border-gray-600">
                             <div className="px-4">
                                 <div className="text-base font-medium text-gray-800 dark:text-gray-200">
                                     {user.name}
@@ -180,9 +183,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
 
                             <div className="mt-3 space-y-1">
-                                <ResponsiveNavLink href={route('profile.edit')}>
-                                    Profile
-                                </ResponsiveNavLink>
                                 <ResponsiveNavLink
                                     method="post"
                                     href={route('logout')}
