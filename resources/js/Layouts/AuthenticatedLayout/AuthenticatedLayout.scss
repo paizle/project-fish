@@ -23,7 +23,7 @@
         grid-area: header;
         background-color: var(--background-color);
 
-        @apply px-0 sm:px-2 lg:px-6;
+        @apply px-0 sm:px-2 lg:px-6 shadow;
 
         @screen sm {
             border-radius: 0.35rem;
