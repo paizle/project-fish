@@ -26,16 +26,12 @@
             transition: 300ms ease-in;
             button.go, button.close {
                 position: absolute;
-                top: 1.5em;
+                top: 1.9em;
                 //border: 2px solid var(--icon-color);
                 border-radius: 50%;
-                width: 2em;
-                height: 2em;
-                background-color: var(--icon-color);
-                color: var(--background-color);
-                svg {
-                    transform: scale(1.5);
-                }
+                width: 1.75em;
+                height: 1.75em;
+                color: var(--icon-color);
             }
             button.go {
                 right: 0;

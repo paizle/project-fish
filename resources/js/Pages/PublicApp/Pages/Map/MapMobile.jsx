@@ -6,8 +6,8 @@ import { InternalLink, useInternalRouting } from '../../Components/InternalRoute
 import { pathSelectorToLocationName } from '@/Components/NewBrunswickMap/NewBrunswickMap';
 import NewBrunswickMapMobile from '@/Components/NewBrunswickMap/NewBrunswickMapMobile';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { ArrowRightCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
+
 export default function MapMobile({ locations }) {
     const internalRouting = useInternalRouting()
     const containerRef = useRef(null);
@@ -84,7 +84,7 @@ export default function MapMobile({ locations }) {
 
                 <div className="locations" ref={locationTitlesRef}>
                     <button className="close" onClick={closeLocation}>
-                        <FontAwesomeIcon icon={faXmark} />
+                        <XCircleIcon />
                     </button>
                     <ul>
                         {Object.keys(pathSelectorToLocationName).map((key) => (
@@ -126,7 +126,7 @@ export default function MapMobile({ locations }) {
                                 ].name,
                             }}
                         >
-                            <FontAwesomeIcon icon={faArrowRight} />
+                            <ArrowRightCircleIcon />
                         </InternalLink>
                     }
                 </div>
