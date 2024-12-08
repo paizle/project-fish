@@ -6,6 +6,7 @@ export default function NewBrunswickMapMobile({
     containerRef = null,
     onTouchLocation,
 }) {
+
     const containerRefLocal = containerRef || React.createRef(null);
 
     const useTapHook = useTap();

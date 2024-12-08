@@ -21,13 +21,11 @@ export function InternalRouterProvider({ config, children = {} }) {
         setLoading(true);
     };
 
-    const updateBreadCrumb = (position, internalLinkOptions) => {
+    const updateBreadCrumb = (position, internalLinkOptions = null) => {
         setBreadCrumb((breadCrumb) => {
             let newBreadCrumb = JSON.parse(JSON.stringify(breadCrumb));
             newBreadCrumb = newBreadCrumb.slice(0, position);
-
             newBreadCrumb[position] = internalLinkOptions;
-
             return newBreadCrumb;
         });
     };
