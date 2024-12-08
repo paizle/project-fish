@@ -1,16 +1,24 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './MapMobile.scss';
 
-import { InternalLink } from '../../Components/InternalRouter/InternalRouter';
+import { InternalLink, useInternalRouting } from '../../Components/InternalRouter/InternalRouter';
 
 import { pathSelectorToLocationName } from '@/Components/NewBrunswickMap/NewBrunswickMap';
 import NewBrunswickMapMobile from '@/Components/NewBrunswickMap/NewBrunswickMapMobile';
 
-export default function Map({ locations, isPortrait }) {
-    const containerRef = React.useRef(null);
-    const locationTitlesRef = React.useRef(null);
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
+export default function MapMobile({ locations }) {
+    const internalRouting = useInternalRouting()
+    const containerRef = useRef(null);
+    const locationTitlesRef = useRef(null);
 
-    const [selectedLocation, setSelectedLocation] = React.useState(false);
+    const [selectedPathId, setSelectedPathId] = useState(null);
+    const selectedPathIdRef = useRef(selectedPathId);
+
+    useEffect(() => {
+        selectedPathIdRef.current = selectedPathId;
+    }, [selectedPathId]);
 
     const locationsIndexed = locations.reduce((a, e) => {
         a[e.name] = e;
@@ -27,8 +35,25 @@ export default function Map({ locations, isPortrait }) {
         onTouchLocation(null, '');
     }
 
-    function onTouchLocation(event, pathId) {
-        console.log('test');
+    const onTouchLocation = (event, pathId) => {
+
+        if (selectedPathIdRef.current === pathId) {
+            const location = getLocationFromPathId(pathId)
+            internalRouting.setView('location', {
+                id: location.id,
+                breadCrumb: {
+                    position: 1,
+                    label: location.name,
+                }
+            })
+            
+            internalRouting.updateBreadCrumb(1, {
+                        name: 'location',
+                        params: {id: location.id},
+                        content: location.name,
+                    });
+                
+        }
 
         locationTitlesRef.current
             .querySelectorAll('.highlighted')
@@ -40,16 +65,16 @@ export default function Map({ locations, isPortrait }) {
                 `[data-path-id=${pathId}]`,
             );
             title.classList.add('highlighted');
-            setSelectedLocation(true);
+            setSelectedPathId(pathId)
         } else {
             locationTitlesRef.current.classList.remove('selected');
-            setSelectedLocation(false);
+            setSelectedPathId(null)
         }
     }
 
     return (
         <div
-            className={`MapMobile portrait ${selectedLocation ? 'selected-location' : null}`}
+            className={`MapMobile portrait ${selectedPathId ? 'selected-location' : ''}`}
         >
             <div className="container">
                 <NewBrunswickMapMobile
@@ -59,7 +84,7 @@ export default function Map({ locations, isPortrait }) {
 
                 <div className="locations" ref={locationTitlesRef}>
                     <button className="close" onClick={closeLocation}>
-                        X
+                        <FontAwesomeIcon icon={faXmark} />
                     </button>
                     <ul>
                         {Object.keys(pathSelectorToLocationName).map((key) => (
@@ -88,6 +113,22 @@ export default function Map({ locations, isPortrait }) {
                             </li>
                         ))}
                     </ul>
+                    {selectedPathId && <InternalLink
+                            className="go"
+                            name="location"
+                            params={{
+                                id: getLocationFromPathId(selectedPathId).id,
+                            }}
+                            breadCrumb={{
+                                position: 1,
+                                label: locationsIndexed?.[
+                                    pathSelectorToLocationName[selectedPathId]
+                                ].name,
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faArrowRight} />
+                        </InternalLink>
+                    }
                 </div>
             </div>
         </div>
