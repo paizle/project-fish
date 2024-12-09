@@ -12,10 +12,12 @@
         'header'
         'main';
 
+
     @screen sm {
         padding: 0.5rem;
-        display: block;
+        //display: block;
     }
+    
 
     @apply mx-auto max-w-7xl;
 

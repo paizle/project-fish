@@ -3,6 +3,7 @@
 /public/hot
 /public/storage
 /public/build
+/public/storybook-static
 /storage/*.key
 /storage/pail
 /vendor
