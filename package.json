@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && storybook build && mv ./storybook-static ./public/storybook",
     "dev": "vite",
     "lint": "eslint resources/js --ext .js,.jsx --ignore-path .gitignore --fix",
     "storybook": "storybook dev -p 6006",

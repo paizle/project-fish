@@ -35,25 +35,32 @@ export default function DataTable({
 
 function renderTBody(children, data, schema, uniqueKey) {
     switch (typeof children) {
-        case 'function':
-            return data.map((row) => children(row));
+        case 'function': return data.map((row, index) => children(row, index))
 
         default:
-            return data.map((row) => (
-                <tr key={row[uniqueKey]}>
-                    {Object.keys(schema).map((column) => {
-                        switch (typeof schema[column]) {
-                            case 'function':
-                                return (
-                                    <td key={column}>{schema[column](row)}</td>
-                                );
-                            default:
-                                return schema[column] ? (
-                                    <td key={column}>{row[schema[column]]}</td>
-                                ) : null;
-                        }
-                    })}
-                </tr>
-            ));
+            return data.map((row, index) => {
+                const key = typeof schema[uniqueKey] === "function" 
+                    ? schema[uniqueKey](row, index) 
+                    : row[uniqueKey]
+                    
+                return (
+                    <tr key={key}>
+                        {Object.keys(schema).map((column) => {
+                            switch (typeof schema[column]) {
+                                case 'function':
+                                    return (
+                                        <td key={column}>{schema[column](row, index)}</td>
+                                    )
+                                default:
+                                    return schema[column] 
+                                        ? (
+                                            <td key={column}>{row[schema[column]]}</td>
+                                        ) 
+                                        : null;
+                            }
+                        })}
+                    </tr>
+                )}
+            );
     }
 }
