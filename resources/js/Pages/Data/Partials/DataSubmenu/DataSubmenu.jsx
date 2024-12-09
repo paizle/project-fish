@@ -1,4 +1,4 @@
-import NavLink from '@/Components/NavLink';
+import NavLink from '@/Components/NavLink/NavLink';
 
 export default function DataSubmenu() {
     return (

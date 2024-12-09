@@ -9,7 +9,7 @@ import {
 import { pathSelectorToLocationName } from '@/Components/NewBrunswickMap/NewBrunswickMap';
 import NewBrunswickMapWeb from '@/Components/NewBrunswickMap/NewBrunswickMapWeb';
 
-export default function Map({ locations }) {
+export default function MapWeb({ locations }) {
     const containerRef = React.useRef(null);
     const locationTitlesRef = React.useRef(null);
 

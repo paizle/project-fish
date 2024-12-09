@@ -1,27 +1,27 @@
 @use '/resources/css/app.scss';
 
-
 .StyleGuide {
     .colors {
         .color {
             display: flex;
             align-items: center;
-            gap: .5em;
+            gap: 0.5em;
 
             .color-box {
                 display: inline-block;
                 width: 1em;
                 height: 1em;
-                border: 1px solid var(--headers-tabs-accents);
+                border: 1px solid var(--border-color);
             }
         }
     }
     dl {
-        dt, dd {
+        dt,
+        dd {
             display: inline;
         }
         dd {
-            margin-left: .5em;
+            margin-left: 0.5em;
             &::after {
                 content: '';
                 display: block;

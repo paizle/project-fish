@@ -27,7 +27,7 @@
         tr {
             &:nth-child(odd) {
                 td {
-                    background-color: var(--contrast-with-white);
+                    background-color: var(--highlight-color-transparent);
                 }
             }
             td:first-child {

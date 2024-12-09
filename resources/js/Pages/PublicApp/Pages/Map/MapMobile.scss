@@ -18,23 +18,28 @@
 
     &.portrait {
         flex-direction: column;
-        .NewBrunswickMap {
-        }
         .locations {
             position: absolute;
             z-index: 11;
             bottom: 0;
             transform: translateY(100%);
             transition: 300ms ease-in;
-            button.close {
+            button.go, button.close {
                 position: absolute;
-                top: 1.5em;
-                right: 0;
-                border: 1px solid black;
+                top: 1.9em;
+                //border: 2px solid var(--icon-color);
                 border-radius: 50%;
-                width: 2em;
-                height: 2em;
+                width: 1.75em;
+                height: 1.75em;
+                color: var(--icon-color);
             }
+            button.go {
+                right: 0;
+            } 
+            button.close {
+                left: 0;
+            }
+            
             &.selected {
                 transform: translateY(0);
             }

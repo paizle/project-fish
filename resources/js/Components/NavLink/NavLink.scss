@@ -1,0 +1,16 @@
+.NavLink {
+    text-decoration: none;
+    color: var(--heading-color);
+    border-color: transparent;
+    border-bottom: 3px solid transparent;
+    position: relative;
+    padding-bottom: 0px;
+    transition: color 300ms ease-in-out;
+    text-align: center;
+    &.active {
+        border-color: var(--highlight-color);
+    }
+    &:hover:not(.active) {
+        border-bottom: 2px solid var(--hover-color);
+    }
+}

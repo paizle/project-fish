@@ -4,59 +4,43 @@
 
 
 
-$headers-tabs-accents: #1A2B48;          
-$highlights-icons: #70B9B0;
-$background: #FFFFFF;                  
-$card-backgrounds-dividers:#F4F4F4;
-$text-secondary-elements: #7D8799;
-$hover-effects: #34B8D9;
-$highlight-actionable: #F4D03F;
+$heading-color: #1A2B48; // headers, tabs, and accents
+$icon-color: #70B9B0; // highlights and icons
+$background-color: #FFFFFF; // background
+$card-background-color:#F4F4F4; //card backgrounds and dividers
+$text-color: #7D8799; // text or secondary elements
+$hover-color: #34B8D9; // hover-effects
+$actionable-color: #F4D03F; // highlight actionable items
 
 :root {
 
-    --headers-tabs-accents: #{$headers-tabs-accents};
-    --highlights-icons: #{$highlights-icons};
-    --background: #{$background};
-    --card-backgrounds-dividers: #{$card-backgrounds-dividers};
-    --text-secondary-elements: #{$text-secondary-elements};
-    --hover-effects: #{$hover-effects};
-    --highlight-actionable: #{$highlight-actionable};
-    --highlight-actionable-transparent: #{rgba($highlight-actionable, .7)};
+    --heading-color: #{$heading-color};
+    --border-color: var(--heading-color);
 
-    --rgb-off-white: 244, 244, 244;
-    --rbg-overlays: var(--rgb-off-white);
-    --off-white: rgb(--var(var(--rgb-off-white)));
+    --icon-color: #{$icon-color};
+    --highlight-color: #{$icon-color};
+    --highlight-color-transparent: #{rgba($icon-color, .2)};
+
+    --background-color: #{$background-color};
+
+    --card-background-color: #{$card-background-color};
+    --divider-color: var(--card-background-color);
+    --off-white: var(--card-background-color);
+
+    --text-color: #{$text-color};
+
+    --hover-color: #{$hover-color};
+    --hover-color-transparent: #{rgba($hover-color, .2)};
+
+    --actionable-color: #{$actionable-color};
+    --actionable-color-translucent: #{rgba($actionable-color, .7)};
+
     --yellow-highlighter: 253, 255, 50;
+    
     --box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
         rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
         rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
-    --rgb-highlight: 112, 185, 176;
-    --highlight: rgb(var(--rgb-highlight));
-    --rgb-white: 255, 255, 255;
-    --white: rgb(var(--rgb-white));
-    --rgb-grey: #f4f4f4;
-    --grey: rgb(var(--rgb-grey));
-    --rgb-text-soft: 125, 135, 153;
-    --text-soft: rgb(var(--rgb-text-soft));
-    --rgb-hover: 52, 184, 217;
-    --hover: rgb(var(--rgb-hover));
-    --rgb-highlight-actionable: 244, 208, 63;
-
-    --contrast-with-white-rgb: 235, 243, 242;
-    --contrast-with-white: rgb(var(--contrast-with-white-rgb));
-
-    --primary-text-rgb: 26, 43, 72;
-    --secondary-text-rgb: 125, 135, 153;
-    --primary-text-color: rgb(var(--primary-text-rgb));
-    --secondary-text-color: rgb(var(--secondary-text-rgb));
-
-
-    --text-heading: var(--headers-tabs-accents);
-
-    --icon-color-rgb: 112, 185, 176;
-    --icon-color: rgb(var(--icon-color-rgb));
-
-    --overlay-color: var(--off-white);
+    
 }
 
 a {
@@ -67,29 +51,40 @@ a {
 }
 
 input::autofill {
-    background-color: var(--highlight-actionable);
+    background-color: var(--actionable-color);
 }
 
 html,
-body {
+body,
+#app {
     margin: 0;
     padding: 0;
 }
 
+html,
 body {
-    color: var(--primary-text-color);
-    font-family: 'Poppins', sans-serif;
+    height: 100vh;
 }
 
-.light-text {
+#app {
+    height: 100%;
+}
+
+body {
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--card-background-color);
+}
+
+@mixin light-text {
     font-weight: 400;
 }
 
-.bold-text {
+@mixin bold-text {
     font-weight: 700;
 }
 
-.regular-text {
+@mixin regular-text {
     font-weight: 500;
 }
 
@@ -100,7 +95,7 @@ h4,
 h5,
 h6,
 label {
-    color: var(--text-heading);
+    color: var(--heading-color);
 }
 
 h1,
@@ -109,85 +104,41 @@ h3,
 h4,
 h5,
 h6 {
-    @apply my-4;
+   
 }
 
 h1 {
     font-size: 2em;
-    @apply bold-text;
+    @include bold-text;
 }
 
 h2 {
     font-size: 1.75em;
-    @apply bold-text;
+    @include bold-text;
 }
 
 h3 {
     font-size: 1.5em;
-    @apply bold-text;
+    @include bold-text;
 }
 
 h4 {
     font-size: 1.25em;
-    @apply regular-text;
+    @include regular-text;
+}
+
+h5 {
+    font-size: 1em;
+    @include light-text;
 }
 
 label {
-    @apply regular-text;
+    @include regular-text;
 }
-
-.main-navigation {
-    background-color: var(--white);
-    border-bottom: 1px solid var(--off-white);
-
-    .NavLink {
-        text-decoration: none;
-        color: var(--text-heading);
-        border-color: transparent;
-        &.active {
-            border-color: var(--highlight);
-        }
-        &:hover {
-            border-color: var(--hover);
-        }
-    } 
-}
-
-.sub-navigation {
-    overflow-x: auto;
-    overflow-y: hidden;
-    display: flex;
-    gap: 1em;
-    padding: 0 0 0.5em 0;
-    margin: 0 1em;
-
-    @apply -my-4 md:my-0 md:mx-4;
-
-    > * {
-        flex-shrink: 0;
-    }
-    
-    .NavLink {
-        display: inline-block;
-        padding: 1.5em 0;
-        text-decoration: none;
-        color: var(--text-heading);
-        border-color: transparent;
-        &.active {
-            border-color: var(--highlight);
-        }
-        &:hover {
-            border-color: var(--hover);
-        }
-    
-    } 
-}
-
-
 
 .table-heading {
-    color: var(--text-heading);
-    @apply bold-text;
+    color: var(--heading-color);
+    @include bold-text;
 }
 
 .button {
@@ -195,7 +146,9 @@ label {
 }
 
 .box {
-    @apply rounded-md bg-white p-4 shadow sm:p-8 dark:bg-gray-800;
+    @apply bg-white p-4 shadow sm:p-8;
+    background-color: var(--background-color);
+    border-radius: .35rem;
 }
 
 .gradient-background {

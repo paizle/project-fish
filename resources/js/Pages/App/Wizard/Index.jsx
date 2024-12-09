@@ -1,6 +1,6 @@
 import './Wizard.scss';
 
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 import WizardCard from '@/Components/WizardCard/WizardCard';

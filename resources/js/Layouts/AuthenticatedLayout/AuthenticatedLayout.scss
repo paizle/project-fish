@@ -1,0 +1,89 @@
+@use '/resources/css/app.scss';
+
+.AuthenticatedLayout {
+    background-color: var(--card-background-color);
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr;
+    
+    grid-template-areas:
+        'header'
+        'main';
+
+    @screen sm {
+        padding: 0.5rem;
+        display: block;
+    }
+
+    @apply mx-auto max-w-7xl;
+
+    header.main-header {
+        grid-area: header;
+        background-color: var(--background-color);
+
+        @apply px-0 sm:px-2 lg:px-6 shadow;
+
+        @screen sm {
+            border-radius: 0.35rem;
+        }
+
+        .menu-container {
+            padding: 0.25em 0;
+            margin: 0 .75em;
+            @screen sm {
+                height: 4rem;
+            }
+            @apply flex justify-between;
+
+            .page-title {
+                font-size: 1.25em;
+                margin: 0;
+                align-self: center;
+            }
+
+            nav.main-navigation {
+                background-color: var(--background-color);
+                border-bottom: 1px solid var(--divider-color);
+                @apply mx-auto max-w-7xl px-4 lg:px-8;
+            }
+        }
+
+
+        .sub-navigation {
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            gap: 1em;
+            padding: 0 0 0.5em 0;
+            margin: 0 1em;
+
+            @screen sm {
+                padding: 0;
+                height: 3.5rem;
+                .NavLink {
+                    padding: 1.25em 0;
+                }
+            }
+
+            @screen md {
+                margin: 0 0.5rem;
+            }
+
+            .NavLink {
+                flex-shrink: 0;
+                padding: .5em 0;
+            }
+        }
+    }
+
+    main {
+        grid-area: main;
+        overflow-y: auto;
+        @apply my-2;
+        .box {
+            overflow-x: auto;
+        }
+    }
+}

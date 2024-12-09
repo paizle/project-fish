@@ -21,7 +21,7 @@ export default function PieChartCompleteness({ complete, incomplete }) {
     });
 
     return (
-        <div style={{ height: 300, width: 500, textAlign: 'center' }}>
+        <div style={{ height: 300, width: '100%', textAlign: 'center' }}>
             <ResponsivePie
                 data={data}
                 margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
@@ -72,7 +72,7 @@ export default function PieChartCompleteness({ complete, incomplete }) {
 
 function renderTooltip({ datum }) {
     return (
-        <div className="rounded-md bg-white p-4 shadow">
+        <div className="rounded-md bg-white p-2 shadow opacity-90">
             <strong>{datum.id}</strong>
             {datum.label ? (
                 <>
