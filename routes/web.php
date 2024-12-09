@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/data-health', [AdminController::class, 'dataHealth'])->name('admin.data-health');
     Route::get('/admin/style-guide', [AdminController::class, 'styleGuide'])->name('admin.style-guide');
+    Route::get('/admin/storybook', function () {
+        return Inertia::render('Admin/Storybook/Storybook');
+    })->name('admin.storybook');
 });
 
 Route::middleware('auth')->group(function () {

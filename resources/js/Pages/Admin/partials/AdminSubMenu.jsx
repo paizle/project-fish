@@ -17,6 +17,13 @@ export default function AdminSubMenu() {
             >
                 Style Guide
             </NavLink>
+
+            <NavLink
+                href={route('admin.storybook')}
+                active={route().current('admin.storybook')}
+            >
+                Storybook
+            </NavLink>
         </div>
     );
 }

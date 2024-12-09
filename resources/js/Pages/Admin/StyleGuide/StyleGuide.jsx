@@ -83,15 +83,6 @@ export default function StyleGuide() {
                     <section>
                         <h3>Icon sets:</h3>
                         <dl>
-                            <dt>Font Awesome:</dt>
-                            <dd>
-                                <a
-                                    target="_blank"
-                                    href="https://fontawesome.com/v6/search?o=r&m=free"
-                                >
-                                    https://fontawesome.com/v6/search?o=r&m=free
-                                </a>
-                            </dd>
                             <dt>Hero Icons:</dt>
                             <dd>
                                 <a
@@ -99,27 +90,6 @@ export default function StyleGuide() {
                                     href="https://heroicons.com/"
                                 >
                                     https://heroicons.com
-                                </a>
-                            </dd>
-                            <dt>Feather Icons:</dt>
-                            <dd>
-                                <a
-                                    target="_blank"
-                                    href="https://feathericons.com/"
-                                >
-                                    https://feathericons.com/
-                                </a>
-                            </dd>
-                            <dt>Tabler Icons:</dt>
-                            <dd>
-                                <a href="https://tabler.io/icons">
-                                    https://tabler.io/icons
-                                </a>
-                            </dd>
-                            <dt>Bootstrap Icons</dt>
-                            <dd>
-                                <a href="https://icons.getbootstrap.com/">
-                                    https://icons.getbootstrap.com/
                                 </a>
                             </dd>
                         </dl>

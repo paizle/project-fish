@@ -11,6 +11,6 @@
         border-color: var(--highlight-color);
     }
     &:hover:not(.active) {
-        border-color: var(--hover-color);
+        border-bottom: 2px solid var(--hover-color);
     }
 }
