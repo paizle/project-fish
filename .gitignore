@@ -1,8 +1,12 @@
 /.phpunit.cache
+/node_modules
 /public/hot
 /public/storage
+/public/build
+/public/storybook-static
 /storage/*.key
 /storage/pail
+/vendor
 .env
 .env.backup
 .env.production
@@ -19,3 +23,4 @@ yarn-error.log
 /.zed
 
 *storybook.log
+/storybook-static
