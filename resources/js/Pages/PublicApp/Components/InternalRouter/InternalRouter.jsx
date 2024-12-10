@@ -1,6 +1,7 @@
 import './InternalRouter.scss';
-
-import React from 'react';
+import React from 'react'
+import { Link } from '@inertiajs/react'
+import { HomeIcon } from '@heroicons/react/24/solid'
 
 const InternalRouterContext = React.createContext();
 
@@ -60,6 +61,7 @@ export function BreadCrumb() {
 
     return (
         <div className={`BreadCrumb depth-${routing.breadCrumb.length}`}>
+            <Link href="/"><HomeIcon /></Link>
             {routing.breadCrumb.map((item, index) => (
                 <div>
                     <InternalLink

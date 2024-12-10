@@ -43,6 +43,24 @@ $actionable-color: #F4D03F; // highlight actionable items
     
 }
 
+.heading-color {
+    color: var(--heading-color);
+}
+
+.icon-color {
+    color: var(--icon-color);
+}
+.highlight-color {
+    color: var(--highlight-color);
+}
+.highlight-color-transparent {
+    color: var(--highlight-color-transparent);
+}
+
+.actionable-color {
+    color: var(--actionable-color);
+}
+
 a {
     text-decoration: underline;
     &:hover {
@@ -70,12 +88,6 @@ body {
     height: 100%;
 }
 
-body {
-    color: var(--text-color);
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--card-background-color);
-}
-
 @mixin light-text {
     font-weight: 400;
 }
@@ -87,6 +99,15 @@ body {
 @mixin regular-text {
     font-weight: 500;
 }
+
+body {
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--card-background-color);
+    @include regular-text;
+}
+
+
 
 h1,
 h2,
@@ -108,22 +129,22 @@ h6 {
 }
 
 h1 {
-    font-size: 2em;
-    @include bold-text;
-}
-
-h2 {
-    font-size: 1.75em;
-    @include bold-text;
-}
-
-h3 {
     font-size: 1.5em;
     @include bold-text;
 }
 
-h4 {
+h2 {
+    font-size: 1.3em;
+    @include bold-text;
+}
+
+h3 {
     font-size: 1.25em;
+    @include bold-text;
+}
+
+h4 {
+    font-size: 1.1em;
     @include regular-text;
 }
 

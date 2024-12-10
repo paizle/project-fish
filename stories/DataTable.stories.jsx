@@ -4,12 +4,6 @@ import { uniqueId } from 'lodash';
 export default {
   title: 'Example/DataTable',
   component: DataTable,
-  argTypes: {
-    schema: {
-      description: 'Schema for the table',
-      control: { type: null }, // Disables controls since it contains functions
-    },
-  },
 };
 
 const Template = (args) => <DataTable {...args} />;

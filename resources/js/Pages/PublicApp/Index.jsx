@@ -9,12 +9,10 @@ import InternalRouter, {
 } from './Components/InternalRouter/InternalRouter';
 
 import Map from './Pages/Map/Map';
-
 import Location from './Pages/Location/Location';
 import Water from './Pages/Water/Water';
 
 export default function Index({ locations }) {
-    //const test = route('publicApp.limitsByLocation.rest')
 
     const internalRouterConfig = {
         defaultViewName: 'map',

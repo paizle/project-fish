@@ -11,6 +11,7 @@
         border-color: var(--highlight-color);
     }
     &:hover:not(.active) {
+        padding-bottom: 1px;
         border-bottom: 2px solid var(--hover-color);
     }
 }
