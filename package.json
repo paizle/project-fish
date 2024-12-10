@@ -2,11 +2,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build && storybook build && rm -rf ./public/storybook-static && mv ./storybook-static ./public/storybook-static",
+    "build": "vite build",
     "dev": "vite",
     "lint": "eslint resources/js --ext .js,.jsx --ignore-path .gitignore --fix",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build && rm -rf ./public/storybook-static && mv ./storybook-static ./public/storybook-static"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",

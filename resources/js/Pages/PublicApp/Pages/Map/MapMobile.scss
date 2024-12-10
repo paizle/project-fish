@@ -24,6 +24,12 @@
             bottom: 0;
             transform: translateY(100%);
             transition: 300ms ease-in;
+
+            &.selected {
+                padding-bottom: 5em;
+                transform: translateY(0);
+            }
+
             button.go, button.close {
                 position: absolute;
                 top: 1.9em;
@@ -40,9 +46,6 @@
                 left: 0;
             }
             
-            &.selected {
-                transform: translateY(0);
-            }
             ul li {
                 display: none;
                 &.highlighted {
@@ -60,6 +63,7 @@
             max-height: 100%;
         }
     }
+
     .locations {
         transition: 300ms ease-in;
         padding: 1em;
