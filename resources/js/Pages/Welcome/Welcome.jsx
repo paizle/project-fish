@@ -24,20 +24,18 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     <h1 className="py-8">Please Select</h1>
 
                     <div className="selection">
+                        <Link href="/public-app">
+                            <div className="box"> 
+                                <MapIcon className="icon-color"  />
+                                <h3>Public App</h3>
+                            </div>
+                        </Link>
+                        <div className="text-center animate-bounce">- or -</div>
                         <Link href="/login">
                             <div className="box">
                                 
                                 <UserIcon className="icon-color" />
                                 <h3>Admin</h3>
-                            </div>
-                        </Link>
-
-                        <div className="text-center animate-bounce">- or -</div>
-
-                        <Link href="/public-app">
-                            <div className="box"> 
-                                <MapIcon className="icon-color"  />
-                                <h3>Public App</h3>
                             </div>
                         </Link>
                     </div>

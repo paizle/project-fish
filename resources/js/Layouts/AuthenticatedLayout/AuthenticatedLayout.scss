@@ -15,7 +15,7 @@
 
     @screen sm {
         padding: 0.5rem;
-        //display: block;
+        display: block;
     }
     
 
@@ -25,14 +25,14 @@
         grid-area: header;
         background-color: var(--background-color);
 
-        @apply px-0 sm:px-2 lg:px-6 shadow;
+        @apply px-0 sm:px-2  shadow;
 
         @screen sm {
             border-radius: 0.35rem;
         }
 
         .menu-container {
-            padding: 0.25em 0;
+            padding: 0;
             margin: 0 .75em;
             @screen sm {
                 height: 4rem;

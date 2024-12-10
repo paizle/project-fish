@@ -61,7 +61,9 @@ export function BreadCrumb() {
 
     return (
         <div className={`BreadCrumb depth-${routing.breadCrumb.length}`}>
-            <Link href="/"><HomeIcon /></Link>
+            <Link href="/" className="icon">
+                <HomeIcon />
+            </Link>
             {routing.breadCrumb.map((item, index) => (
                 <div>
                     <InternalLink
