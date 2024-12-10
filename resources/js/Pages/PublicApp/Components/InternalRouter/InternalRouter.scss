@@ -42,10 +42,13 @@
                 border-bottom: 1px solid transparent;
             }
         }
-
+    }
+    
+    a.icon {
+        display: flex;
+        align-items: center;
         svg {
-            height: 1.25em;
-            margin-top: 2px;
+            height: 1.1em;
             color: var(--heading-color);
         }
     }

@@ -5,8 +5,22 @@
     "src": ".storybook/preview.js",
     "isDynamicEntry": true
   },
-  "_DocsRenderer-CFRXHY34-lh7_yKLI.js": {
-    "file": "assets/DocsRenderer-CFRXHY34-lh7_yKLI.js",
+  "_DataTable-!~{00j}~.js": {
+    "file": "assets/DataTable-gMBk139R.css",
+    "src": "_DataTable-!~{00j}~.js"
+  },
+  "_DataTable-DkVh-kfm.js": {
+    "file": "assets/DataTable-DkVh-kfm.js",
+    "name": "DataTable",
+    "imports": [
+      "_jsx-runtime-CkxqCPlQ.js"
+    ],
+    "css": [
+      "assets/DataTable-gMBk139R.css"
+    ]
+  },
+  "_DocsRenderer-CFRXHY34-Bu7sol8J.js": {
+    "file": "assets/DocsRenderer-CFRXHY34-Bu7sol8J.js",
     "name": "DocsRenderer-CFRXHY34",
     "isDynamicEntry": true,
     "imports": [
@@ -22,6 +36,21 @@
       "node_modules/storybook/core/components/index.js",
       "node_modules/@storybook/blocks/dist/Color-F6OSRLHC.mjs",
       "node_modules/@mdx-js/react/index.js"
+    ]
+  },
+  "_NewBrunswickMap-!~{00k}~.js": {
+    "file": "assets/NewBrunswickMap-3smiN2lx.css",
+    "src": "_NewBrunswickMap-!~{00k}~.js"
+  },
+  "_NewBrunswickMap-CkbF8Y0p.js": {
+    "file": "assets/NewBrunswickMap-CkbF8Y0p.js",
+    "name": "NewBrunswickMap",
+    "imports": [
+      "_jsx-runtime-CkxqCPlQ.js",
+      "_index-DJO9vBfz.js"
+    ],
+    "css": [
+      "assets/NewBrunswickMap-3smiN2lx.css"
     ]
   },
   "_chunk-XP5HYGXS-BGCqD1aY.js": {
@@ -58,13 +87,15 @@
     ]
   },
   "iframe.html": {
-    "file": "assets/iframe-DytifT2C.js",
+    "file": "assets/iframe-BdjC7PrS.js",
     "name": "iframe",
     "src": "iframe.html",
     "isEntry": true,
     "dynamicImports": [
       "stories/DataTable.stories.jsx",
       "stories/DataTable.stories.jsx",
+      "stories/NewBrunswickMap/NewBrunswickMap.stories.jsx",
+      "stories/NewBrunswickMap/NewBrunswickMapWeb.stories.jsx",
       "node_modules/@storybook/react/dist/entry-preview.mjs",
       "node_modules/@storybook/react/dist/entry-preview-docs.mjs",
       "node_modules/@storybook/addon-essentials/dist/docs/preview.mjs",
@@ -103,7 +134,7 @@
     ]
   },
   "node_modules/@storybook/addon-essentials/dist/docs/preview.mjs": {
-    "file": "assets/preview-DbGiREt9.js",
+    "file": "assets/preview-yjGRQ4dQ.js",
     "name": "preview",
     "src": "node_modules/@storybook/addon-essentials/dist/docs/preview.mjs",
     "isDynamicEntry": true,
@@ -111,7 +142,7 @@
       "iframe.html"
     ],
     "dynamicImports": [
-      "_DocsRenderer-CFRXHY34-lh7_yKLI.js"
+      "_DocsRenderer-CFRXHY34-Bu7sol8J.js"
     ]
   },
   "node_modules/@storybook/addon-essentials/dist/highlight/preview.mjs": {
@@ -148,12 +179,12 @@
     "isDynamicEntry": true
   },
   "node_modules/@storybook/blocks/dist/Color-F6OSRLHC.mjs": {
-    "file": "assets/Color-F6OSRLHC-BmQ-CePp.js",
+    "file": "assets/Color-F6OSRLHC-Dl1BYpTH.js",
     "name": "Color-F6OSRLHC",
     "src": "node_modules/@storybook/blocks/dist/Color-F6OSRLHC.mjs",
     "isDynamicEntry": true,
     "imports": [
-      "_DocsRenderer-CFRXHY34-lh7_yKLI.js",
+      "_DocsRenderer-CFRXHY34-Bu7sol8J.js",
       "_index-DJO9vBfz.js",
       "iframe.html",
       "_jsx-runtime-CkxqCPlQ.js",
@@ -185,7 +216,7 @@
     ]
   },
   "node_modules/@storybook/react/dist/entry-preview.mjs": {
-    "file": "assets/entry-preview-Ciy6pWKu.js",
+    "file": "assets/entry-preview-DfohHfSH.js",
     "name": "entry-preview",
     "src": "node_modules/@storybook/react/dist/entry-preview.mjs",
     "isDynamicEntry": true,
@@ -200,12 +231,12 @@
     ]
   },
   "node_modules/storybook/core/components/index.js": {
-    "file": "assets/index-CRfUX8wL.js",
+    "file": "assets/index-CMjZjC8I.js",
     "name": "index",
     "src": "node_modules/storybook/core/components/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "_DocsRenderer-CFRXHY34-lh7_yKLI.js",
+      "_DocsRenderer-CFRXHY34-Bu7sol8J.js",
       "iframe.html",
       "_index-DJO9vBfz.js",
       "_jsx-runtime-CkxqCPlQ.js",
@@ -216,16 +247,37 @@
     ]
   },
   "stories/DataTable.stories.jsx": {
-    "file": "assets/DataTable.stories-BF_4c0_4.js",
+    "file": "assets/DataTable.stories-BGf80zuj.js",
     "name": "DataTable.stories",
     "src": "stories/DataTable.stories.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_jsx-runtime-CkxqCPlQ.js",
+      "_DataTable-DkVh-kfm.js",
       "_index-DJO9vBfz.js"
-    ],
-    "css": [
-      "assets/DataTable-DAYhJm_z.css"
+    ]
+  },
+  "stories/NewBrunswickMap/NewBrunswickMap.stories.jsx": {
+    "file": "assets/NewBrunswickMap.stories-B1CLOxb6.js",
+    "name": "NewBrunswickMap.stories",
+    "src": "stories/NewBrunswickMap/NewBrunswickMap.stories.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jsx-runtime-CkxqCPlQ.js",
+      "_DataTable-DkVh-kfm.js",
+      "_NewBrunswickMap-CkbF8Y0p.js",
+      "_index-DJO9vBfz.js"
+    ]
+  },
+  "stories/NewBrunswickMap/NewBrunswickMapWeb.stories.jsx": {
+    "file": "assets/NewBrunswickMapWeb.stories-DBYWIwID.js",
+    "name": "NewBrunswickMapWeb.stories",
+    "src": "stories/NewBrunswickMap/NewBrunswickMapWeb.stories.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jsx-runtime-CkxqCPlQ.js",
+      "_index-DJO9vBfz.js",
+      "_NewBrunswickMap-CkbF8Y0p.js"
     ]
   }
 }

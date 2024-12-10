@@ -2,16 +2,14 @@
 
 .PublicAppLayout {
     height: 100%;
-
-    background-color: var(--background-color);
-
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
-
     grid-template-areas:
         'header'
         'main';
+
+    background-color: var(--background-color);
 
     .PublicAppMenu {
         @apply border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800;
