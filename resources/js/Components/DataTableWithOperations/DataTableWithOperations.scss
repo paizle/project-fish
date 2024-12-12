@@ -1,6 +1,6 @@
 @use '/resources/css/app.scss';
 
-.DataTable {
+.DataTableWithOperations {
     width: 100%;
     position: relative;
 
@@ -64,14 +64,14 @@
                     display: flex;
                     flex-direction: column-reverse;
                     flex-wrap: wrap;
-
+                    
                     @screen sm {
                         display: block;
                         .action-container {
                             float: right;
                             padding-top: 2px;
                             button {
-                                font-size: 1.1em !important;
+                                font-size: 1.15em !important;
                                 float: right;
                             }
                         }
@@ -81,21 +81,21 @@
                         display: inline-flex;
                         flex-wrap: wrap;
                         justify-content: left;
+                        
                         button {
                             font-size: 1.5em;
                             display: inline-flex;
                             justify-content: center;
                             width: 1.2em;
                             height: 1.2em;
+                            color: var(--highlight-color-translucent);
+                            &:hover {
+                                color: var(--highlight-color);    
+                            }
                         }
                         .filter {
-                            color: var(--highlight-color);
-                            &:hover {
-                                color: var(--highlight-color-translucent);
-                            }
                             svg {
                                 transform: translateY(2px);
-                                
                                 width: 1em;
                                 height: 1em;
                                 stroke: currentColor;
@@ -104,10 +104,6 @@
                         }
                         
                         .sorting {
-                            color: var(--highlight-color);
-                            &:hover {
-                                color: var(--highlight-color-translucent);
-                            }
                             svg {
                                 width: 1.2em;
                                 height: 1.2em;

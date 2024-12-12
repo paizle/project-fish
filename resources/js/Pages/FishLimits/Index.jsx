@@ -1,10 +1,8 @@
-import DataTable from '@/Components/DataTable/DataTable';
+import './FishLimits.scss';
+import DataTableWithOperations from '@/Components/DataTableWithOperations/DataTableWithOperations';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import React, {useState} from 'react';
-import './FishLimits.scss';
-
-import indexBy from '@/Util/indexBy';
 
 export default function FishLimits({
     fishLimits,
@@ -182,19 +180,21 @@ export default function FishLimits({
                         </div>
                     </div>
                     <div className="box">
-                    <DataTable
+                    <DataTableWithOperations
                         isLoading={isLoading}
                         data={data}
                         uniqueKey="id"
-                        filters={{
-                            'Location': Object.keys(locations).map((key) => locations[key].name), 
-                            'Fish Category': Object.keys(fishCategories).map((key) => fishCategories[key].name),
-                            'Fish': Object.keys(fishes).map((key) => fishes[key].name),
-                            'Boundary': Object.keys(boundaries).map((key) => boundaries[key].name),
-                            'Waters Category': Object.keys(watersCategories).map((key) => watersCategories[key].name),
-                            'Tidal': Object.keys(tidalCategories).map((key) => tidalCategories[key].name),
-                            'Waters': Object.keys(waters).map((key) => waters[key].name),
-                            
+                        options={{
+                            'filters': {
+                                'Location': Object.keys(locations).map((key) => locations[key].name), 
+                                'Fish Category': Object.keys(fishCategories).map((key) => fishCategories[key].name),
+                                'Fish': Object.keys(fishes).map((key) => fishes[key].name),
+                                'Boundary': Object.keys(boundaries).map((key) => boundaries[key].name),
+                                'Waters Category': Object.keys(watersCategories).map((key) => watersCategories[key].name),
+                                'Tidal': Object.keys(tidalCategories).map((key) => tidalCategories[key].name),
+                                'Waters': Object.keys(waters).map((key) => waters[key].name),
+                            },
+                            sorting: true
                         }}
                         schema={{
                             Location: filters?.locationId

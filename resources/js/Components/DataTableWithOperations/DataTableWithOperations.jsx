@@ -1,13 +1,10 @@
+import './DataTableWithOperations.scss'
 import { useState} from 'react'
-import './DataTable.scss'
-
 import {  XMarkIcon } from '@heroicons/react/24/solid'
-
 import {  FunnelIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline'
-
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
-export default function DataTable({
+export default function DataTableWithOperations({
     children,
     className = '',
     isLoading = false,
@@ -184,7 +181,7 @@ export default function DataTable({
     }
 
     return (
-        <table className="DataTable">
+        <table className="DataTableWithOperations">
             {!!Object.keys(activeFilters).length && (
                 <caption>
                     {renderActiveFilters()}
