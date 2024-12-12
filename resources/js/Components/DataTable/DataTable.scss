@@ -3,6 +3,39 @@
 .DataTable {
     width: 100%;
 
+    caption {
+        text-align: left;
+
+        .filters {
+            display: flex;
+            gap: .5em;
+            margin: .5em 0;
+            label {
+                display: inline-flex;
+                gap: .4em;
+                border-radius: .25em;
+                padding: .25em .5em;
+                background-color: var(--highlight-color);
+                &:hover {
+                    background-color: var(--highlight-color-translucent);
+                }
+                align-items: center;
+                color: var(--highlight-color-contrast);
+                button {
+                    width: 1em;
+                    height: 1em;
+                    svg {
+                        path {
+                            stroke: currentColor;
+                            stroke-width: 2 !important;
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+
     th,
     td {
         padding: 0 0.25em;
@@ -18,6 +51,19 @@
                 }
                 &:last-child {
                     padding-right: 0;
+                }
+                .filter {
+                    font-size: .5em;
+                }
+
+                button {
+                    float: right;
+                    width: 1em;
+                    height: 1em;
+                    color: var(--highlight-color);
+                    &:hover {
+                        color: var(--highlight-color-translucent);
+                    }
                 }
             }
         }

@@ -4,6 +4,8 @@ import { Head } from '@inertiajs/react';
 import React from 'react';
 import './FishLimits.scss';
 
+import indexBy from '@/Util/indexBy';
+
 export default function FishLimits({
     fishLimits,
     locations,
@@ -23,7 +25,11 @@ export default function FishLimits({
         console.log({ fishLimits });
     }, []);
 
-    const updateFilter = (filterName) => (event) => {
+    const updateFilter = (event) => {
+
+        const input = event.target
+        const filterName = input.name
+
         const newFilters = JSON.parse(JSON.stringify(filters));
         newFilters[filterName] = event.target.value;
         setFilters(newFilters);
@@ -56,7 +62,7 @@ export default function FishLimits({
                                 <select
                                     value={filters.locationId}
                                     name="locationId"
-                                    onChange={updateFilter('locationId')}
+                                    onChange={updateFilter}
                                 >
                                     <option value="">(all)</option>
                                     {Object.keys(locations).map((id) => (
@@ -74,7 +80,7 @@ export default function FishLimits({
                                 <select
                                     value={filters.fishCategoryId}
                                     name="fishCategoryId"
-                                    onChange={updateFilter('fishCategoryId')}
+                                    onChange={updateFilter}
                                 >
                                     <option value="">(all)</option>
                                     {Object.keys(fishCategories).map((id) => (
@@ -92,7 +98,7 @@ export default function FishLimits({
                                 <select
                                     value={filters.fishId}
                                     name="fishId"
-                                    onChange={updateFilter('fishId')}
+                                    onChange={updateFilter}
                                 >
                                     <option value="">(all)</option>
                                     {Object.keys(fishes).map((id) => (
@@ -109,7 +115,7 @@ export default function FishLimits({
                                 Boundary:
                                 <select
                                     value={filters.boundaryId}
-                                    onChange={updateFilter('boundaryId')}
+                                    onChange={updateFilter}
                                 >
                                     <option value="">(all)</option>
                                     {Object.keys(boundaries).map((id) => (
@@ -126,7 +132,7 @@ export default function FishLimits({
                                 Waters Category:
                                 <select
                                     value={filters.watersCategoryId}
-                                    onChange={updateFilter('watersCategoryId')}
+                                    onChange={updateFilter}
                                 >
                                     <option value="">(all)</option>
                                     {Object.keys(watersCategories).map((id) => (
@@ -143,7 +149,7 @@ export default function FishLimits({
                                 Tidal Category:
                                 <select
                                     value={filters.tidalCategoryId}
-                                    onChange={updateFilter('tidalCategoryId')}
+                                    onChange={updateFilter}
                                 >
                                     <option value="">(all)</option>
                                     {Object.keys(tidalCategories).map((id) => (
@@ -160,7 +166,7 @@ export default function FishLimits({
                                 Water:
                                 <select
                                     value={filters.waterId}
-                                    onChange={updateFilter('watersId')}
+                                    onChange={updateFilter}
                                 >
                                     <option value="">(all)</option>
                                     {Object.keys(waters).map((id) => (
@@ -176,6 +182,16 @@ export default function FishLimits({
                     <DataTable
                         data={data}
                         uniqueKey="id"
+                        filters={{
+                            'Location': Object.keys(locations).map((key) => locations[key].name), 
+                            'Fish Category': Object.keys(fishCategories).map((key) => fishCategories[key].name),
+                            'Fish': Object.keys(fishes).map((key) => fishes[key].name),
+                            'Boundary': Object.keys(boundaries).map((key) => boundaries[key].name),
+                            'Waters Category': Object.keys(watersCategories).map((key) => watersCategories[key].name),
+                            'Tidal': Object.keys(tidalCategories).map((key) => tidalCategories[key].name),
+                            'Waters': Object.keys(waters).map((key) => waters[key].name),
+                            
+                        }}
                         schema={{
                             Location: filters?.locationId
                                 ? false
