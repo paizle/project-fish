@@ -1,13 +1,44 @@
 import './DataTable.scss';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 export default function DataTable({
     className = '',
     children,
+    isLoading = null,
     data = [],
     schema = {},
     uniqueKey = 'id',
     ...props
 }) {
+
+    function renderFooter() {
+        if (isLoading) {
+            return (
+                <tr>
+                    <td colSpan="100%" className="loading">
+                        <span> </span>
+                        <div className="spinner-backdrop">
+                            <div className="spinner-wrapper">
+                                <LoadingSpinner />
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            )
+        }
+
+        if (!data?.length) {
+            return (
+                <tr>
+                    <td colSpan="100%" className="no-data">
+                        (no data)
+                    </td>
+                </tr>
+            )
+        }
+
+    }
+
     return (
         <table className="DataTable">
             <thead>
@@ -21,17 +52,13 @@ export default function DataTable({
             </thead>
             <tbody>{renderTBody(children, data, schema, uniqueKey)}</tbody>
             <tfoot>
-                {data.length ? null : (
-                    <tr>
-                        <td colSpan="100%" className="no-data">
-                            (no data)
-                        </td>
-                    </tr>
-                )}
+                {renderFooter()}
             </tfoot>
         </table>
     );
 }
+
+
 
 function renderTBody(children, data, schema, uniqueKey) {
     switch (typeof children) {
