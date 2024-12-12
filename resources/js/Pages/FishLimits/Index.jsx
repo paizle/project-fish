@@ -1,7 +1,7 @@
 import DataTable from '@/Components/DataTable/DataTable';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import React from 'react';
+import React, {useState} from 'react';
 import './FishLimits.scss';
 
 import indexBy from '@/Util/indexBy';
@@ -16,9 +16,10 @@ export default function FishLimits({
     tidalCategories,
     waters,
 }) {
-    const [data, setData] = React.useState([]);
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
 
-    const [filters, setFilters] = React.useState({});
+    const [filters, setFilters] = useState({});
 
     React.useEffect(() => {
         setData(fishLimits);
@@ -32,8 +33,9 @@ export default function FishLimits({
 
         const newFilters = JSON.parse(JSON.stringify(filters));
         newFilters[filterName] = event.target.value;
-        setFilters(newFilters);
+        setFilters(newFilters)
 
+        setIsLoading(true)
         axios
             .post(route('fishLimits.data'), { filters: newFilters })
             .then((response) => {
@@ -45,7 +47,8 @@ export default function FishLimits({
                     'Error:',
                     error.response ? error.response.data : error.message,
                 ); // Handle error
-            });
+            })
+            .finally(() => setIsLoading(false))
     };
 
     return (
@@ -180,6 +183,7 @@ export default function FishLimits({
                     </div>
                     <div className="box">
                     <DataTable
+                        isLoading={isLoading}
                         data={data}
                         uniqueKey="id"
                         filters={{

@@ -5,10 +5,13 @@ import {  XMarkIcon, FunnelIcon as FunnelIconSolid } from '@heroicons/react/24/s
 
 import {  FunnelIcon } from '@heroicons/react/24/solid'
 
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+
 
 export default function DataTable({
-    className = '',
     children,
+    className = '',
+    isLoading = false,
     data = [],
     schema = {},
     filters={},
@@ -59,16 +62,16 @@ export default function DataTable({
     
         return schema[column] && (
             <th key={column}>
-                {filters?.[column] 
-                    && <button onClick={(e) => selectFilter(column)}>
+                <span className='filter-container'>
+                    {filters?.[column] 
+                        && <button onClick={(e) => selectFilter(column)}>
                             {activeFilters[column]
                                 ? <FunnelIconSolid /> 
                                 : <FunnelIcon />
                             }
-                            
-                            
                         </button>}
-                {column}
+                    <span>{column}</span>
+                </span>
                 
                 {selectingFilter && renderFilter(column)}
             </th>
@@ -121,6 +124,33 @@ export default function DataTable({
         )
     }
 
+    function renderFooter() {
+        if (isLoading) {
+            return (
+                <tr>
+                    <td colSpan="100%" className="loading">
+                        <div className="spinner-backdrop">
+                            <div className="spinner-wrapper">
+                                <LoadingSpinner />
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            )
+        }
+
+        if (!data?.length) {
+            return (
+                <tr>
+                    <td colSpan="100%" className="no-data">
+                        (no data)
+                    </td>
+                </tr>
+            )
+        }
+
+    }
+
     return (
         <table className="DataTable">
             {activeFilters && (
@@ -135,13 +165,7 @@ export default function DataTable({
             </thead>
             <tbody>{renderTBody(children, data, schema, uniqueKey)}</tbody>
             <tfoot>
-                {data.length ? null : (
-                    <tr>
-                        <td colSpan="100%" className="no-data">
-                            (no data)
-                        </td>
-                    </tr>
-                )}
+                {renderFooter()}
             </tfoot>
         </table>
     )
