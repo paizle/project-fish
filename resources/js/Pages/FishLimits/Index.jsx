@@ -5,7 +5,6 @@ import { Head } from '@inertiajs/react';
 import React, {useState} from 'react';
 
 export default function FishLimits({
-    fishLimits,
     locations,
     fishCategories,
     fishes,
@@ -14,221 +13,105 @@ export default function FishLimits({
     tidalCategories,
     waters,
 }) {
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
 
-    const [filters, setFilters] = useState({});
-
-    React.useEffect(() => {
-        setData(fishLimits);
-        console.log({ fishLimits });
-    }, []);
-
-    const updateFilter = (event) => {
-
-        const input = event.target
-        const filterName = input.name
-
-        const newFilters = JSON.parse(JSON.stringify(filters));
-        newFilters[filterName] = event.target.value;
-        setFilters(newFilters)
-
-        setIsLoading(true)
-        axios
-            .post(route('fishLimits.data'), { filters: newFilters })
-            .then((response) => {
-                setData(response.data.fishLimits);
-                console.log(response.data.fishLimits);
-            })
+    const loadFishLimitsData = (filters) => {
+        return axios
+            .post(route('fishLimits.data'), { filters })
+            .then((response) => response.data.fishLimits)
             .catch((error) => {
                 console.error(
                     'Error:',
                     error.response ? error.response.data : error.message,
                 ); // Handle error
             })
-            .finally(() => setIsLoading(false))
-    };
+    }
+
+    
 
     return (
         <AuthenticatedLayout header={null}>
             <Head title="Project: FISH - Fishing Limits" />
 
             <div className="FishLimits">
-                
-                    <div className="Filters">
-                        <header>Filters: </header>
-                        <div>
-                            <label>
-                                Location:
-                                <select
-                                    value={filters.locationId}
-                                    name="locationId"
-                                    onChange={updateFilter}
-                                >
-                                    <option value="">(all)</option>
-                                    {Object.keys(locations).map((id) => (
-                                        <option key={id} value={id}>
-                                            {locations[id].name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-                    
-                        <div>
-                            <label>
-                                Fish Category:
-                                <select
-                                    value={filters.fishCategoryId}
-                                    name="fishCategoryId"
-                                    onChange={updateFilter}
-                                >
-                                    <option value="">(all)</option>
-                                    {Object.keys(fishCategories).map((id) => (
-                                        <option key={id} value={id}>
-                                            {fishCategories[id].name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-
-                        <div>
-                            <label>
-                                Fish:
-                                <select
-                                    value={filters.fishId}
-                                    name="fishId"
-                                    onChange={updateFilter}
-                                >
-                                    <option value="">(all)</option>
-                                    {Object.keys(fishes).map((id) => (
-                                        <option key={id} value={id}>
-                                            {fishes[id].name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-
-                        <div>
-                            <label>
-                                Boundary:
-                                <select
-                                    value={filters.boundaryId}
-                                    onChange={updateFilter}
-                                >
-                                    <option value="">(all)</option>
-                                    {Object.keys(boundaries).map((id) => (
-                                        <option key={id} value={id}>
-                                            {boundaries[id].name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-
-                        <div>
-                            <label>
-                                Waters Category:
-                                <select
-                                    value={filters.watersCategoryId}
-                                    onChange={updateFilter}
-                                >
-                                    <option value="">(all)</option>
-                                    {Object.keys(watersCategories).map((id) => (
-                                        <option key={id} value={id}>
-                                            {watersCategories[id].name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-
-                        <div>
-                            <label>
-                                Tidal Category:
-                                <select
-                                    value={filters.tidalCategoryId}
-                                    onChange={updateFilter}
-                                >
-                                    <option value="">(all)</option>
-                                    {Object.keys(tidalCategories).map((id) => (
-                                        <option key={id} value={id}>
-                                            {tidalCategories[id].name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-
-                        <div>
-                            <label>
-                                Water:
-                                <select
-                                    value={filters.waterId}
-                                    onChange={updateFilter}
-                                >
-                                    <option value="">(all)</option>
-                                    {Object.keys(waters).map((id) => (
-                                        <option key={id} value={id}>
-                                            {waters[id].name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                    <div className="box">
+    
+                <div className="box">
                     <DataTableWithOperations
-                        isLoading={isLoading}
-                        data={data}
+                        loadData={() => Promise.resolve()}
+                        onFiltersUpdate={loadFishLimitsData}
                         uniqueKey="id"
                         options={{
                             'filters': {
-                                'Location': Object.keys(locations).map((key) => locations[key].name), 
-                                'Fish Category': Object.keys(fishCategories).map((key) => fishCategories[key].name),
-                                'Fish': Object.keys(fishes).map((key) => fishes[key].name),
-                                'Boundary': Object.keys(boundaries).map((key) => boundaries[key].name),
-                                'Waters Category': Object.keys(watersCategories).map((key) => watersCategories[key].name),
-                                'Tidal': Object.keys(tidalCategories).map((key) => tidalCategories[key].name),
-                                'Waters': Object.keys(waters).map((key) => waters[key].name),
+                                'Location': {
+                                    key: 'location_id',
+                                    options: Object.keys(locations).reduce((a, key) => {
+                                        a[locations[key].id] = locations[key].name
+                                        return a
+                                    }, {}),
+                                },
+                                'Fish Category': {
+                                    key: 'fish_category_id',
+                                    options: Object.keys(fishCategories).reduce((a, key) => {
+                                        a[fishCategories[key].id] = fishCategories[key].name
+                                        return a
+                                    }, {}),
+                                },
+                                'Fish': {
+                                    key: 'fish_id',
+                                    options: Object.keys(fishes).reduce((a, key) => {
+                                        a[fishes[key].id] = fishes[key].name
+                                        return a
+                                    }, {}),
+                                },
+                                'Boundary': {
+                                    key: 'boundary_id',
+                                    options: Object.keys(boundaries).reduce((a, key) => {
+                                        a[boundaries[key].id] = boundaries[key].name
+                                        return a
+                                    }, {}),
+                                },
+                                'Waters Category': {
+                                    key: 'waters_category_id',
+                                    options: Object.keys(watersCategories).reduce((a, key) => {
+                                        a[watersCategories[key].id] = watersCategories[key].name
+                                        return a
+                                    }, {}),
+                                },
+                                'Tidal': {
+                                    key: 'tidal_id',
+                                    options: Object.keys(tidalCategories).map((key) => tidalCategories[key].name),
+                                    options: Object.keys(tidalCategories).reduce((a, key) => {
+                                        a[tidalCategories[key].id] = tidalCategories[key].name
+                                        return a
+                                    }, {}),
+                                },
+                                'Waters': {
+                                    key: 'waters_id',
+                                    options: Object.keys(waters).reduce((a, key) => {
+                                        a[waters[key].id] = waters[key].name
+                                        return a
+                                    }, {}),
+                                }
                             },
                             sorting: true
                         }}
                         schema={{
-                            Location: filters?.locationId
-                                ? false
-                                : (row) =>
-                                      locations[row.location_id]?.name ??
-                                      '(all)',
-                            'Fish Category': filters?.fishCategoryId
-                                ? false
-                                : (row) =>
-                                      fishCategories[row.fish_category_id]
-                                          ?.name ?? '(all)',
-                            Fish: filters?.fishId
-                                ? false
-                                : (row) => fishes[row.fish_id]?.name ?? '(all)',
-                            Boundary: filters?.boundaryId
-                                ? false
-                                : (row) =>
-                                      boundaries[row.boundary_id]?.name ??
-                                      '(all)',
-                            'Waters Category': filters?.watersCategoryId
-                                ? false
-                                : (row) =>
-                                      watersCategories[row.waters_category_id]
-                                          ?.name ?? '(all)',
-                            Tidal: filters?.tidalCategoryId
-                                ? false
-                                : (row) =>
-                                      tidalCategories[row.tidal_category_id]
-                                          ?.name ?? '(all)',
-                            Waters: (row) =>
-                                filters?.watersId
-                                    ? false
-                                    : (waters[row.water_id]?.name ?? '(all)'),
+                            Location: (row) =>
+                                    locations[row.location_id]?.name ??
+                                    '(all)',
+                            'Fish Category': (row) =>
+                                    fishCategories[row.fish_category_id]
+                                        ?.name ?? '(all)',
+                            Fish: (row) => fishes[row.fish_id]?.name ?? '(all)',
+                            Boundary: (row) =>
+                                    boundaries[row.boundary_id]?.name ??
+                                    '(all)',
+                            'Waters Category': (row) =>
+                                    watersCategories[row.waters_category_id]
+                                        ?.name ?? '(all)',
+                            Tidal: (row) =>
+                                    tidalCategories[row.tidal_category_id]
+                                        ?.name ?? '(all)',
+                            Waters: (row) => waters[row.water_id]?.name ?? '(all)',
                             Limit: (row) => row.bag_limit ?? 'Unlimited',
                             'Min Size': (row) => row.minimum_size ?? 'N/A',
                             'Max Size': (row) => row.maximum_size ?? 'N/A',

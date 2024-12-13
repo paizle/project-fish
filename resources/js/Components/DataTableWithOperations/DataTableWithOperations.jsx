@@ -1,5 +1,5 @@
 import './DataTableWithOperations.scss'
-import { useState} from 'react'
+import { useState, useEffect } from 'react'
 import {  XMarkIcon } from '@heroicons/react/24/solid'
 import {  FunnelIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
@@ -7,14 +7,25 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 export default function DataTableWithOperations({
     children,
     className = '',
-    isLoading = false,
-    data = [],
+    loadData = () => null,
+    onFiltersUpdate = () => null,
     schema = {},
     options={},
     uniqueKey = 'id',
     onFilter = () => null,
     ...rest
 }) {
+
+    const [data, setData] = useState([])
+    const [isLoading, setIsLoading] = useState(null)
+
+    useEffect(() => {
+        setIsLoading(true)
+        loadData()
+            .then((data) => setData(data ?? []))
+            .finally(() => setIsLoading(false))
+    }, [])
+
     const { filters = {}, sorting = false } = options
 
     const [activeFilters, setActiveFilters] = useState({})
@@ -27,7 +38,6 @@ export default function DataTableWithOperations({
         } else {
             setSelectingFilter(filterName)
         }
-        
     }
 
     const setActiveFilter = ((event) => {
@@ -45,6 +55,23 @@ export default function DataTableWithOperations({
         setSelectingFilter(null)
     })
 
+    useEffect(() => {
+
+        const filtersQuery = {}
+
+        Object.keys(activeFilters).forEach((name) => {
+            filtersQuery[filters[name].key] = activeFilters[name]
+        })
+
+        setIsLoading(true)
+        onFiltersUpdate(filtersQuery)
+            .then((data) => {
+                setData(data ?? [])
+            })
+            .finally(() => setIsLoading(false))
+
+    }, [activeFilters])
+
     const renderFilter = (filterName) => {
 
         if (filterName !== selectingFilter) {
@@ -54,7 +81,7 @@ export default function DataTableWithOperations({
         return filterName === selectingFilter && (
             <select onChange={setActiveFilter} name={filterName}>
                 <option value=''>(all)</option>
-                {Object.keys(filters[filterName]).map((key) => <option value={key}>{filters[filterName][key]}</option>)}
+                {Object.keys(filters[filterName].options).map((key) => <option value={key}>{filters[filterName].options[key]}</option>)}
             </select>
         )
     }
@@ -68,7 +95,7 @@ export default function DataTableWithOperations({
                     
                     <div className='action-container'>
                         {sorting && (
-                            <button className="sorting" onclick={(e) => sortColumn(column)}>
+                            <button className="sorting" onClick={(e) => sortColumn(column)}>
                                 <ChevronUpDownIcon />
                             </button>
                         )}
@@ -139,7 +166,7 @@ export default function DataTableWithOperations({
             <div className="filters">
                 {Object.keys(filters).map((column) => activeFilters[column] && (
                     <label key={column}>
-                        <span>{column}: {filters[column][activeFilters[column]]}</span>
+                        <span>{column}:<wbr /> {filters[column].options[activeFilters[column]]}</span>
                         <button className="text-sm" name={column} value="" onClick={setActiveFilter}><XMarkIcon /></button>
                     </label>
                     )
@@ -153,7 +180,6 @@ export default function DataTableWithOperations({
             return (
                 <tr>
                     <td colSpan="100%" className="loading">
-                        <span> </span>
                         <div className="spinner-backdrop">
                             <div className="spinner-wrapper">
                                 <LoadingSpinner />
