@@ -20,6 +20,8 @@ $actionable-color: #F4D03F; // highlight actionable items
     --icon-color: #{$icon-color};
     --highlight-color: #{$icon-color};
     --highlight-color-transparent: #{rgba($icon-color, .2)};
+    --highlight-color-translucent: #{rgba($icon-color, .7)};
+    --highlight-color-contrast: var(--background-color);
 
     --background-color: #{$background-color};
 
