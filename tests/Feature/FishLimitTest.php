@@ -13,7 +13,7 @@ class FishLimitTest extends TestCase
     /**
      * Test to verify the count of FishLimit records matches a predefined constant.
      */
-    public function test_fish_limit_count_matches_constant_ok()
+    public function test_fish_limit_count_matches_constant()
     {
         // Define the constant (replace with your actual constant or config value)
         $expectedAtLeastCount = config('constants.fish_limit_minimum_count', 1);

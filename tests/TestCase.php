@@ -3,6 +3,8 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Database\Seeders\ImportDatabaseSeeder;
+
 
 abstract class TestCase extends BaseTestCase
 {
@@ -15,14 +17,8 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         if (!self::$seeded) {
-            //$this->artisan('migrate');
-            //$this->artisan('db:seed');
-
-            $this->artisan('db:seed', ['--class' => 'ImportDatabaseSeeder']);
+            $this->artisan('db:seed', ['--class' => ImportDatabaseSeeder::class]);
             self::$seeded = true;
         }
-
-        
-        //$this->artisan('db:seed', ['--class' => 'ImportDatabaseSeeder']);
     }
 }

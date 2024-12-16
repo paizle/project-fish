@@ -1,30 +1,27 @@
 <?php
 
-namespace Seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ImportDatabaseSeeder extends Seeder
 {
     public function run()
     {
 
-        $mysqlHost = env('DB_HOST', '127.0.0.1');
-        $mysqlPort = env('DB_PORT', '3306');
-        $mysqlDatabase = env('DB_DATABASE');
-        $mysqlUser = env('DB_USERNAME');
-        $mysqlPassword = env('DB_PASSWORD');
-        $dumpFile = database_path('seeders/test_database_dump.sql');
+        $mysqlDumpDatabase = 'fish2';
+        $mysqlDumpUser = 'root';
+        $mysqlDumpPassword = '';
+        $dumpFile = base_path() .'/ignored/database_dump.sql';
 
         // Execute mysqldump to export the database
         $mysqldumpCommand = sprintf(
-            'C:\wamp64\bin\mysql\mysql8.3.0\bin\mysql --host=%s --port=%s --user=%s --password=%s %s > %s',
-            escapeshellarg($mysqlHost),
-            escapeshellarg($mysqlPort),
-            escapeshellarg($mysqlUser),
-            escapeshellarg($mysqlPassword),
-            escapeshellarg($mysqlDatabase),
+            'C:\wamp64\bin\mysql\mysql8.3.0\bin\mysqldump --user=%s --password=%s %s > %s',
+            escapeshellarg($mysqlDumpUser),
+            escapeshellarg($mysqlDumpPassword),
+            escapeshellarg($mysqlDumpDatabase),
             escapeshellarg($dumpFile)
         );
 
@@ -34,15 +31,20 @@ class ImportDatabaseSeeder extends Seeder
         $sql = file_get_contents($dumpFile);
         DB::unprepared($sql);
 
-
-        $sql = file_get_contents(database_path('seeders/test_database_dump.sql'));
+        $sql = file_get_contents($dumpFile);
         DB::unprepared($sql);
+
+        if (file_exists($dumpFile)) {
+            unlink($dumpFile);  // Use unlink() for deleting local files
+        }
     }
 
     private function runCommand(string $command)
     {
         $output = [];
         $exitCode = 0;
+
+        echo $command;
 
         // Run the command and wait for it to finish
         exec($command, $output, $exitCode);
