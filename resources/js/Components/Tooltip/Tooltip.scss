@@ -1,19 +1,29 @@
+@use '/resources/css/app.scss';
+
 .Tooltip {
     position: relative;
-    [popover] {
+    .message {
+        position: absolute;
+        top: 1em;
+        left: 1em;
+        z-index: 0;
         pointer-events: none;
-        margin: 0;
-        border-radius: 0.5em;
-        padding: 0.25em 0.5em;
-        background-color: rgb(var(--yellow-highlighter));
-        font-weight: bold;
-        transition: opacity 500ms ease;
-        display: block;
+        visibility: hidden;
         opacity: 0;
-        box-shadow: var(--box-shadow);
-        &:popover-open {
+        transition: 300ms;
+        background-color: var(--background-color);
+        border-radius: .25rem;
+        @apply shadow p-4;
+        transition-delay: 800ms;
+        width: 16em;
+    }
+    &:hover {
+        .message {
+            z-index: 1;
+            visibility: visible;
             pointer-events: all;
             opacity: 1;
+
         }
     }
 }

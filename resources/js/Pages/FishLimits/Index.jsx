@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/react'
 import React, {useState} from 'react'
 import parseMySqlDate from '@/Util/parseMySqlDate'
 import formatDate from '@/Util/formatDate'
-
+import Tooltip from '@/Components/Tooltip/Tooltip'
 
 export default function FishLimits({
     fishLimits,
@@ -240,7 +240,15 @@ export default function FishLimits({
                                 filters?.watersId
                                     ? false
                                     : (waters[row.water_id]?.name ?? '(all)'),
-                            Limit: (row) => row.bag_limit ?? 'Unlimited',
+                            Limit: (row) => {
+                                return row.note
+                                    ? (    
+                                        <Tooltip message={row.note}>
+                                            {row.bag_limit ?? 'Unlimited'} *
+                                        </Tooltip>
+                                    )
+                                    : row.bag_limit ?? 'Unlimited'
+                            },
                             'Min Size': (row) => row.minimum_size ?? 'N/A',
                             'Max Size': (row) => row.maximum_size ?? 'N/A',
                             'Season Start': (row) => formatDate(parseMySqlDate(row.season_start)),
