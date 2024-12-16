@@ -50,6 +50,7 @@ export default function DataTableWithOperations({
             } else {
                 delete newActiveFilters[name]
             }
+            onFiltersUpdate?.(newActiveFilters)
             return newActiveFilters
         })
         setSelectingFilter(null)

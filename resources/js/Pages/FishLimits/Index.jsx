@@ -22,11 +22,9 @@ export default function FishLimits({
                 console.error(
                     'Error:',
                     error.response ? error.response.data : error.message,
-                ); // Handle error
+                );
             })
     }
-
-    
 
     return (
         <AuthenticatedLayout header={null}>
