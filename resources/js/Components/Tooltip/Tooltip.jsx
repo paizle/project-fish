@@ -1,18 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import './Tooltip.scss';
 
-const Tooltip = ({ message, children, position = 'top', delay = 500 }) => {
+const Tooltip = ({ message, children }) => {
 
-  return (
-    <button
-      className="Tooltip"
-    >
-        {children}
-        <div className="message">
-            {message}
-        </div>
-    </button>
-  );
+    return (
+        <button className="Tooltip">
+            {children}
+            <div className="message">
+                {message}
+            </div>
+        </button>
+    );
 };
 
 export default Tooltip;

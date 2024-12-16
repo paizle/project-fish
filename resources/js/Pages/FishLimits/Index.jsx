@@ -244,7 +244,7 @@ export default function FishLimits({
                                 return row.note
                                     ? (    
                                         <Tooltip message={row.note}>
-                                            {row.bag_limit ?? 'Unlimited'} *
+                                            {row.bag_limit ?? 'Unlimited'}*
                                         </Tooltip>
                                     )
                                     : row.bag_limit ?? 'Unlimited'

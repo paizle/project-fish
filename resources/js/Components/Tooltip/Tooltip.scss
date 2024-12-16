@@ -2,6 +2,8 @@
 
 .Tooltip {
     position: relative;
+    cursor: help;
+    text-decoration: underline;
     .message {
         position: absolute;
         top: 1em;
@@ -14,10 +16,12 @@
         background-color: var(--background-color);
         border-radius: .25rem;
         @apply shadow p-4;
-        transition-delay: 800ms;
+        transition-delay: 500ms;
         width: 16em;
+        
     }
     &:hover {
+        text-decoration-style: dotted;
         .message {
             z-index: 1;
             visibility: visible;
