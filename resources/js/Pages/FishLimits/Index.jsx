@@ -1,8 +1,11 @@
-import './FishLimits.scss';
-import DataTable from '@/Components/DataTable/DataTable';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import React, {useState} from 'react';
+import './FishLimits.scss'
+import DataTable from '@/Components/DataTable/DataTable'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import { Head } from '@inertiajs/react'
+import React, {useState} from 'react'
+import parseMySqlDate from '@/Util/parseMySqlDate'
+import formatDate from '@/Util/formatDate'
+
 
 export default function FishLimits({
     fishLimits,
@@ -13,41 +16,42 @@ export default function FishLimits({
     watersCategories,
     tidalCategories,
     waters,
+    fishingMethods
 }) {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
-    const [filters, setFilters] = useState({});
+    const [filters, setFilters] = useState({})
 
     React.useEffect(() => {
-        setData(fishLimits);
-        console.log({ fishLimits });
-    }, []);
+        setData(fishLimits)
+        console.log({ fishLimits })
+    }, [])
 
     const updateFilter = (event) => {
 
         const input = event.target
         const filterName = input.name
 
-        const newFilters = JSON.parse(JSON.stringify(filters));
-        newFilters[filterName] = event.target.value;
+        const newFilters = JSON.parse(JSON.stringify(filters))
+        newFilters[filterName] = event.target.value
         setFilters(newFilters)
 
         setIsLoading(true)
         axios
             .post(route('fishLimits.data'), { filters: newFilters })
             .then((response) => {
-                setData(response.data.fishLimits);
-                console.log(response.data.fishLimits);
+                setData(response.data.fishLimits)
+                console.log(response.data.fishLimits)
             })
             .catch((error) => {
                 console.error(
                     'Error:',
                     error.response ? error.response.data : error.message,
-                ); // Handle error
+                ) // Handle error
             })
             .finally(() => setIsLoading(false))
-    };
+    }
 
     return (
         <AuthenticatedLayout header={null}>
@@ -105,6 +109,24 @@ export default function FishLimits({
                                     {Object.keys(fishes).map((id) => (
                                         <option key={id} value={id}>
                                             {fishes[id].name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label>
+                                Fishing Method:
+                                <select
+                                    value={filters.fishingMethodId}
+                                    name="fishingMethodId"
+                                    onChange={updateFilter}
+                                >
+                                    <option value="">(all)</option>
+                                    {Object.keys(fishingMethods).map((id) => (
+                                        <option key={id} value={id}>
+                                            {fishingMethods[id].name}
                                         </option>
                                     ))}
                                 </select>
@@ -195,9 +217,6 @@ export default function FishLimits({
                                 : (row) =>
                                       fishCategories[row.fish_category_id]
                                           ?.name ?? '(all)',
-                            Fish: filters?.fishId
-                                ? false
-                                : (row) => fishes[row.fish_id]?.name ?? '(all)',
                             Boundary: filters?.boundaryId
                                 ? false
                                 : (row) =>
@@ -213,6 +232,10 @@ export default function FishLimits({
                                 : (row) =>
                                       tidalCategories[row.tidal_category_id]
                                           ?.name ?? '(all)',
+                            
+                            Fish: filters?.fishId
+                                ? false
+                                : (row) => fishes[row.fish_id]?.name ?? '(all)',
                             Waters: (row) =>
                                 filters?.watersId
                                     ? false
@@ -220,10 +243,15 @@ export default function FishLimits({
                             Limit: (row) => row.bag_limit ?? 'Unlimited',
                             'Min Size': (row) => row.minimum_size ?? 'N/A',
                             'Max Size': (row) => row.maximum_size ?? 'N/A',
+                            'Season Start': (row) => formatDate(parseMySqlDate(row.season_start)),
+                            'Sesason End': (row) => formatDate(parseMySqlDate(row.season_end)),
+                            'Fishing Method': filters?.fishingMethodId
+                                ? false
+                                : (row) => fishingMethods[row.fishing_method_id]?.name ?? '(all)',
                         }}
                     />
                 </div>
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

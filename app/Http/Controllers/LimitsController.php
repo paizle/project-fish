@@ -51,6 +51,10 @@ class LimitsController extends Controller
             $fish_limits_query->where('fish_id', $filters['fishId']);
         }
 
+        if ($filters['fishingMethodId'] ?? null) {
+            $fish_limits_query->where('fishing_method_id', $filters['fishingMethodId']);
+        }
+
         if ($filters['boundaryId'] ?? null) {
             $fish_limits_query->where('boundary_id', $filters['boundaryId']);
         }
