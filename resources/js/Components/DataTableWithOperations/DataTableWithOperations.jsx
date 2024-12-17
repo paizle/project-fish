@@ -1,42 +1,73 @@
 import './DataTableWithOperations.scss'
 import { useState, useEffect } from 'react'
 import {  XMarkIcon } from '@heroicons/react/24/solid'
-import {  FunnelIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline'
+import {  FunnelIcon, ChevronUpDownIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 export default function DataTableWithOperations({
     children,
-    className = '',
-    loadData = () => null,
-    onFiltersUpdate = () => null,
+    data = null,
+    loadData = () => Promise.resolve(),
+    onFiltersUpdate = () => Promise.resolve(),
     schema = {},
-    options={},
-    uniqueKey = 'id',
-    onFilter = () => null,
-    ...rest
+    options: {filters = {}, sorting = false, toggleShow = {}} = {},
+    uniqueKey = 'id'
 }) {
 
-    const [data, setData] = useState([])
-    const [isLoading, setIsLoading] = useState(null)
-
     useEffect(() => {
-        setIsLoading(true)
-        loadData()
-            .then((data) => setData(data ?? []))
-            .finally(() => setIsLoading(false))
+        if (data === null) {
+            setIsLoading(true)
+            loadData()
+                .then((data) => setInnerData(data ?? []))
+                .finally(() => setIsLoading(false))
+        }
     }, [])
 
-    const { filters = {}, sorting = false } = options
 
     const [activeFilters, setActiveFilters] = useState({})
+    useEffect(() => {
+
+        const filtersQuery = {}
+
+        Object.keys(activeFilters).forEach((name) => {
+            filtersQuery[filters[name].key] = activeFilters[name]
+        })
+
+        setIsLoading(true)
+        onFiltersUpdate(filtersQuery)
+            .then((data) => {
+                setInnerData(data)
+            })
+            .finally(() => setIsLoading(false))
+
+    }, [activeFilters])
+
+    const [innerData, setInnerData] = useState(data ?? [])
+    const [isLoading, setIsLoading] = useState(null)
+
+    const [hiddenColumns, setHiddenColumns] = useState([])
 
     const [selectingFilter, setSelectingFilter] = useState(null)
 
-    const selectFilter = (filterName) => {
-        if (selectingFilter === filterName) {
+    const hideColumn = (event) => {
+        const name = event.currentTarget.name
+        const value = event.currentTarget.value
+        setHiddenColumns((hiddenColumns) => {
+            const newHiddenColumns = JSON.parse(JSON.stringify(hiddenColumns))
+            if (value) {
+                newHiddenColumns.push(name)
+            } else {
+                newHiddenColumns.splice(newHiddenColumns.indexOf(name), 1)
+            }
+            return newHiddenColumns
+        })
+    }
+
+    const selectFilter = (column) => {
+        if (selectingFilter === column) {
             setSelectingFilter(null)
         } else {
-            setSelectingFilter(filterName)
+            setSelectingFilter(column)
         }
     }
 
@@ -56,23 +87,6 @@ export default function DataTableWithOperations({
         setSelectingFilter(null)
     })
 
-    useEffect(() => {
-
-        const filtersQuery = {}
-
-        Object.keys(activeFilters).forEach((name) => {
-            filtersQuery[filters[name].key] = activeFilters[name]
-        })
-
-        setIsLoading(true)
-        onFiltersUpdate(filtersQuery)
-            .then((data) => {
-                setData(data ?? [])
-            })
-            .finally(() => setIsLoading(false))
-
-    }, [activeFilters])
-
     const renderFilter = (filterName) => {
 
         if (filterName !== selectingFilter) {
@@ -82,15 +96,18 @@ export default function DataTableWithOperations({
         return filterName === selectingFilter && (
             <select onChange={setActiveFilter} name={filterName}>
                 <option value=''>(all)</option>
-                {Object.keys(filters[filterName].options).map((key) => <option value={key}>{filters[filterName].options[key]}</option>)}
+                {Object
+                    .keys(filters[filterName].options)
+                    .sort((a, b) => filters[filterName].options[a] > filters[filterName].options[b])
+                    .map((key) => <option key={key} value={key}>{filters[filterName].options[key]}</option>)}
             </select>
         )
     }
 
-    function renderColumnHeader(column, schema, filters) {
+    function renderColumnHeader(column) {
         
-        return !activeFilters[column] && schema[column] && (
-            <th key={column}>
+        return !hiddenColumns.includes(column) && !activeFilters[column] && schema[column] && (
+            <th key={column} className={column.replaceAll(' ', '')}>
 
                 <div className="cell-container">
                     
@@ -98,6 +115,11 @@ export default function DataTableWithOperations({
                         {sorting && (
                             <button className="sorting" onClick={(e) => sortColumn(column)}>
                                 <ChevronUpDownIcon />
+                            </button>
+                        )}
+                        {toggleShow.includes(column) && (
+                            <button className="hide" name={column} value='1' onClick={hideColumn}>
+                                <EyeSlashIcon />
                             </button>
                         )}
                         {filters?.[column] && (
@@ -119,10 +141,10 @@ export default function DataTableWithOperations({
     
     function renderTBody() {
         switch (typeof children) {
-            case 'function': return data.map((row, index) => children(row, index))
+            case 'function': return innerData.map((row, index) => children(row, index))
     
             default:
-                return data.map((row, index) => {
+                return innerData.map((row, index) => {
                     const key = typeof schema[uniqueKey] === "function" 
                         ? schema[uniqueKey](row, index) 
                         : row[uniqueKey]
@@ -141,7 +163,7 @@ export default function DataTableWithOperations({
 
     const renderTableDatum = (column, row, index) => {
 
-        if (activeFilters[column]) {
+        if (activeFilters[column] || hiddenColumns.includes(column)) {
             return
         }
 
@@ -172,6 +194,13 @@ export default function DataTableWithOperations({
                     </label>
                     )
                 )}
+                {hiddenColumns.map((column) => (
+                    <label key={column}>
+                        <span>{column}:<wbr /> (hidden)</span>
+                        <button className="text-sm" name={column} value="" onClick={hideColumn}><XMarkIcon /></button>
+                    </label>
+                    )
+                )}
             </div>
         )
     }
@@ -191,7 +220,7 @@ export default function DataTableWithOperations({
             )
         }
 
-        if (!data?.length) {
+        if (!innerData?.length) {
             return (
                 <tr>
                     <td colSpan="100%" className="no-data">
@@ -209,7 +238,7 @@ export default function DataTableWithOperations({
 
     return (
         <table className="DataTableWithOperations">
-            {!!Object.keys(activeFilters).length && (
+            {(!!Object.keys(activeFilters).length || !!hiddenColumns.length) && (
                 <caption>
                     {renderActiveFilters()}
                 </caption>
@@ -219,12 +248,10 @@ export default function DataTableWithOperations({
                     {Object.keys(schema).map((column) => renderColumnHeader(column, schema, filters))}
                 </tr>
             </thead>
-            <tbody>{renderTBody(children, data, schema, uniqueKey)}</tbody>
+            <tbody>{renderTBody()}</tbody>
             <tfoot>
                 {renderFooter()}
             </tfoot>
         </table>
     )
 }
-
-

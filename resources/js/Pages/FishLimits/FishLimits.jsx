@@ -2,13 +2,14 @@ import './FishLimits.scss';
 import DataTableWithOperations from '@/Components/DataTableWithOperations/DataTableWithOperations';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import React, {useState} from 'react';
+import React from 'react';
 
 import formatDate from '@/Util/formatDate';
 import parseMySqlDate from '@/Util/parseMySqlDate'
 import Tooltip from '@/Components/Tooltip/Tooltip';
 
 export default function FishLimits({
+    fishLimits,
     locations,
     fishCategories,
     fishes,
@@ -18,6 +19,7 @@ export default function FishLimits({
     waters,
     fishingMethods
 }) {
+    
 
     const loadFishLimitsData = (filters) => {
         return axios
@@ -39,10 +41,12 @@ export default function FishLimits({
     
                 <div className="box">
                     <DataTableWithOperations
+                        data={fishLimits}
                         loadData={loadFishLimitsData}
                         onFiltersUpdate={loadFishLimitsData}
                         uniqueKey="id"
                         options={{
+                            'toggleShow' : ['Water Stretch', 'Note'],
                             'filters': {
                                 'Location': {
                                     key: 'location_id',
@@ -86,7 +90,7 @@ export default function FishLimits({
                                         return a
                                     }, {}),
                                 },
-                                'Waters': {
+                                'Waterbody': {
                                     key: 'waters_id',
                                     options: Object.keys(waters).reduce((a, key) => {
                                         a[waters[key].id] = waters[key].name
@@ -119,7 +123,10 @@ export default function FishLimits({
                             Tidal: (row) =>
                                     tidalCategories[row.tidal_category_id]
                                         ?.name ?? '(all)',
-                            Waters: (row) => waters[row.water_id]?.name ?? '(all)',
+                            Waterbody: (row) => waters[row.water_id]?.name ?? '(all)',
+                            'Water Stretch': (row) => row.water_description,
+                            'Fishing Method': (row) => fishingMethods[row.fishing_method_id]?.name ?? '(all)',
+                            'Note': (row) => row.note,
                             Limit: (row) => {
                                 return row.note
                                     ? (    
@@ -133,7 +140,6 @@ export default function FishLimits({
                             'Max Size': (row) => row.maximum_size ?? 'N/A',
                             'Season Start': (row) => formatDate(parseMySqlDate(row.season_start)),
                             'Sesason End': (row) => formatDate(parseMySqlDate(row.season_end)),
-                            'Fishing Method': (row) => fishingMethods[row.fishing_method_id]?.name ?? '(all)',
                         }}
                     />
                 </div>

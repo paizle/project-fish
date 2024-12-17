@@ -20,7 +20,8 @@ class LimitsController extends Controller
 {
     public function index()
     {
-        return Inertia::render('FishLimits/Index', [
+        return Inertia::render('FishLimits/FishLimits', [
+            'fishLimits' => FishLimit::all(),
             'locations' => Indexer::indexBy(Location::all()),
             'fishCategories' => Indexer::indexBy(FishCategory::all()),
             'fishes' => Indexer::indexBy(Fish::all()),

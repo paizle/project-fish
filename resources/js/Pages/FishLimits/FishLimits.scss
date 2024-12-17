@@ -1,37 +1,22 @@
 @use '/resources/css/app.scss';
 
 .FishLimits {
-    .Filters {
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        justify-items: left;
-        background-color: var(--highlight-color);
-        margin: 1.5rem 0 1em 0;
-
-
-        @apply flex items-center gap-4 rounded-md border border-transparent p-4;
-
-        header {
-            position: absolute;
-            left: -1px;
-            top: -1.5rem;
-            height: 2rem;
-            background-color: inherit;
-            font-weight: 400;
-            padding: 0 0.5em 0.5em 0.5em;
-            color: var(--heading-color);
-
-            @apply rounded-md;
+    .DataTableWithOperations {
+        thead tr {
+            th.Location, th.Boundary, th.WatersCategory, th.Tidal, th.Waterbody, 
+            th.WaterStretch, th.FishingMethod, th.Note {
+                @screen sm {
+                    span {
+                        display: block;
+                        padding-right: 1.5em;
+                    }
+                }
+            }
         }
-
-        select {
-            max-width: 120px;
-        }
-
-        label {
-            select {
-                margin-left: 0.5em;
+        
+        tbody tr {
+            td:nth-child(1) {
+               
             }
         }
     }

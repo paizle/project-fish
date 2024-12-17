@@ -61,6 +61,10 @@
 
                 vertical-align: bottom;
 
+                select {
+                    max-width: 12em;
+                }
+
                 .cell-container {
                     display: flex;
                     flex-direction: column;
