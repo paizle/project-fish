@@ -1,15 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\FishLimit;
 
 class FishLimitTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * Test to verify the count of FishLimit records matches a predefined constant.
      */
@@ -22,7 +19,7 @@ class FishLimitTest extends TestCase
         $actualCount = FishLimit::count();
 
         // Assert that the count matches the expected value
-        $this->assertTrue($actualCount > $expectedAtLeastCount, 'The FishLimit count does not contain at least ' . $expectedAtLeastCount . ' record.');
+        $this->assertTrue($actualCount >= $expectedAtLeastCount, 'The FishLimit count does not contain at least ' . $expectedAtLeastCount . ' record.');
     }
 
 }

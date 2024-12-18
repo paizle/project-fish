@@ -4,16 +4,14 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-
 class ImportDatabaseSeeder extends Seeder
 {
     public function run()
     {
 
-        $mysqlDumpDatabase = 'fish2';
-        $mysqlDumpUser = 'root';
-        $mysqlDumpPassword = '';
+        $mysqlDumpDatabase = env('DB_EXPORT_DATABASE');
+        $mysqlDumpUser = env('DB_EXPORT_USERNAME');
+        $mysqlDumpPassword = env('DB_EXPORT_PASSWORD');
         $dumpFile = base_path() .'/ignored/database_dump.sql';
 
         // Execute mysqldump to export the database
@@ -27,15 +25,11 @@ class ImportDatabaseSeeder extends Seeder
 
         $this->runCommand($mysqldumpCommand);
 
-        // Import the SQL file into the SQLite database
-        $sql = file_get_contents($dumpFile);
-        DB::unprepared($sql);
-
         $sql = file_get_contents($dumpFile);
         DB::unprepared($sql);
 
         if (file_exists($dumpFile)) {
-            unlink($dumpFile);  // Use unlink() for deleting local files
+            unlink($dumpFile);
         }
     }
 
