@@ -67,8 +67,8 @@ export default function DataTableWithOperations({
     }
 
     const setActiveFilter = ((event) => {
-        const name = event.target.name
-        const value = event.target.value
+        const name = event.currentTarget.name
+        const value = event.currentTarget.value
         setActiveFilters((activeFilters) => {
             const newActiveFilters = JSON.parse(JSON.stringify(activeFilters))
             if (value) {

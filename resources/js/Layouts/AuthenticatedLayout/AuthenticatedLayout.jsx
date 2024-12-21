@@ -54,16 +54,16 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
 
                             <div className="flex sm:hidden grow mx-4 justify-center">
-                                {navigation.map(({ content, active, ...rest }) => (
+                                {navigation.map(({ content, active, ...rest }, index) => (
                                     active 
-                                        ? <h1 className="page-title">{content}</h1>
+                                        ? <h1 key={index} className="page-title">{content}</h1>
                                         : null
                                 ))}
                             </div>
 
                             <div className="hidden grow sm:mx-2 sm:flex sm:gap-2 lg:mx-4 lg:gap-6">
-                                {navigation.map(({ content, ...rest }) => (
-                                    <NavLink className="nav-item" {...rest}>
+                                {navigation.map(({ content, ...rest }, index) => (
+                                    <NavLink key={index} className="nav-item" {...rest}>
                                         {content}
                                     </NavLink>
                                 ))}
@@ -159,8 +159,8 @@ export default function AuthenticatedLayout({ header, children }) {
                         }
                     >
                         <div className="space-y-1 pb-3 pt-2">
-                            {navigation.map(({ content, ...rest }) => (
-                                <ResponsiveNavLink {...rest}>
+                            {navigation.map(({ content, ...rest }, index) => (
+                                <ResponsiveNavLink key={index} {...rest}>
                                     {content}
                                 </ResponsiveNavLink>
                             ))}
