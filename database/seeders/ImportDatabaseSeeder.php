@@ -12,7 +12,7 @@ class ImportDatabaseSeeder extends Seeder
         $mysqlDumpDatabase = env('DB_EXPORT_DATABASE');
         $mysqlDumpUser = env('DB_EXPORT_USERNAME');
         $mysqlDumpPassword = env('DB_EXPORT_PASSWORD');
-        $dumpFile = base_path() .'/ignored/database_dump.sql';
+        $dumpFile = base_path() . '/ignored/database_dump.sql';
 
         // Execute mysqldump to export the database
         $mysqldumpCommand = sprintf(

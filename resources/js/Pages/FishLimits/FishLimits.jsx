@@ -45,6 +45,42 @@ export default function FishLimits({
                         loadData={loadFishLimitsData}
                         onFiltersUpdate={loadFishLimitsData}
                         uniqueKey="id"
+                        schema={{
+                            ID: (row) => row.id,
+                            Location: (row) =>
+                                    locations[row.location_id]?.name ??
+                                    '(all)',
+                            'Fish Category': (row) =>
+                                    fishCategories[row.fish_category_id]
+                                        ?.name ?? '(all)',
+                            Fish: (row) => fishes[row.fish_id]?.name ?? '(all)',
+                            Boundary: (row) =>
+                                    boundaries[row.boundary_id]?.name ??
+                                    '(all)',
+                            'Waters Category': (row) =>
+                                    watersCategories[row.waters_category_id]
+                                        ?.name ?? '(all)',
+                            Tidal: (row) =>
+                                    tidalCategories[row.tidal_category_id]
+                                        ?.name ?? '(all)',
+                            Waterbody: (row) => waters[row.water_id]?.name ?? '(all)',
+                            'Water Stretch': (row) => row.water_description,
+                            'Fishing Method': (row) => fishingMethods[row.fishing_method_id]?.name ?? '(all)',
+                            'Note': (row) => row.note,
+                            Limit: (row) => {
+                                return row.note
+                                    ? (    
+                                        <Tooltip message={row.note}>
+                                            {row.bag_limit ?? 'Unlimited'}*
+                                        </Tooltip>
+                                    )
+                                    : row.bag_limit ?? 'Unlimited'
+                            },
+                            'Min Size': (row) => row.minimum_size ?? 'N/A',
+                            'Max Size': (row) => row.maximum_size ?? 'N/A',
+                            'Season Start': (row) => formatDate(parseMySqlDate(row.season_start)),
+                            'Sesason End': (row) => formatDate(parseMySqlDate(row.season_end)),
+                        }}
                         options={{
                             'toggleShow' : ['Water Stretch', 'Note'],
                             'filters': {
@@ -91,7 +127,7 @@ export default function FishLimits({
                                     }, {}),
                                 },
                                 'Waterbody': {
-                                    key: 'waters_id',
+                                    key: 'water_id',
                                     options: Object.keys(waters).reduce((a, key) => {
                                         a[waters[key].id] = waters[key].name
                                         return a
@@ -105,43 +141,7 @@ export default function FishLimits({
                                     }, {}),
                                 }
                             }
-                        }}
-                        schema={{
-                            Location: (row) =>
-                                    locations[row.location_id]?.name ??
-                                    '(all)',
-                            'Fish Category': (row) =>
-                                    fishCategories[row.fish_category_id]
-                                        ?.name ?? '(all)',
-                            Fish: (row) => fishes[row.fish_id]?.name ?? '(all)',
-                            Boundary: (row) =>
-                                    boundaries[row.boundary_id]?.name ??
-                                    '(all)',
-                            'Waters Category': (row) =>
-                                    watersCategories[row.waters_category_id]
-                                        ?.name ?? '(all)',
-                            Tidal: (row) =>
-                                    tidalCategories[row.tidal_category_id]
-                                        ?.name ?? '(all)',
-                            Waterbody: (row) => waters[row.water_id]?.name ?? '(all)',
-                            'Water Stretch': (row) => row.water_description,
-                            'Fishing Method': (row) => fishingMethods[row.fishing_method_id]?.name ?? '(all)',
-                            'Note': (row) => row.note,
-                            Limit: (row) => {
-                                return row.note
-                                    ? (    
-                                        <Tooltip message={row.note}>
-                                            {row.bag_limit ?? 'Unlimited'}*
-                                        </Tooltip>
-                                    )
-                                    : row.bag_limit ?? 'Unlimited'
-                            },
-                            'Min Size': (row) => row.minimum_size ?? 'N/A',
-                            'Max Size': (row) => row.maximum_size ?? 'N/A',
-                            'Season Start': (row) => formatDate(parseMySqlDate(row.season_start)),
-                            'Sesason End': (row) => formatDate(parseMySqlDate(row.season_end)),
-                        }}
-                    />
+                        }}                    />
                 </div>
             </div>
         </AuthenticatedLayout>

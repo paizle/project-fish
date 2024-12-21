@@ -1,3 +1,14 @@
 .Water {
     width: 100%;
+
+    .DataTable {
+        td {
+            .extra {
+                font-size: .8em;
+            }
+            &:not(&:first-child) {
+                white-space: nowrap;
+            }
+        }
+    }
 }

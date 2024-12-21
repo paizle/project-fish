@@ -12,7 +12,7 @@ class LocationTest extends TestCase
     public function test_location_count_matches_constant()
     {
         // Define the constant
-        $expectedAtLeastCount = config('constants.location_minimum_count', 1);
+        $expectedAtLeastCount = config('constants.location_minimum_count', 8);
 
         // Retrieve all records from the Location model
         $actualCount = Location::count();

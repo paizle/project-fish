@@ -14,6 +14,12 @@ export default function DataTableWithOperations({
     uniqueKey = 'id'
 }) {
 
+    const [innerData, setInnerData] = useState(data ?? [])
+    const [activeFilters, setActiveFilters] = useState({})
+    const [isLoading, setIsLoading] = useState(null)
+    const [hiddenColumns, setHiddenColumns] = useState([])
+    const [selectingFilter, setSelectingFilter] = useState(null)
+
     useEffect(() => {
         if (data === null) {
             setIsLoading(true)
@@ -23,8 +29,6 @@ export default function DataTableWithOperations({
         }
     }, [])
 
-
-    const [activeFilters, setActiveFilters] = useState({})
     useEffect(() => {
 
         const filtersQuery = {}
@@ -35,19 +39,10 @@ export default function DataTableWithOperations({
 
         setIsLoading(true)
         onFiltersUpdate(filtersQuery)
-            .then((data) => {
-                setInnerData(data)
-            })
+            .then((data) => setInnerData(data))
             .finally(() => setIsLoading(false))
 
     }, [activeFilters])
-
-    const [innerData, setInnerData] = useState(data ?? [])
-    const [isLoading, setIsLoading] = useState(null)
-
-    const [hiddenColumns, setHiddenColumns] = useState([])
-
-    const [selectingFilter, setSelectingFilter] = useState(null)
 
     const hideColumn = (event) => {
         const name = event.currentTarget.name
@@ -81,7 +76,6 @@ export default function DataTableWithOperations({
             } else {
                 delete newActiveFilters[name]
             }
-            onFiltersUpdate?.(newActiveFilters)
             return newActiveFilters
         })
         setSelectingFilter(null)
@@ -139,7 +133,7 @@ export default function DataTableWithOperations({
         )
     }
     
-    function renderTBody() {
+    function renderTBody(innerData) {
         switch (typeof children) {
             case 'function': return innerData.map((row, index) => children(row, index))
     
@@ -248,7 +242,7 @@ export default function DataTableWithOperations({
                     {Object.keys(schema).map((column) => renderColumnHeader(column, schema, filters))}
                 </tr>
             </thead>
-            <tbody>{renderTBody()}</tbody>
+            <tbody>{renderTBody(innerData)}</tbody>
             <tfoot>
                 {renderFooter()}
             </tfoot>
