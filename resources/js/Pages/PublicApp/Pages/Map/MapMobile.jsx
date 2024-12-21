@@ -37,7 +37,7 @@ export default function MapMobile({ locations }) {
 
     const onTouchLocation = (event, pathId) => {
 
-        if (selectedPathIdRef.current === pathId) {
+        if (selectedPathIdRef?.current === pathId) {
             const location = getLocationFromPathId(pathId)
             internalRouting.setView('location', {
                 id: location.id,
@@ -91,6 +91,12 @@ export default function MapMobile({ locations }) {
                             <li key={key} data-path-id={key}>
                                 <InternalLink
                                     name="location"
+                                    onClick={(event) => {
+                                        if (!locationsIndexed?.[pathSelectorToLocationName[key]]?.hasData) {
+                                            event.preventDefault()
+                                            return false
+                                        }
+                                    }}
                                     params={{
                                         id: getLocationFromPathId(key).id,
                                     }}
@@ -103,6 +109,11 @@ export default function MapMobile({ locations }) {
                                 >
                                     <h3>{pathSelectorToLocationName[key]}</h3>
                                     <em>
+                                        {
+                                            !locationsIndexed?.[
+                                                pathSelectorToLocationName[key]
+                                            ]?.hasData && (<strong>(no data)</strong>)
+                                        }
                                         {
                                             locationsIndexed?.[
                                                 pathSelectorToLocationName[key]
@@ -126,8 +137,14 @@ export default function MapMobile({ locations }) {
                                 ].name,
                             }}
                         >
-                            <ArrowRightCircleIcon />
-                        </InternalLink>
+                            {locationsIndexed?.[
+                                    pathSelectorToLocationName[selectedPathId]
+                                ].hasData
+                                    ? <ArrowRightCircleIcon />
+                                    : null
+                                
+                            }
+                            </InternalLink>
                     }
                 </div>
             </div>

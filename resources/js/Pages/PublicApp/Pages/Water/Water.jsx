@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Water.scss';
 
 import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter';
@@ -10,14 +10,16 @@ import { format } from 'date-fns';
 import parseMySqlDate from '@/Util/parseMySqlDate';
 
 export default function Water({ children, id, route, ...rest }) {
-    const [results, setResults] = React.useState([]);
+    const [results, setResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
 
     React.useEffect(() => {
-        console.log({ route });
-
-        axios.get(route(id, '')).then((result) => {
-            setResults(result.data.limits ?? []);
-        });
+        setIsLoading(true)
+        axios
+            .get(route(id, '')).then((result) => {
+                setResults(result.data.limits ?? []);
+            })
+            .finally(() => setIsLoading(false))
     }, []);
 
     const internalRouting = useInternalRouting();
@@ -56,6 +58,7 @@ export default function Water({ children, id, route, ...rest }) {
     return (
         <div className="Water">
             <DataTable
+                isLoading={isLoading}
                 data={results}
                 uniqueKey="id"
                 schema={{

@@ -3,6 +3,9 @@
 .FishLimits {
     .DataTableWithOperations {
         thead tr {
+            th select {
+                display: block;
+            }
             th.Location, th.Boundary, th.WatersCategory, th.Tidal, th.Waterbody, 
             th.WaterStretch, th.FishingMethod, th.Note {
                 @screen sm {

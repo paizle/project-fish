@@ -18,9 +18,9 @@ class FishLimit extends Model
         $d = $fishLimit->fish->id;
 
         $query = FishLimit::whereRelation("location", "location_id", $fishLimit->location->id)
-        ->whereRelation("fish_category", "fish_category_id", $fishLimit->fish_category->id)
-        ->whereRelation("boundary", "boundary_id", $fishLimit->boundary->id)
-        ->whereRelation("waters_category", "waters_category_id", $fishLimit->waters_category->id);
+            ->whereRelation("fish_category", "fish_category_id", $fishLimit->fish_category->id)
+            ->whereRelation("boundary", "boundary_id", $fishLimit->boundary->id)
+            ->whereRelation("waters_category", "waters_category_id", $fishLimit->waters_category->id);
 
         if ($fishLimit->fish === null) {
             $query->whereNull('fish_id');
@@ -53,30 +53,70 @@ class FishLimit extends Model
         $record->maximum_size = $fishLimit->maximum_size;
 
         return $record;
-    } 
+    }
 
-    public static function getOrCreate(Location  $location, FishCategory $fish_category, Fish $fish,
-        Boundary $boundary, WatersCategory $waters_category, Water $water = null) {
+    /**
+     * Gets the existing entry from the DB or creates one.
+     * 
+     * @param \App\Models\Location $location
+     * @param \App\Models\FishCategory $fish_category
+     * @param \App\Models\Fish|null $fish
+     * @param \App\Models\Boundary|null $boundary
+     * @param \App\Models\WatersCategory|null $waters_category
+     * @param \App\Models\Water|null $water
+     * @param \App\Models\TidalCategory|null $tidal_category
+     * @param \App\Models\FishingMethod|null $fishing_method
+     * @return FishLimit
+     */
+    public static function getOrCreate(
+        Location $location,
+        FishCategory $fish_category,
+        Fish $fish = null,
+        Boundary $boundary = null,
+        WatersCategory $waters_category = null,
+        Water $water = null, 
+        TidalCategory $tidal_category = null, 
+        FishingMethod $fishing_method = null
+    ) {
 
+        $query = FishLimit
+            ::whereRelation("location", "location_id", $location->id)
+            ->whereRelation("fish_category", "fish_category_id", $fish_category->id);
 
-        /*
-        $row1->location()->associate($this->getLocation());
-        $row1->fish_category()->associate($this->getFishCategoryTrout());
-        $row1->boundary()->associate($this->getBoundaryInland());
-        $row1->waters_category()->associate($this->getWatersCategoryFlowing());
-        */
+        if ($boundary === null) {
+            $query->whereNull('boundary_id');
+        } else {
+            $query->whereRelation('boundary', 'boundary_id', $boundary->id);
+        }
 
-        $a = $water?->id ?? null;
+        if ($fish === null) {
+            $query->whereNull('fish_id');
+        } else {
+            $query->whereRelation("fish", "fish_id", $fish->id);
+        }
 
-        $query = FishLimit::whereRelation("location", "location_id", $location->id)
-            ->whereRelation("fish_category", "fish_category_id", $fish_category->id)
-            ->whereRelation("boundary", "boundary_id", $boundary->id)
-            ->whereRelation("waters_category", "waters_category_id", $waters_category->id);
+        if ($waters_category === null) {
+            $query->whereNull('waters_category_id');
+        } else {
+            $query->whereRelation("waters_category", "waters_category_id", $waters_category->id);
+        }
 
         if ($water === null) {
             $query->whereNull('water_id');
         } else {
             $query->whereRelation("water", "water_id", $water->id);
+        }
+
+        if ($tidal_category === null) {
+            $query->whereNull('tidal_category_id');
+        } else {
+            $query->whereRelation("tidal_category", "tidal_category_id", $tidal_category->id);
+        }
+
+        if ($fishing_method === null) {
+            $query->whereNull('fishing_method_id');
+        } else {
+            $query->whereRelation("fishing_method", "fishing_method_id", $fishing_method->id);
         }
 
         $record = $query->first();
@@ -85,17 +125,13 @@ class FishLimit extends Model
             $record = new FishLimit();
             $record->location()->associate($location);
             $record->fish_category()->associate($fish_category);
+            $record->fish()->associate($fish);
             $record->boundary()->associate($boundary);
             $record->waters_category()->associate($waters_category);
             $record->water()->associate($water);
+            $record->tidal_category()->associate($tidal_category);
+            $record->fishing_method()->associate($fishing_method);
         }
-        /*
-        $row1 = new FishLimit();
-        $row1->location()->associate($this->getLocation());
-        $row1->fish_category()->associate($this->getFishCategoryTrout());
-        $row1->boundary()->associate($this->getBoundaryInland());
-        $row1->waters_category()->associate($this->getWatersCategoryFlowing());
-        */
 
         return $record;
     }
@@ -112,10 +148,6 @@ class FishLimit extends Model
         return $this->belongsTo(Fish::class);
     }
 
-    public function fishing_method() {
-        return $this->belongsTo(FishingMethod::class);
-    }
-
     public function boundary() {
         return $this->belongsTo(Boundary::class);
     }
@@ -124,16 +156,29 @@ class FishLimit extends Model
         return $this->belongsTo(WatersCategory::class);
     }
 
-    public function tidal_category() {
-        return $this->belongsTo(TidalCategory::class);
-    }
-
     public function water() {
         return $this->belongsTo(Water::class);
     }
 
+    public function tidal_category() {
+        return $this->belongsTo(TidalCategory::class);
+    }
+
+    public function fishing_method() {
+        return $this->belongsTo(FishingMethod::class);
+    }
+
     protected $fillable = [
-        'location', 'fish_category', 'fish', 'boundary', 'waters_category', 'water', 'season_start',
-        'season_end', 'bag_limit', 'minimum_size', 'maximum_size'
+        'location', 'location_id',
+        'fish_category', 'fish_category_id',
+        'fish', 'fish_id',
+        'boundary', 'boundary_id',
+        'waters_category', 'waters_category_id',
+        'water', 'water_id',
+        'water_description',
+        'tidal_category', 'tidal_category_id',
+        'fishing_method',
+        'fishing_method_id',
+        'season_start', 'season_end', 'bag_limit', 'minimum_size', 'maximum_size', 'note'
     ];
 }

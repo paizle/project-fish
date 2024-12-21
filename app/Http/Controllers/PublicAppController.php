@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FishLimit;
 use App\Models\Location;
+use App\Models\Fish;
 
 use App\Util\Indexer;
 use Inertia\Inertia;
@@ -85,15 +86,11 @@ class PublicAppController extends Controller
 
         $limits_by_water = FishLimit::query()
             ->whereIn('id', $results_ids)
-            ->with('fish')
-            ->with('water')
-            ->with('tidal_category')
-            ->with('fishing_method')
+            ->with(['fish', 'water', 'tidal_category', 'fishing_method'])
+            ->orderBy(Fish::select('name')->whereColumn('fish.id', 'fish_limits.fish_id'))
+            ->orderBy('season_start')
             ->get()
             ->toArray();
-
-        // sort array by limit->fish->name
-        usort($limits_by_water, fn($a, $b) => strcmp($a['fish']['name'], $b['fish']['name']));
 
         return ['limits' => $limits_by_water];
     }
