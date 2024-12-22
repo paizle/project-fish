@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\File;
+
 class ImportDatabaseSeeder extends Seeder
 {
     public function run()
@@ -12,7 +15,13 @@ class ImportDatabaseSeeder extends Seeder
         $mysqlDumpDatabase = env('DB_EXPORT_DATABASE');
         $mysqlDumpUser = env('DB_EXPORT_USERNAME');
         $mysqlDumpPassword = env('DB_EXPORT_PASSWORD');
-        $dumpFile = base_path() . '/ignored/database_dump.sql';
+        $dumpPath = base_path() . '/ignored/';
+
+        if (!File::exists($dumpPath)) {
+            File::makeDirectory($dumpPath);
+        }
+
+        $dumpFile = $dumpPath . 'database_dump.sql';
 
         // Execute mysqldump to export the database
         $mysqldumpCommand = sprintf(
@@ -20,16 +29,20 @@ class ImportDatabaseSeeder extends Seeder
             escapeshellarg($mysqlDumpUser),
             escapeshellarg($mysqlDumpPassword),
             escapeshellarg($mysqlDumpDatabase),
-            escapeshellarg($dumpFile)
+            escapeshellarg( $dumpFile)
         );
 
         $this->runCommand($mysqldumpCommand);
 
-        $sql = file_get_contents($dumpFile);
+        $sql = File::get($dumpFile);
         DB::unprepared($sql);
 
-        if (file_exists($dumpFile)) {
-            unlink($dumpFile);
+        if (File::exists($dumpFile)) {
+            File::delete($dumpFile);
+        }
+
+        if (File::exists($dumpPath)) {
+            File::delete($dumpPath);
         }
     }
 

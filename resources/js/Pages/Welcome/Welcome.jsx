@@ -40,6 +40,19 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </Link>
                     </div>
                 </div>
+
+                <div className="m-8">
+                    <h2 className="py-4 text-center">About</h2>
+                    <p>
+                        This web application is intended to provide publicly available data regarding New Brunswick, Canada fishing regulations in an easily navigatable and user friendly format.
+                    </p>
+                    <p>
+                        At this time, the data presented in this web application is not intended to be used in any capactiy other than demonstration.
+                    </p>
+                    <p>
+                        Please feel free to view the <Link href="/public-app">Public App</Link> or sign up for an account to view the administrative back-end.
+                    </p>
+                </div>
             </div>
         </>
     );
