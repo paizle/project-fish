@@ -51,6 +51,8 @@
         tr {
             th {
                 text-align: left;
+                vertical-align: bottom;
+                display: table-cell;
                 @apply table-heading;
                 &:first-child {
                     padding-left: 0;
@@ -59,7 +61,6 @@
                     padding-right: 0;
                 }
 
-                vertical-align: bottom;
 
                 select {
                     max-width: 12em;
