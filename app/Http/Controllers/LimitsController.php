@@ -20,7 +20,7 @@ class LimitsController extends Controller
 {
     public function index()
     {
-        return Inertia::render('FishLimits/Index', [
+        return Inertia::render('FishLimits/FishLimits', [
             'fishLimits' => FishLimit::all(),
             'locations' => Indexer::indexBy(Location::all()),
             'fishCategories' => Indexer::indexBy(FishCategory::all()),
@@ -39,32 +39,32 @@ class LimitsController extends Controller
 
         $fish_limits_query = FishLimit::query();
 
-        if ($filters['locationId'] ?? null) {
-            $fish_limits_query->where('location_id', $filters['locationId']);
+        if ($filters['location_id'] ?? null) {
+            $fish_limits_query->where('location_id', $filters['location_id']);
         }
 
-        if ($filters['fishCategoryId'] ?? null) {
-            $fish_limits_query->where('fish_category_id', $filters['fishCategoryId']);
+        if ($filters['fish_category_id'] ?? null) {
+            $fish_limits_query->where('fish_category_id', $filters['fish_category_id']);
         }
 
-        if ($filters['fishId'] ?? null) {
-            $fish_limits_query->where('fish_id', $filters['fishId']);
+        if ($filters['fish_id'] ?? null) {
+            $fish_limits_query->where('fish_id', $filters['fish_id']);
         }
 
-        if ($filters['boundaryId'] ?? null) {
-            $fish_limits_query->where('boundary_id', $filters['boundaryId']);
+        if ($filters['boundary_id'] ?? null) {
+            $fish_limits_query->where('boundary_id', $filters['boundary_id']);
         }
 
-        if ($filters['waterCategoryId'] ?? null) {
-            $fish_limits_query->where('water_category_id', $filters['waterCategoryId']);
+        if ($filters['water_category_id'] ?? null) {
+            $fish_limits_query->where('water_category_id', $filters['water_category_id']);
         }
         
-        if ($filters['tidalCategoryId'] ?? null) {
-            $fish_limits_query->where('tidal_category_id', $filters['tidalCategoryId']);
+        if ($filters['tidal_category_id'] ?? null) {
+            $fish_limits_query->where('tidal_category_id', $filters['tidal_category_id']);
         }
 
-        if ($filters['waterId'] ?? null) {
-            $fish_limits_query->where('water_id', $filters['waterId']);
+        if ($filters['water_id'] ?? null) {
+            $fish_limits_query->where('water_id', $filters['water_id']);
         }
         
         $fish_limits = $fish_limits_query->get();

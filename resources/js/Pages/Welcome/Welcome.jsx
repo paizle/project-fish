@@ -31,7 +31,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </div>
                         </Link>
                         <div className="text-center animate-bounce">- or -</div>
-                        <Link href="/login">
+                        <Link href="/dashboard">
                             <div className="box">
                                 
                                 <UserIcon className="icon-color" />

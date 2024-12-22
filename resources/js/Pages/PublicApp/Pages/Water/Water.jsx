@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Water.scss';
 
 import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter';
@@ -6,18 +6,20 @@ import { useInternalRouting } from '../../Components/InternalRouter/InternalRout
 import DataTable from '@/Components/DataTable/DataTable';
 
 import config from '@/Util/config';
-import mySQLTimestampToDate from '@/Util/mySQLTimestampToDate';
 import { format } from 'date-fns';
+import parseMySqlDate from '@/Util/parseMySqlDate';
 
 export default function Water({ children, id, route, ...rest }) {
-    const [results, setResults] = React.useState([]);
+    const [results, setResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
 
     React.useEffect(() => {
-        console.log({ route });
-
-        axios.get(route(id, '')).then((result) => {
-            setResults(result.data.limits ?? []);
-        });
+        setIsLoading(true)
+        axios
+            .get(route(id, '')).then((result) => {
+                setResults(result.data.limits ?? []);
+            })
+            .finally(() => setIsLoading(false))
     }, []);
 
     const internalRouting = useInternalRouting();
@@ -27,27 +29,53 @@ export default function Water({ children, id, route, ...rest }) {
 
     const test = results;
 
+    const renderFishColumn = (row) => {
+
+        const fishName = row.fish.name
+
+        let extra = [];
+
+        if (row.tidal_category) {
+            extra.push(row.tidal_category.name + ' waters');
+        }
+
+        if (row.fishing_method) {
+            if (row.fishing_method.name  === 'May only be angled by artificial fly or baited barbless hook with a single point') {
+                extra.push('Fly Fishing')
+            } else {
+                extra.push(row.fishing_method.name)
+            }
+        }
+
+        return (
+            <>
+                {fishName}
+                {extra.map((text) => <span className="extra">({text})</span>)}
+            </>
+        )
+    }
+
     return (
         <div className="Water">
             <DataTable
+                isLoading={isLoading}
                 data={results}
                 uniqueKey="id"
                 schema={{
-                    Fish: (row) => row.fish?.name ?? '(all)',
+                    Fish: renderFishColumn,
+                    'Min Size': (row) => row.minimum_size ?? 'N/A',
+                    'Max Size': (row) => row.maximum_size ?? 'N/A',
+                    Limit: (row) => row.bag_limit ?? 'Unlimited',
                     'Season Start': (row) =>
                         format(
-                            mySQLTimestampToDate(row.season_start),
+                            parseMySqlDate(row.season_start),
                             config.displayDayMonthFormat,
                         ),
                     'Season End': (row) =>
                         format(
-                            mySQLTimestampToDate(row.season_end),
+                            parseMySqlDate(row.season_end),
                             config.displayDayMonthFormat,
                         ),
-                    Tidal: (row) => row.tidal_category_id ?? '(all)',
-                    Limit: (row) => row.bag_limit ?? 'Unlimited',
-                    'Min Size': (row) => row.minimum_size ?? 'N/A',
-                    'Max Size': (row) => row.maximum_size ?? 'N/A',
                 }}
             />
         </div>

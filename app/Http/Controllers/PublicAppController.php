@@ -3,9 +3,12 @@ namespace App\Http\Controllers;
 
 use App\Models\FishLimit;
 use App\Models\Location;
+use App\Models\Fish;
 
 use App\Util\Indexer;
 use Inertia\Inertia;
+
+use Illuminate\Database\Eloquent\Builder;
 
 class PublicAppController extends Controller
 {
@@ -56,34 +59,38 @@ class PublicAppController extends Controller
             $results_ids[] = $limit['id'];
 
             $related_limits = FishLimit::query()
-                ->where('waters_category_id', $limit['waters_category_id'])
-                ->where('location_id', $limit['location_id']);
+                ->where('water_id', null)
+                ->where('location_id', $limit['location_id'])
+                ->where(function (Builder $query) use ($limit) {
+                    $query
+                        ->where('waters_category_id', $limit['waters_category_id'])
+                        ->orWhereNull('waters_category_id');
+                });
 
             if ($limit['boundary_id']) {
-                $related_limits->where('boundary_id', $limit['boundary_id']);
+                $related_limits->where(function (Builder $query) use ($limit) {
+                    $query
+                        ->where('boundary_id', $limit['boundary_id'])
+                        ->orWhereNull('boundary_id');
+                });
             } else {
                 $test = true;
             }
             $related_limits = $related_limits->get();
 
             foreach($related_limits->toArray() as $related_limit) {
-                if ($related_limit['water_id'] === null) {
-                    // no specific water so this is a rule for the location
-                    $results_ids[] = $related_limit['id'];
-                }
+                // no specific water so this is a rule for the location
+                $results_ids[] = $related_limit['id'];
             }
         }
 
         $limits_by_water = FishLimit::query()
             ->whereIn('id', $results_ids)
-            ->with('fish')
-            ->with('fish_category')
-            ->with('water')
+            ->with(['fish', 'water', 'tidal_category', 'fishing_method'])
+            ->orderBy(Fish::select('name')->whereColumn('fish.id', 'fish_limits.fish_id'))
+            ->orderBy('season_start')
             ->get()
             ->toArray();
-
-        // sort array by limit->fish->name
-        usort($limits_by_water, fn($a, $b) => strcmp($a['fish']['name'], $b['fish']['name']));
 
         return ['limits' => $limits_by_water];
     }

@@ -99,7 +99,7 @@ export default function Login({ status, canResetPassword, canRegister }) {
                         )}
                     </div>
 
-                    <PrimaryButton disabled={processing}>
+                    <PrimaryButton className="whitespace-nowrap" disabled={processing}>
                         Log in
                     </PrimaryButton>
                 </div>

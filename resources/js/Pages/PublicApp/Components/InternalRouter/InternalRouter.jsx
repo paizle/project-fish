@@ -84,6 +84,7 @@ export function InternalLink({
     params = {},
     breadCrumb = null,
     children,
+    onClick,
     ...rest
 }) {
     const routing = useInternalRouting();
@@ -102,7 +103,12 @@ export function InternalLink({
     return (
         <button
             className="InternalLink"
-            onClick={(e) => setView(name, params)}
+            onClick={(e) => {
+                onClick?.(e)
+                if (!e.isDefaultPrevented()) {
+                    setView(name, params)
+                }
+            }}
             {...rest}
         >
             {children}

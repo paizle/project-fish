@@ -5,7 +5,7 @@ import AdminSubMenu from './partials/AdminSubMenu';
 
 export default function Edit({ locations }) {
     const sectionStatus = {
-        'Upper Saint John': {
+        'Lower Saint John': {
             hasData: true,
         },
         Southwest: {
@@ -39,7 +39,7 @@ export default function Edit({ locations }) {
 
                     <h4>
                         <span>Next Section to complete: </span>
-                        <strong>Lower Saint John</strong>
+                        <strong>Upper Saint John</strong>
                     </h4>
                 </div>
 
