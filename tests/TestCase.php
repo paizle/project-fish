@@ -10,8 +10,7 @@ abstract class TestCase extends BaseTestCase
 {
 
     protected static $seeded = false;
-
-    //
+    
     protected function setUp(): void
     {
         parent::setUp();

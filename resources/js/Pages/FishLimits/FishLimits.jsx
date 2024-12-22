@@ -20,7 +20,6 @@ export default function FishLimits({
     fishingMethods
 }) {
     
-
     const loadFishLimitsData = (filters) => {
         return axios
             .post(route('fishLimits.data'), { filters })
