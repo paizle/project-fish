@@ -1,3 +1,4 @@
+# from .gitignore
 /ignored
 /.phpunit.cache
 /node_modules
@@ -24,4 +25,9 @@ yarn-error.log
 /.zed
 *storybook.log
 /storybook-static
+
+# additional settings (not from .gitignore)
+
 artisan
+/storage/framework/views/
+/public/index.php
