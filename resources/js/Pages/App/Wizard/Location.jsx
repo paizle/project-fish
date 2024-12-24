@@ -1,13 +1,13 @@
-import WizardCard from '@/Components/WizardCard/WizardCard';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import WizardCard from '@/Components/WizardCard/WizardCard'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import { Head } from '@inertiajs/react'
 
-import BreadCrumb from './Partials/BreadCrumb/Breadcrumb';
+import BreadCrumb from './Partials/BreadCrumb/Breadcrumb'
 
 const images = {
     'Lakes, ponds and reservoirs': '/images/lake.png',
     'Rivers, brooks and streams': '/images/river.png',
-};
+}
 
 export default function Location({
     watersCategories,
@@ -34,5 +34,5 @@ export default function Location({
                 ))}
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

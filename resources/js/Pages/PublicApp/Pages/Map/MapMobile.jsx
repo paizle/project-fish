@@ -1,42 +1,44 @@
-import React, {useState, useEffect, useRef} from 'react';
-import './MapMobile.scss';
+import React, { useState, useEffect, useRef } from 'react'
+import './MapMobile.scss'
 
-import { InternalLink, useInternalRouting } from '../../Components/InternalRouter/InternalRouter';
+import {
+    InternalLink,
+    useInternalRouting,
+} from '../../Components/InternalRouter/InternalRouter'
 
-import { pathSelectorToLocationName } from '@/Components/NewBrunswickMap/NewBrunswickMap';
-import NewBrunswickMapMobile from '@/Components/NewBrunswickMap/NewBrunswickMapMobile';
+import { pathSelectorToLocationName } from '@/Components/NewBrunswickMap/NewBrunswickMap'
+import NewBrunswickMapMobile from '@/Components/NewBrunswickMap/NewBrunswickMapMobile'
 
 import { ArrowRightCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
 
 export default function MapMobile({ locations }) {
     const internalRouting = useInternalRouting()
-    const containerRef = useRef(null);
-    const locationTitlesRef = useRef(null);
+    const containerRef = useRef(null)
+    const locationTitlesRef = useRef(null)
 
-    const [selectedPathId, setSelectedPathId] = useState(null);
-    const selectedPathIdRef = useRef(selectedPathId);
+    const [selectedPathId, setSelectedPathId] = useState(null)
+    const selectedPathIdRef = useRef(selectedPathId)
 
     useEffect(() => {
-        selectedPathIdRef.current = selectedPathId;
-    }, [selectedPathId]);
+        selectedPathIdRef.current = selectedPathId
+    }, [selectedPathId])
 
     const locationsIndexed = locations.reduce((a, e) => {
-        a[e.name] = e;
-        return a;
-    }, {});
+        a[e.name] = e
+        return a
+    }, {})
 
     const getLocationFromPathId = (pathId) => {
-        const name = pathSelectorToLocationName[pathId];
-        const location = locationsIndexed[name];
-        return location;
-    };
+        const name = pathSelectorToLocationName[pathId]
+        const location = locationsIndexed[name]
+        return location
+    }
 
     function closeLocation(event) {
-        onTouchLocation(null, '');
+        onTouchLocation(null, '')
     }
 
     const onTouchLocation = (event, pathId) => {
-
         if (selectedPathIdRef?.current === pathId) {
             const location = getLocationFromPathId(pathId)
             internalRouting.setView('location', {
@@ -44,30 +46,29 @@ export default function MapMobile({ locations }) {
                 breadCrumb: {
                     position: 1,
                     label: location.name,
-                }
+                },
             })
-            
+
             internalRouting.updateBreadCrumb(1, {
-                        name: 'location',
-                        params: {id: location.id},
-                        content: location.name,
-                    });
-                
+                name: 'location',
+                params: { id: location.id },
+                content: location.name,
+            })
         }
 
         locationTitlesRef.current
             .querySelectorAll('.highlighted')
-            .forEach((element) => element.classList.remove('highlighted'));
+            .forEach((element) => element.classList.remove('highlighted'))
 
         if (pathId) {
-            locationTitlesRef.current.classList.add('selected');
+            locationTitlesRef.current.classList.add('selected')
             const title = locationTitlesRef.current.querySelector(
                 `[data-path-id=${pathId}]`,
-            );
-            title.classList.add('highlighted');
+            )
+            title.classList.add('highlighted')
             setSelectedPathId(pathId)
         } else {
-            locationTitlesRef.current.classList.remove('selected');
+            locationTitlesRef.current.classList.remove('selected')
             setSelectedPathId(null)
         }
     }
@@ -92,7 +93,11 @@ export default function MapMobile({ locations }) {
                                 <InternalLink
                                     name="location"
                                     onClick={(event) => {
-                                        if (!locationsIndexed?.[pathSelectorToLocationName[key]]?.hasData) {
+                                        if (
+                                            !locationsIndexed?.[
+                                                pathSelectorToLocationName[key]
+                                            ]?.hasData
+                                        ) {
                                             event.preventDefault()
                                             return false
                                         }
@@ -109,11 +114,11 @@ export default function MapMobile({ locations }) {
                                 >
                                     <h3>{pathSelectorToLocationName[key]}</h3>
                                     <em>
-                                        {
-                                            !locationsIndexed?.[
-                                                pathSelectorToLocationName[key]
-                                            ]?.hasData && (<strong>(no data)</strong>)
-                                        }
+                                        {!locationsIndexed?.[
+                                            pathSelectorToLocationName[key]
+                                        ]?.hasData && (
+                                            <strong>(no data)</strong>
+                                        )}
                                         {
                                             locationsIndexed?.[
                                                 pathSelectorToLocationName[key]
@@ -124,7 +129,8 @@ export default function MapMobile({ locations }) {
                             </li>
                         ))}
                     </ul>
-                    {selectedPathId && <InternalLink
+                    {selectedPathId && (
+                        <InternalLink
                             className="go"
                             name="location"
                             params={{
@@ -138,16 +144,14 @@ export default function MapMobile({ locations }) {
                             }}
                         >
                             {locationsIndexed?.[
-                                    pathSelectorToLocationName[selectedPathId]
-                                ].hasData
-                                    ? <ArrowRightCircleIcon />
-                                    : null
-                                
-                            }
-                            </InternalLink>
-                    }
+                                pathSelectorToLocationName[selectedPathId]
+                            ].hasData ? (
+                                <ArrowRightCircleIcon />
+                            ) : null}
+                        </InternalLink>
+                    )}
                 </div>
             </div>
         </div>
-    );
+    )
 }

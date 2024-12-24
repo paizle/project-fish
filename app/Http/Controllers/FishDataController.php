@@ -23,43 +23,42 @@ class FishDataController extends Controller
     public function locations()
     {
         return Inertia::render('Data/Locations', [
-            'data' => Location::get()
+            'data' => Location::get(),
         ]);
     }
-    
+
     public function fishCategories()
     {
         return Inertia::render('Data/FishCategories', [
-            'data' => FishCategory::get()
+            'data' => FishCategory::get(),
         ]);
     }
 
     public function fishes()
     {
         return Inertia::render('Data/Fishes', [
-            'data' => Fish::get()
+            'data' => Fish::get(),
         ]);
     }
 
     public function boundaries()
     {
         return Inertia::render('Data/Boundaries', [
-            'data' => Boundary::get()
+            'data' => Boundary::get(),
         ]);
     }
 
     public function waterCategories()
     {
         return Inertia::render('Data/WaterCategories', [
-            'data' => WatersCategory::get()
+            'data' => WatersCategory::get(),
         ]);
     }
 
     public function waters()
     {
         return Inertia::render('Data/Waters', [
-            'data' => Water::get()
+            'data' => Water::get(),
         ]);
     }
-
 }

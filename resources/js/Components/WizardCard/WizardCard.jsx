@@ -1,8 +1,8 @@
-import { Link } from '@inertiajs/react';
-import './WizardCard.scss';
+import { Link } from '@inertiajs/react'
+import './WizardCard.scss'
 
 export default function Card({ href, imageSrc, objectFit = null, children }) {
-    const style = objectFit ? { objectFit: objectFit } : null;
+    const style = objectFit ? { objectFit: objectFit } : null
 
     return (
         <Link
@@ -13,5 +13,5 @@ export default function Card({ href, imageSrc, objectFit = null, children }) {
             {imageSrc ? <img src={imageSrc} /> : null}
             <div>{children}</div>
         </Link>
-    );
+    )
 }

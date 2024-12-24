@@ -1,10 +1,10 @@
-import { ResponsivePie } from '@nivo/pie';
-import React from 'react';
+import { ResponsivePie } from '@nivo/pie'
+import React from 'react'
 
 export default function PieChartCompleteness({ complete, incomplete }) {
-    const [hoveredSlice, setHoveredSlice] = React.useState(null);
+    const [hoveredSlice, setHoveredSlice] = React.useState(null)
 
-    const data = [];
+    const data = []
 
     data.push(
         ...complete.map((e) => ({
@@ -12,13 +12,13 @@ export default function PieChartCompleteness({ complete, incomplete }) {
             value: 1,
             label: 'completed',
         })),
-    );
+    )
 
     data.push({
         id: 'Incomplete',
         value: incomplete.length,
         label: incomplete.map((e) => e.name).join('<br />'),
-    });
+    })
 
     return (
         <div style={{ height: 300, width: '100%', textAlign: 'center' }}>
@@ -67,12 +67,12 @@ export default function PieChartCompleteness({ complete, incomplete }) {
                 }
             />
         </div>
-    );
+    )
 }
 
 function renderTooltip({ datum }) {
     return (
-        <div className="rounded-md bg-white p-2 shadow opacity-90">
+        <div className="rounded-md bg-white p-2 opacity-90 shadow">
             <strong>{datum.id}</strong>
             {datum.label ? (
                 <>
@@ -81,5 +81,5 @@ function renderTooltip({ datum }) {
                 </>
             ) : null}
         </div>
-    );
+    )
 }

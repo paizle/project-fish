@@ -61,7 +61,11 @@ export default function MapWeb({ locations }) {
                         <li key={key} data-path-id={key}>
                             <InternalLink
                                 onClick={(event) => {
-                                    if (!locationsIndexed?.[pathSelectorToLocationName[key]]?.hasData) {
+                                    if (
+                                        !locationsIndexed?.[
+                                            pathSelectorToLocationName[key]
+                                        ]?.hasData
+                                    ) {
                                         event.preventDefault()
                                         return false
                                     }
@@ -95,11 +99,9 @@ export default function MapWeb({ locations }) {
                             >
                                 <h3>{pathSelectorToLocationName[key]}</h3>
                                 <em>
-                                    {
-                                        !locationsIndexed?.[
-                                            pathSelectorToLocationName[key]
-                                        ]?.hasData && (<strong>(no data)</strong>)
-                                    }
+                                    {!locationsIndexed?.[
+                                        pathSelectorToLocationName[key]
+                                    ]?.hasData && <strong>(no data)</strong>}
                                     {
                                         locationsIndexed?.[
                                             pathSelectorToLocationName[key]

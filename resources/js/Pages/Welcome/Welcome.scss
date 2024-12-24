@@ -1,7 +1,6 @@
 @use '/resources/css/app.scss';
 
 .Welcome {
-    
     display: flex;
     flex-direction: column;
 
@@ -19,7 +18,7 @@
         align-items: stretch;
         justify-content: center;
         gap: 2em;
-        
+
         @screen sm {
             flex-direction: row;
             align-items: center;

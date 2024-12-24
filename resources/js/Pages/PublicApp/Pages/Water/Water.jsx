@@ -1,46 +1,49 @@
-import React, { useState } from 'react';
-import './Water.scss';
+import React, { useState } from 'react'
+import './Water.scss'
 
-import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter';
+import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter'
 
-import DataTable from '@/Components/DataTable/DataTable';
+import DataTable from '@/Components/DataTable/DataTable'
 
-import config from '@/Util/config';
-import { format } from 'date-fns';
-import parseMySqlDate from '@/Util/parseMySqlDate';
+import config from '@/Util/config'
+import { format } from 'date-fns'
+import parseMySqlDate from '@/Util/parseMySqlDate'
 
 export default function Water({ children, id, route, ...rest }) {
-    const [results, setResults] = useState([]);
+    const [results, setResults] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
     React.useEffect(() => {
         setIsLoading(true)
         axios
-            .get(route(id, '')).then((result) => {
-                setResults(result.data.limits ?? []);
+            .get(route(id, ''))
+            .then((result) => {
+                setResults(result.data.limits ?? [])
             })
             .finally(() => setIsLoading(false))
-    }, []);
+    }, [])
 
-    const internalRouting = useInternalRouting();
+    const internalRouting = useInternalRouting()
     React.useEffect(() => {
-        internalRouting.setLoading(false);
-    }, []);
+        internalRouting.setLoading(false)
+    }, [])
 
-    const test = results;
+    const test = results
 
     const renderFishColumn = (row) => {
-
         const fishName = row.fish.name
 
-        let extra = [];
+        let extra = []
 
         if (row.tidal_category) {
-            extra.push(row.tidal_category.name + ' waters');
+            extra.push(row.tidal_category.name + ' waters')
         }
 
         if (row.fishing_method) {
-            if (row.fishing_method.name  === 'May only be angled by artificial fly or baited barbless hook with a single point') {
+            if (
+                row.fishing_method.name ===
+                'May only be angled by artificial fly or baited barbless hook with a single point'
+            ) {
                 extra.push('Fly Fishing')
             } else {
                 extra.push(row.fishing_method.name)
@@ -50,7 +53,9 @@ export default function Water({ children, id, route, ...rest }) {
         return (
             <>
                 {fishName}
-                {extra.map((text) => <span className="extra">({text})</span>)}
+                {extra.map((text) => (
+                    <span className="extra">({text})</span>
+                ))}
             </>
         )
     }
@@ -79,5 +84,5 @@ export default function Water({ children, id, route, ...rest }) {
                 }}
             />
         </div>
-    );
+    )
 }

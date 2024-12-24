@@ -30,16 +30,18 @@
             &.selected {
                 transform: translateY(0);
                 opacity: 1;
-                button.go, button.close {
+                button.go,
+                button.close {
                     display: block;
                 }
             }
 
-            button.go, button.close {
+            button.go,
+            button.close {
                 display: none;
                 position: absolute;
                 z-index: 2;
-                top: .7em;
+                top: 0.7em;
                 width: 1.75em;
                 height: 1.75em;
                 color: var(--icon-color);
@@ -48,11 +50,11 @@
             }
             button.go {
                 right: -1em;
-            } 
+            }
             button.close {
                 left: -1em;
             }
-            
+
             ul li {
                 display: none;
                 &.highlighted {

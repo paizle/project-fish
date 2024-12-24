@@ -1,122 +1,149 @@
 @use '/resources/css/app.scss';
 
 .DataTableWithOperations {
+    overflow-x: auto;
     width: 100%;
-    position: relative;
+    background-color: var(--background-color);
 
-    caption {
-        text-align: left;
+    &.sticky-headers {
+        height: 100%;
 
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            gap: .5em;
-            margin: .5em 0;
-            label {
-                display: flex;
-                gap: .4em;
-                border-radius: .25em;
-                padding: .25em .5em;
-                background-color: var(--highlight-color);
-                &:hover {
-                    background-color: var(--highlight-color-translucent);
-                }
-                align-items: center;
-                color: var(--highlight-color-contrast);
-                span {
-                    font-size: .85em;
-                    max-width: 16em;
-                }
-                button {
-                    width: 1em;
-                    height: 1em;
-                    svg {
-                        path {
-                            stroke: currentColor;
-                            stroke-width: 2 !important;
-                        }
-                    } 
-                }
+        table {
+            overflow-x: visible;
+            overflow-y: visible;
+
+            thead {
+                position: sticky;
+                top: 0;
+                background-color: var(--background-color);
+            }
+
+            tbody {
+                overflow-y: auto;
             }
         }
     }
 
-    th,
-    td {
-        padding: 0 0.25em;
-    }
+    table {
+        width: 100%;
+        position: relative;
 
-    thead {
-        tr {
-            th {
-                text-align: left;
-                vertical-align: top;
+        caption,
+        .caption {
+            text-align: left;
 
-                @apply table-heading;
-                
-                &:first-child {
-                    padding-left: 0;
-                }
-                &:last-child {
-                    padding-right: 0;
-                }
-
-                select {
-                    max-width: 12em;
-                }
-
-                .cell-container {
+            .filters {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+                gap: 0.5em;
+                margin: 0.5em 0;
+                label {
+                    cursor: pointer;
                     display: flex;
-                    flex-direction: column;
-                    flex-wrap: wrap;
-                    
-                    @screen sm {
-                        display: block;
-                        .action-container {
-                            float: right;
-                            padding-top: 2px;
-                            button {
-                                font-size: 1.15em !important;
-                                float: right;
-                            }
-                        }
+                    gap: 0.4em;
+                    border-radius: 0.25em;
+                    padding: 0.25em 0.5em;
+                    background-color: var(--highlight-color);
+                    &:hover {
+                        background-color: var(--highlight-color-translucent);
                     }
-
-                    .action-container {
-                        display: inline-flex;
-                        flex-wrap: wrap;
-                        justify-content: left;
-                        
-                        button {
-                            font-size: 1.5em;
-                            display: inline-flex;
-                            justify-content: center;
-                            width: 1.2em;
-                            height: 1.2em;
-                            color: var(--highlight-color-translucent);
-                            &:hover {
-                                color: var(--highlight-color);    
-                            }
-                        }
-                        .filter {
-                            svg {
-                                transform: translate(1px, 2px);
-                                width: 1em;
-                                height: 1em;
+                    align-items: center;
+                    color: var(--highlight-color-contrast);
+                    span {
+                        font-size: 0.85em;
+                        max-width: 16em;
+                    }
+                    button {
+                        width: 1em;
+                        height: 1em;
+                        svg {
+                            path {
                                 stroke: currentColor;
                                 stroke-width: 2 !important;
                             }
                         }
-                        
-                        .sorting {
-                            svg {
-                                transform: translateX(1px);
+                    }
+                }
+            }
+        }
+
+        th,
+        td {
+            padding: 0 0.25em;
+        }
+
+        thead {
+            tr {
+                th {
+                    text-align: left;
+                    vertical-align: top;
+
+                    @apply table-heading;
+
+                    &:first-child {
+                        padding-left: 0;
+                    }
+                    &:last-child {
+                        padding-right: 0;
+                    }
+
+                    select {
+                        max-width: 12em;
+                    }
+
+                    .cell-container {
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+
+                        @screen sm {
+                            display: block;
+                            .action-container {
+                                float: right;
+                                padding-top: 2px;
+                                button {
+                                    font-size: 1.15em !important;
+                                    float: right;
+                                }
+                            }
+                        }
+
+                        .action-container {
+                            display: inline-flex;
+                            flex-wrap: wrap;
+                            justify-content: left;
+
+                            button {
+                                font-size: 1.5em;
+                                display: inline-flex;
+                                justify-content: center;
                                 width: 1.2em;
                                 height: 1.2em;
-                                path {
+                                color: var(--highlight-color-translucent);
+                                &:hover {
+                                    color: var(--highlight-color);
+                                }
+                            }
+                            .filter {
+                                svg {
+                                    transform: translate(1px, 2px);
+                                    width: 1em;
+                                    height: 1em;
                                     stroke: currentColor;
                                     stroke-width: 2 !important;
+                                }
+                            }
+
+                            .sorting {
+                                svg {
+                                    transform: translateX(1px);
+                                    width: 1.2em;
+                                    height: 1.2em;
+                                    path {
+                                        stroke: currentColor;
+                                        stroke-width: 2 !important;
+                                    }
                                 }
                             }
                         }
@@ -124,53 +151,52 @@
                 }
             }
         }
-    }
 
-    tbody {
-        tr {
-            &:nth-child(odd) {
-                td {
-                    background-color: var(--highlight-color-transparent);
-                }
-            }
-            td:first-child {
-                padding-left: 0;
-            }
-            td:last-child {
-                padding-right: 0;
-            }
-        }
-    }
-
-    tfoot tr {
-        td.no-data {
-            text-align: center;
-            padding: 1em 0;
-        }
-        td.loading {
-            padding: 1em 0;
-            div.spinner-backdrop {
-                pointer-events: none;
-                position: absolute;
-                z-index: 2;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                
-                min-height: 2em;
-                color: var(--highlight-color);
-                background-color: var(--background-color);
-                opacity: .7;
-                .spinner-wrapper {
-                    padding-top: 4em;
-                    svg {
-                        width: 5em;
-                        height: 5em;
+        tbody {
+            tr {
+                &:nth-child(odd) {
+                    td {
+                        background-color: var(--highlight-color-transparent);
                     }
                 }
+                td:first-child {
+                    padding-left: 0;
+                }
+                td:last-child {
+                    padding-right: 0;
+                }
+            }
+        }
+
+        tfoot tr {
+            td.no-data {
+                text-align: center;
+                padding: 1em 0;
+                height: 100%;
+            }
+        }
+    }
+
+    div.spinner-backdrop {
+        pointer-events: none;
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 2em;
+        color: var(--highlight-color);
+        background-color: var(--background-color);
+        opacity: 0.7;
+        .spinner-wrapper {
+            padding-top: 4em;
+            svg {
+                width: 5em;
+                height: 5em;
             }
         }
     }

@@ -1,8 +1,8 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import BreadCrumb from './Partials/BreadCrumb/Breadcrumb';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import { Head } from '@inertiajs/react'
+import BreadCrumb from './Partials/BreadCrumb/Breadcrumb'
 
-import './Wizard.scss';
+import './Wizard.scss'
 
 export default function FishCategory({ fishLimits, wizardBreadcrumb }) {
     return (
@@ -49,11 +49,11 @@ export default function FishCategory({ fishLimits, wizardBreadcrumb }) {
                 </div>
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }
 
 function renderWaters(fishLimit) {
-    let result = null;
+    let result = null
 
     if (fishLimit.water) {
         if (fishLimit.boundary) {
@@ -66,17 +66,17 @@ function renderWaters(fishLimit) {
                             {fishLimit.tidal_category.name}
                         </em>
                     </>
-                );
+                )
             } else {
                 return (
                     <>
                         {fishLimit.water.name}{' '}
                         <em>({fishLimit.boundary.name})</em>
                     </>
-                );
+                )
             }
         } else {
-            return <>{fishLimit.water.name}</>;
+            return <>{fishLimit.water.name}</>
         }
     } else {
         if (fishLimit.boundary) {
@@ -88,13 +88,13 @@ function renderWaters(fishLimit) {
                             {fishLimit.tidal_category.name}
                         </em>
                     </>
-                );
+                )
             } else {
                 return (
                     <>
                         <em>{fishLimit.boundary.name}</em>
                     </>
-                );
+                )
             }
         } else {
             if (fishLimit.tidal_category) {
@@ -102,12 +102,12 @@ function renderWaters(fishLimit) {
                     <>
                         <em>{fishLimit.tidal_category.name}</em>
                     </>
-                );
+                )
             }
         }
     }
 
-    return <strong>All</strong>;
+    return <strong>All</strong>
 }
 
 function renderRow(limit) {
@@ -120,5 +120,5 @@ function renderRow(limit) {
             <div>5</div>
             <div> 6</div>
         </>
-    );
+    )
 }

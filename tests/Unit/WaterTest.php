@@ -18,7 +18,11 @@ class WaterTest extends TestCase
         $actualCount = Water::count();
 
         // Assert that the count matches the expected value
-        $this->assertTrue($actualCount >= $expectedAtLeastCount, 'The water count does not contain at least ' . $expectedAtLeastCount . ' record.');
+        $this->assertTrue(
+            $actualCount >= $expectedAtLeastCount,
+            'The water count does not contain at least ' .
+                $expectedAtLeastCount .
+                ' record.'
+        );
     }
-
 }

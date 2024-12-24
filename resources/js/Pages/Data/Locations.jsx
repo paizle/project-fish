@@ -1,10 +1,10 @@
-import DataTable from '@/Components/DataTable/DataTable';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import config from '@/Util/config';
-import mySQLTimestampToDate from '@/Util/mySQLTimestampToDate';
-import { Head } from '@inertiajs/react';
-import { format } from 'date-fns';
-import DataSubmenu from './Partials/DataSubmenu/DataSubmenu';
+import DataTable from '@/Components/DataTable/DataTable'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import config from '@/Util/config'
+import mySQLTimestampToDate from '@/Util/mySQLTimestampToDate'
+import { Head } from '@inertiajs/react'
+import { format } from 'date-fns'
+import DataSubmenu from './Partials/DataSubmenu/DataSubmenu'
 
 export default function Locations({ data }) {
     return (
@@ -31,5 +31,5 @@ export default function Locations({ data }) {
                 />
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

@@ -8,8 +8,10 @@ export default function Storybook({ locations }) {
         <AuthenticatedLayout header={<AdminSubMenu />}>
             <Head title="Project: FISH" />
 
-            <iframe className="Storybook" src="/storybook-static/index.html"></iframe>
-           
+            <iframe
+                className="Storybook"
+                src="/storybook-static/index.html"
+            ></iframe>
         </AuthenticatedLayout>
-    );
+    )
 }

@@ -1,7 +1,7 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import AdminSubMenu from '../partials/AdminSubMenu';
-import './StyleGuide.scss';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import { Head } from '@inertiajs/react'
+import AdminSubMenu from '../partials/AdminSubMenu'
+import './StyleGuide.scss'
 
 export default function StyleGuide() {
     return (
@@ -97,5 +97,5 @@ export default function StyleGuide() {
                 </div>
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }
