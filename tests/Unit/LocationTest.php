@@ -18,7 +18,11 @@ class LocationTest extends TestCase
         $actualCount = Location::count();
 
         // Assert that the count matches the expected value
-        $this->assertTrue($actualCount >= $expectedAtLeastCount, 'The Location count does not contain at least ' . $expectedAtLeastCount . ' record.');
+        $this->assertTrue(
+            $actualCount >= $expectedAtLeastCount,
+            'The Location count does not contain at least ' .
+                $expectedAtLeastCount .
+                ' record.'
+        );
     }
-
 }

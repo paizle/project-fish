@@ -1,27 +1,39 @@
 @use '/resources/css/app.scss';
-
 .FishLimits {
+    height: 100%;
+
+    .box {
+        height: 100%;
+        padding-top: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+
     .DataTableWithOperations {
+        thead tr.caption th {
+            @screen sm {
+                padding-top: 1em;
+            }
+        }
         thead tr {
             th select {
                 display: block;
             }
-            th.Location, th.Boundary, th.WatersCategory, th.Tidal, th.Waterbody, 
-            th.WaterStretch, th.FishingMethod, th.Note {
+            th.Location,
+            th.Boundary,
+            th.WatersCategory,
+            th.Tidal,
+            th.Waterbody,
+            th.WaterStretch,
+            th.FishingMethod,
+            th.Note {
                 @screen sm {
-                    span {
+                    span.heading-container {
                         display: block;
                         padding-right: 1.5em;
                     }
                 }
             }
         }
-        
-        tbody tr {
-            td:nth-child(1) {
-               
-            }
-        }
     }
-    
 }

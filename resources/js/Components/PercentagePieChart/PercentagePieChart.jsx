@@ -1,5 +1,5 @@
-import { ResponsivePie } from '@nivo/pie';
-import React from 'react';
+import { ResponsivePie } from '@nivo/pie'
+import React from 'react'
 
 export default function PercentagePieChart({
     caption = '',
@@ -7,19 +7,19 @@ export default function PercentagePieChart({
     of = 1,
     sectionsLeft = [],
 }) {
-    const [hoveredSlice, setHoveredSlice] = React.useState(null);
+    const [hoveredSlice, setHoveredSlice] = React.useState(null)
 
     // Calculate percentage and prepare data
-    const percentage = ((of / count) * 100).toFixed(2);
+    const percentage = ((of / count) * 100).toFixed(2)
     const data = [
         { id: 'Completed', value: count },
         { id: 'Remaining', value: of - count, label: '!!!' },
-    ];
+    ]
 
     data.push({
         id: 'Test',
         value: 1,
-    });
+    })
 
     return (
         <div style={{ height: 400, textAlign: 'center' }}>
@@ -68,5 +68,5 @@ export default function PercentagePieChart({
                 }
             />
         </div>
-    );
+    )
 }

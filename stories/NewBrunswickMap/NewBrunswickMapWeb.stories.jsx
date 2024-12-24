@@ -1,11 +1,11 @@
-import NewBrunswickMapWeb from "@/Components/NewBrunswickMap/NewBrunswickMapWeb";
+import NewBrunswickMapWeb from '@/Components/NewBrunswickMap/NewBrunswickMapWeb'
 
 export default {
-  title: 'Example/NewBrunswickMap/NewBrunswickMapWeb',
-  component: NewBrunswickMapWeb,
-};
+    title: 'Example/NewBrunswickMap/NewBrunswickMapWeb',
+    component: NewBrunswickMapWeb,
+}
 
-const Template = (args) => <NewBrunswickMapWeb {...args} />;
+const Template = (args) => <NewBrunswickMapWeb {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {}

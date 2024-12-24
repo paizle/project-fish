@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
-import PublicAppNavigation from './PublicAppNavigation';
+import ApplicationLogo from '@/Components/ApplicationLogo'
+import Dropdown from '@/Components/Dropdown'
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink/ResponsiveNavLink'
+import { Link } from '@inertiajs/react'
+import PublicAppNavigation from './PublicAppNavigation'
 
 export default function PublicAppMenu({ children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        React.useState(false);
+        React.useState(false)
 
     return (
         <nav className="PublicAppMenu">
@@ -152,5 +152,5 @@ export default function PublicAppMenu({ children }) {
                 </div>
             </div>
         </nav>
-    );
+    )
 }

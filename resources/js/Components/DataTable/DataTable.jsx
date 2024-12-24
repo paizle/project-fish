@@ -1,5 +1,5 @@
-import './DataTable.scss';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import './DataTable.scss'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 export default function DataTable({
     className = '',
@@ -10,7 +10,6 @@ export default function DataTable({
     uniqueKey = 'id',
     ...props
 }) {
-
     function renderFooter() {
         if (isLoading) {
             return (
@@ -36,7 +35,6 @@ export default function DataTable({
                 </tr>
             )
         }
-
     }
 
     return (
@@ -46,48 +44,48 @@ export default function DataTable({
                     {Object.keys(schema).map((column) => {
                         return schema[column] ? (
                             <th key={column}>{column}</th>
-                        ) : null;
+                        ) : null
                     })}
                 </tr>
             </thead>
             <tbody>{renderTBody(children, data, schema, uniqueKey)}</tbody>
-            <tfoot>
-                {renderFooter()}
-            </tfoot>
+            <tfoot>{renderFooter()}</tfoot>
         </table>
-    );
+    )
 }
-
-
 
 function renderTBody(children, data, schema, uniqueKey) {
     switch (typeof children) {
-        case 'function': return data.map((row, index) => children(row, index))
+        case 'function':
+            return data.map((row, index) => children(row, index))
 
         default:
             return data.map((row, index) => {
-                const key = typeof schema[uniqueKey] === "function" 
-                    ? schema[uniqueKey](row, index) 
-                    : row[uniqueKey]
-                    
+                const key =
+                    typeof schema[uniqueKey] === 'function'
+                        ? schema[uniqueKey](row, index)
+                        : row[uniqueKey]
+
                 return (
                     <tr key={key}>
                         {Object.keys(schema).map((column) => {
                             switch (typeof schema[column]) {
                                 case 'function':
                                     return (
-                                        <td key={column}>{schema[column](row, index)}</td>
+                                        <td key={column}>
+                                            {schema[column](row, index)}
+                                        </td>
                                     )
                                 default:
-                                    return schema[column] 
-                                        ? (
-                                            <td key={column}>{row[schema[column]]}</td>
-                                        ) 
-                                        : null;
+                                    return schema[column] ? (
+                                        <td key={column}>
+                                            {row[schema[column]]}
+                                        </td>
+                                    ) : null
                             }
                         })}
                     </tr>
-                )}
-            );
+                )
+            })
     }
 }

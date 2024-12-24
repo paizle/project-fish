@@ -19,7 +19,11 @@ class FishLimitTest extends TestCase
         $actualCount = FishLimit::count();
 
         // Assert that the count matches the expected value
-        $this->assertTrue($actualCount >= $expectedAtLeastCount, 'The FishLimit count does not contain at least ' . $expectedAtLeastCount . ' record.');
+        $this->assertTrue(
+            $actualCount >= $expectedAtLeastCount,
+            'The FishLimit count does not contain at least ' .
+                $expectedAtLeastCount .
+                ' record.'
+        );
     }
-
 }

@@ -1,5 +1,5 @@
-import { Link } from '@inertiajs/react';
-import './NavLink.scss';
+import { Link } from '@inertiajs/react'
+import './NavLink.scss'
 
 export default function NavLink({
     active = false,
@@ -18,5 +18,5 @@ export default function NavLink({
         >
             {children}
         </Link>
-    );
+    )
 }

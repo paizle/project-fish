@@ -9,33 +9,44 @@ class FishLimit extends Model
 {
     use HasFactory;
 
-
-    public static function getOrInitialize(FishLimit $fishLimit) {
-
+    public static function getOrInitialize(FishLimit $fishLimit)
+    {
         $a = $fishLimit->location->id;
         $b = $fishLimit->boundary->id;
         $c = $fishLimit->waters_category->id;
         $d = $fishLimit->fish->id;
 
-        $query = FishLimit::whereRelation("location", "location_id", $fishLimit->location->id)
-            ->whereRelation("fish_category", "fish_category_id", $fishLimit->fish_category->id)
-            ->whereRelation("boundary", "boundary_id", $fishLimit->boundary->id)
-            ->whereRelation("waters_category", "waters_category_id", $fishLimit->waters_category->id);
+        $query = FishLimit::whereRelation(
+            'location',
+            'location_id',
+            $fishLimit->location->id
+        )
+            ->whereRelation(
+                'fish_category',
+                'fish_category_id',
+                $fishLimit->fish_category->id
+            )
+            ->whereRelation('boundary', 'boundary_id', $fishLimit->boundary->id)
+            ->whereRelation(
+                'waters_category',
+                'waters_category_id',
+                $fishLimit->waters_category->id
+            );
 
         if ($fishLimit->fish === null) {
             $query->whereNull('fish_id');
         } else {
-            $query->whereRelation("fish", "fish_id", $fishLimit->fish->id);
+            $query->whereRelation('fish', 'fish_id', $fishLimit->fish->id);
         }
 
         if ($fishLimit->water === null) {
             $query->whereNull('water_id');
         } else {
-            $query->whereRelation("water", "water_id", $fishLimit->water->id);
+            $query->whereRelation('water', 'water_id', $fishLimit->water->id);
         }
 
         $record = $query->first();
-        
+
         if (!$record) {
             $record = new FishLimit();
             $record->location()->associate($fishLimit->location);
@@ -57,7 +68,7 @@ class FishLimit extends Model
 
     /**
      * Gets the existing entry from the DB or creates one.
-     * 
+     *
      * @param \App\Models\Location $location
      * @param \App\Models\FishCategory $fish_category
      * @param \App\Models\Fish|null $fish
@@ -74,14 +85,19 @@ class FishLimit extends Model
         Fish $fish = null,
         Boundary $boundary = null,
         WatersCategory $waters_category = null,
-        Water $water = null, 
-        TidalCategory $tidal_category = null, 
+        Water $water = null,
+        TidalCategory $tidal_category = null,
         FishingMethod $fishing_method = null
     ) {
-
-        $query = FishLimit
-            ::whereRelation("location", "location_id", $location->id)
-            ->whereRelation("fish_category", "fish_category_id", $fish_category->id);
+        $query = FishLimit::whereRelation(
+            'location',
+            'location_id',
+            $location->id
+        )->whereRelation(
+            'fish_category',
+            'fish_category_id',
+            $fish_category->id
+        );
 
         if ($boundary === null) {
             $query->whereNull('boundary_id');
@@ -92,35 +108,47 @@ class FishLimit extends Model
         if ($fish === null) {
             $query->whereNull('fish_id');
         } else {
-            $query->whereRelation("fish", "fish_id", $fish->id);
+            $query->whereRelation('fish', 'fish_id', $fish->id);
         }
 
         if ($waters_category === null) {
             $query->whereNull('waters_category_id');
         } else {
-            $query->whereRelation("waters_category", "waters_category_id", $waters_category->id);
+            $query->whereRelation(
+                'waters_category',
+                'waters_category_id',
+                $waters_category->id
+            );
         }
 
         if ($water === null) {
             $query->whereNull('water_id');
         } else {
-            $query->whereRelation("water", "water_id", $water->id);
+            $query->whereRelation('water', 'water_id', $water->id);
         }
 
         if ($tidal_category === null) {
             $query->whereNull('tidal_category_id');
         } else {
-            $query->whereRelation("tidal_category", "tidal_category_id", $tidal_category->id);
+            $query->whereRelation(
+                'tidal_category',
+                'tidal_category_id',
+                $tidal_category->id
+            );
         }
 
         if ($fishing_method === null) {
             $query->whereNull('fishing_method_id');
         } else {
-            $query->whereRelation("fishing_method", "fishing_method_id", $fishing_method->id);
+            $query->whereRelation(
+                'fishing_method',
+                'fishing_method_id',
+                $fishing_method->id
+            );
         }
 
         $record = $query->first();
-        
+
         if (!$record) {
             $record = new FishLimit();
             $record->location()->associate($location);
@@ -136,49 +164,69 @@ class FishLimit extends Model
         return $record;
     }
 
-    public function location() {
+    public function location()
+    {
         return $this->belongsTo(Location::class);
     }
 
-    public function fish_category() {
+    public function fish_category()
+    {
         return $this->belongsTo(FishCategory::class);
     }
 
-    public function fish() {
+    public function fish()
+    {
         return $this->belongsTo(Fish::class);
     }
 
-    public function boundary() {
+    public function boundary()
+    {
         return $this->belongsTo(Boundary::class);
     }
 
-    public function waters_category() {
+    public function waters_category()
+    {
         return $this->belongsTo(WatersCategory::class);
     }
 
-    public function water() {
+    public function water()
+    {
         return $this->belongsTo(Water::class);
     }
 
-    public function tidal_category() {
+    public function tidal_category()
+    {
         return $this->belongsTo(TidalCategory::class);
     }
 
-    public function fishing_method() {
+    public function fishing_method()
+    {
         return $this->belongsTo(FishingMethod::class);
     }
 
     protected $fillable = [
-        'location', 'location_id',
-        'fish_category', 'fish_category_id',
-        'fish', 'fish_id',
-        'boundary', 'boundary_id',
-        'waters_category', 'waters_category_id',
-        'water', 'water_id',
+        'location',
+        'location_id',
+        'fish_category',
+        'fish_category_id',
+        'fish',
+        'fish_id',
+        'boundary',
+        'boundary_id',
+        'waters_category',
+        'waters_category_id',
+        'water',
+        'water_id',
         'water_description',
-        'tidal_category', 'tidal_category_id',
+        'tidal_category',
+        'tidal_category_id',
         'fishing_method',
         'fishing_method_id',
-        'season_start', 'season_end', 'bag_limit', 'minimum_size', 'maximum_size', 'note'
+        'season_start',
+        'season_end',
+        'bag_limit',
+        'minimum_size',
+        'maximum_size',
+        'note',
     ];
 }

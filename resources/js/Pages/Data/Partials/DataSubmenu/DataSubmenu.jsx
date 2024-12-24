@@ -1,4 +1,4 @@
-import NavLink from '@/Components/NavLink/NavLink';
+import NavLink from '@/Components/NavLink/NavLink'
 
 export default function DataSubmenu() {
     return (
@@ -45,5 +45,5 @@ export default function DataSubmenu() {
                 Waters
             </NavLink>
         </div>
-    );
+    )
 }

@@ -1,24 +1,24 @@
-import React from 'react';
-import './Location.scss';
+import React from 'react'
+import './Location.scss'
 
 import {
     InternalLink,
     useInternalRouting,
-} from '../../Components/InternalRouter/InternalRouter';
+} from '../../Components/InternalRouter/InternalRouter'
 
 export default function Location({ children, id, route, ...rest }) {
-    const [results, setResults] = React.useState([]);
+    const [results, setResults] = React.useState([])
 
-    const [filteredResults, setFilteredResults] = React.useState([]);
+    const [filteredResults, setFilteredResults] = React.useState([])
 
-    const [waterName, setWaterName] = React.useState('');
+    const [waterName, setWaterName] = React.useState('')
 
-    const resultsRef = React.useRef(null);
+    const resultsRef = React.useRef(null)
 
     const changeWaterName = (e) => {
-        const value = e.target.value;
-        setWaterName(value);
-        console.log(value);
+        const value = e.target.value
+        setWaterName(value)
+        console.log(value)
         if (value.length) {
             const newFilteredResults = results.filter((result) =>
                 result.water
@@ -26,36 +26,36 @@ export default function Location({ children, id, route, ...rest }) {
                           .toLowerCase()
                           .includes(value.trim().toLowerCase())
                     : false,
-            );
-            setFilteredResults(newFilteredResults);
+            )
+            setFilteredResults(newFilteredResults)
         } else {
-            setFilteredResults([]);
+            setFilteredResults([])
         }
-    };
+    }
 
     React.useEffect(() => {
         if (resultsRef.current) {
-            const size = 28;
+            const size = 28
             if (waterName && filteredResults.length === 0) {
                 //resultsRef.current.style.height = size + 'px'
             } else {
                 //resultsRef.current.style.height = filteredResults.length * size + 'px'
             }
         }
-    }, [filteredResults, waterName]);
+    }, [filteredResults, waterName])
 
     React.useEffect(() => {
-        console.log({ route });
+        console.log({ route })
 
         axios.get(route(id, '')).then((result) => {
-            setResults(result.data.limits ?? []);
-        });
-    }, []);
+            setResults(result.data.limits ?? [])
+        })
+    }, [])
 
-    const internalRouting = useInternalRouting();
+    const internalRouting = useInternalRouting()
     React.useEffect(() => {
-        internalRouting.setLoading(false);
-    }, []);
+        internalRouting.setLoading(false)
+    }, [])
 
     return (
         <div className="Location">
@@ -96,5 +96,5 @@ export default function Location({ children, id, route, ...rest }) {
                 </ul>
             </div>
         </div>
-    );
+    )
 }

@@ -22,7 +22,7 @@ class AdminController extends Controller
     public function dataHealth(Request $request): Response
     {
         return Inertia::render('Admin/DataHealth', [
-            'locations' => Location::all()
+            'locations' => Location::all(),
         ]);
     }
 
@@ -30,5 +30,4 @@ class AdminController extends Controller
     {
         return Inertia::render('Admin/StyleGuide/StyleGuide', []);
     }
-
 }

@@ -11,7 +11,6 @@ class ImportDatabaseSeeder extends Seeder
 {
     public function run()
     {
-
         $mysqlDumpDatabase = env('DB_EXPORT_DATABASE');
         $mysqlDumpUser = env('DB_EXPORT_USERNAME');
         $mysqlDumpPassword = env('DB_EXPORT_PASSWORD');
@@ -29,7 +28,7 @@ class ImportDatabaseSeeder extends Seeder
             escapeshellarg($mysqlDumpUser),
             escapeshellarg($mysqlDumpPassword),
             escapeshellarg($mysqlDumpDatabase),
-            escapeshellarg( $dumpFile)
+            escapeshellarg($dumpFile)
         );
 
         $this->runCommand($mysqldumpCommand);
@@ -57,7 +56,9 @@ class ImportDatabaseSeeder extends Seeder
         exec($command, $output, $exitCode);
 
         if ($exitCode !== 0) {
-            throw new \RuntimeException('Command failed: ' . implode(PHP_EOL, $output));
+            throw new \RuntimeException(
+                'Command failed: ' . implode(PHP_EOL, $output)
+            );
         }
     }
 }

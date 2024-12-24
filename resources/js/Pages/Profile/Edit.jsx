@@ -1,12 +1,14 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import { Head } from '@inertiajs/react'
+import DeleteUserForm from './Partials/DeleteUserForm'
+import UpdatePasswordForm from './Partials/UpdatePasswordForm'
+import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm'
 
 export default function Edit({ mustVerifyEmail, status }) {
     return (
-        <AuthenticatedLayout header={<h1 className="hidden sm:block">Profile</h1>}>
+        <AuthenticatedLayout
+            header={<h1 className="hidden sm:block">Profile</h1>}
+        >
             <Head title="Profile" />
 
             <div className="">
@@ -27,5 +29,5 @@ export default function Edit({ mustVerifyEmail, status }) {
                 </div>
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

@@ -1,33 +1,32 @@
-import useTap from '@/Hooks/useTap';
-import React from 'react';
-import NewBrunswickMap, { pathSelectorToLocationName } from './NewBrunswickMap';
+import useTap from '@/Hooks/useTap'
+import React from 'react'
+import NewBrunswickMap, { pathSelectorToLocationName } from './NewBrunswickMap'
 
 export default function NewBrunswickMapMobile({
     containerRef = null,
     onTouchLocation,
 }) {
+    const containerRefLocal = containerRef || React.createRef(null)
 
-    const containerRefLocal = containerRef || React.createRef(null);
-
-    const useTapHook = useTap();
+    const useTapHook = useTap()
 
     React.useEffect(() => {
         if (containerRefLocal.current) {
-            const svg = containerRefLocal.current.querySelector('svg');
+            const svg = containerRefLocal.current.querySelector('svg')
 
             Object.keys(pathSelectorToLocationName).forEach((key) => {
-                const locationPath = svg.querySelector('#' + key);
-                locationPath.classList.add('location');
+                const locationPath = svg.querySelector('#' + key)
+                locationPath.classList.add('location')
 
                 if (onTouchLocation) {
                     locationPath.addEventListener(
                         'touchstart',
                         useTapHook.onTouchStart(() => null),
-                    );
+                    )
                     locationPath.addEventListener(
                         'touchmove',
                         useTapHook.onTouchMove(() => null),
-                    );
+                    )
                     locationPath.addEventListener(
                         'touchend',
                         useTapHook.onTouchEnd((event) => {
@@ -35,21 +34,21 @@ export default function NewBrunswickMapMobile({
                                 (key) => {
                                     const locationPath = svg.querySelector(
                                         '#' + key,
-                                    );
-                                    locationPath.classList.remove('active');
+                                    )
+                                    locationPath.classList.remove('active')
                                 },
-                            );
+                            )
                             const locationPath = svg
                                 .querySelector('#' + key)
-                                .classList.add('active');
+                                .classList.add('active')
 
-                            onTouchLocation(event, key);
+                            onTouchLocation(event, key)
                         }),
-                    );
+                    )
                 }
-            });
+            })
         }
-    }, [containerRefLocal.current]);
+    }, [containerRefLocal.current])
 
-    return <NewBrunswickMap containerRef={containerRefLocal} />;
+    return <NewBrunswickMap containerRef={containerRefLocal} />
 }

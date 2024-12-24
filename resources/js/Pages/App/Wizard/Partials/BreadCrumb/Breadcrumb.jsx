@@ -1,5 +1,5 @@
-import { Link } from '@inertiajs/react';
-import './BreadCrumb.scss';
+import { Link } from '@inertiajs/react'
+import './BreadCrumb.scss'
 
 export default function BreadCrumb({ breadCrumb }) {
     return (
@@ -19,5 +19,5 @@ export default function BreadCrumb({ breadCrumb }) {
                 ),
             )}
         </div>
-    );
+    )
 }
