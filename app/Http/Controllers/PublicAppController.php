@@ -15,7 +15,7 @@ class PublicAppController extends Controller
     public function index()
     {
         return Inertia::render('PublicApp/Index', [
-            'locations' => Location::all()
+            'locations' => Location::all(),
         ]);
     }
 
@@ -25,37 +25,33 @@ class PublicAppController extends Controller
             ->where('location_id', $id)
             ->with('water')
             ->get()
-            ->toArray()
-        ;
+            ->toArray();
 
         $limits_by_water_name = [];
 
         // remove duplicate waters
-        foreach($limits as $limit) {
+        foreach ($limits as $limit) {
             $water_name = $limit['water']['name'] ?? '';
             if ($water_name && !($limits_by_water_name[$water_name] ?? false)) {
                 $limits_by_water_name[$water_name] = $limit;
             }
         }
         $limits_by_water_name = array_values($limits_by_water_name);
-        usort($limits_by_water_name, 
-            fn($a, $b) => strcmp($a['water']['name'], $b['water']['name']));
+        usort(
+            $limits_by_water_name,
+            fn($a, $b) => strcmp($a['water']['name'], $b['water']['name'])
+        );
 
         return ['limits' => $limits_by_water_name];
     }
 
     public function limitsByWater($id)
     {
-
         $results_ids = [];
 
-        $limits = FishLimit::query()
-            ->where('water_id', $id)
-            ->get()
-        ;
-        
-        foreach($limits->toArray() as $limit) {
+        $limits = FishLimit::query()->where('water_id', $id)->get();
 
+        foreach ($limits->toArray() as $limit) {
             $results_ids[] = $limit['id'];
 
             $related_limits = FishLimit::query()
@@ -63,7 +59,10 @@ class PublicAppController extends Controller
                 ->where('location_id', $limit['location_id'])
                 ->where(function (Builder $query) use ($limit) {
                     $query
-                        ->where('waters_category_id', $limit['waters_category_id'])
+                        ->where(
+                            'waters_category_id',
+                            $limit['waters_category_id']
+                        )
                         ->orWhereNull('waters_category_id');
                 });
 
@@ -78,7 +77,7 @@ class PublicAppController extends Controller
             }
             $related_limits = $related_limits->get();
 
-            foreach($related_limits->toArray() as $related_limit) {
+            foreach ($related_limits->toArray() as $related_limit) {
                 // no specific water so this is a rule for the location
                 $results_ids[] = $related_limit['id'];
             }
@@ -87,12 +86,16 @@ class PublicAppController extends Controller
         $limits_by_water = FishLimit::query()
             ->whereIn('id', $results_ids)
             ->with(['fish', 'water', 'tidal_category', 'fishing_method'])
-            ->orderBy(Fish::select('name')->whereColumn('fish.id', 'fish_limits.fish_id'))
+            ->orderBy(
+                Fish::select('name')->whereColumn(
+                    'fish.id',
+                    'fish_limits.fish_id'
+                )
+            )
             ->orderBy('season_start')
             ->get()
             ->toArray();
 
         return ['limits' => $limits_by_water];
     }
-
 }

@@ -1,5 +1,5 @@
-import NavLink from '@/Components/NavLink/NavLink';
-import NewIndicator from '@/Components/NewIndicator/NewIndicator';
+import NavLink from '@/Components/NavLink/NavLink'
+import NewIndicator from '@/Components/NewIndicator/NewIndicator'
 
 export default function AdminSubMenu() {
     return (
@@ -25,5 +25,5 @@ export default function AdminSubMenu() {
                 Storybook
             </NavLink>
         </div>
-    );
+    )
 }

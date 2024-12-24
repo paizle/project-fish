@@ -1,7 +1,7 @@
-import WizardCard from '@/Components/WizardCard/WizardCard';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import BreadCrumb from './Partials/BreadCrumb/Breadcrumb';
+import WizardCard from '@/Components/WizardCard/WizardCard'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import { Head } from '@inertiajs/react'
+import BreadCrumb from './Partials/BreadCrumb/Breadcrumb'
 
 export default function WatersCategory({
     location,
@@ -14,7 +14,7 @@ export default function WatersCategory({
         Salmon: '/images/salmon.jpg',
         Bass: '/images/smallmouth-bass.png',
         'Non-Sport Fish': '/images/non-sport-fish.jpg',
-    };
+    }
 
     return (
         <AuthenticatedLayout>
@@ -38,5 +38,5 @@ export default function WatersCategory({
                 ))}
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

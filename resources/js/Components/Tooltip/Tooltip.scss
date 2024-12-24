@@ -15,11 +15,10 @@
         opacity: 0;
         transition: 300ms;
         background-color: var(--background-color);
-        border-radius: .25rem;
-        @apply shadow p-4;
+        border-radius: 0.25rem;
+        @apply p-4 shadow;
         transition-delay: 500ms;
         width: 16em;
-        
     }
     &:hover {
         text-decoration-style: dotted;
@@ -28,7 +27,6 @@
             visibility: visible;
             pointer-events: all;
             opacity: 1;
-
         }
     }
 }

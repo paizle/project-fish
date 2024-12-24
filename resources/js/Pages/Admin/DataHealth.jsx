@@ -1,7 +1,7 @@
-import PieChartCompleteness from '@/Components/PieChartCompleteness/PieChartCompleteness';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import AdminSubMenu from './partials/AdminSubMenu';
+import PieChartCompleteness from '@/Components/PieChartCompleteness/PieChartCompleteness'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import { Head } from '@inertiajs/react'
+import AdminSubMenu from './partials/AdminSubMenu'
 
 export default function Edit({ locations }) {
     const sectionStatus = {
@@ -11,11 +11,11 @@ export default function Edit({ locations }) {
         Southwest: {
             hasData: true,
         },
-    };
+    }
 
     const locationsHavingData = locations.filter((location) => {
-        return sectionStatus?.[location.name]?.hasData;
-    });
+        return sectionStatus?.[location.name]?.hasData
+    })
 
     return (
         <AuthenticatedLayout header={<AdminSubMenu />}>
@@ -55,5 +55,5 @@ export default function Edit({ locations }) {
                 </div>
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

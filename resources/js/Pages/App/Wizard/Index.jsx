@@ -1,14 +1,14 @@
-import './Wizard.scss';
+import './Wizard.scss'
 
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
+import { Head } from '@inertiajs/react'
 
-import WizardCard from '@/Components/WizardCard/WizardCard';
+import WizardCard from '@/Components/WizardCard/WizardCard'
 
 const images = {
     'Upper Saint John': '/images/upper-saint-john-map.png',
     Southwest: '/images/south-west-saint-john-map.png',
-};
+}
 
 export default function Index({ locations }) {
     return (
@@ -29,5 +29,5 @@ export default function Index({ locations }) {
                 )}
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

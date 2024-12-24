@@ -1,5 +1,5 @@
 import './ResponsiveNavLink.scss'
-import { Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react'
 
 export default function ResponsiveNavLink({
     active = false,
@@ -14,5 +14,5 @@ export default function ResponsiveNavLink({
         >
             {children}
         </Link>
-    );
+    )
 }

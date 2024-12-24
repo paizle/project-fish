@@ -1,4 +1,4 @@
-import './NewIndicator.scss';
+import './NewIndicator.scss'
 
 export default function NewIndicator({ text = 'new', children }) {
     return (
@@ -6,5 +6,5 @@ export default function NewIndicator({ text = 'new', children }) {
             {children}
             <div className="text-content">{text}</div>
         </div>
-    );
+    )
 }

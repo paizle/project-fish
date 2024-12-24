@@ -1,23 +1,22 @@
-import './Index.scss';
+import './Index.scss'
 
-import PublicAppLayout from './Layout/PublicAppLayout';
-import PublicAppMenu from './Layout/PublicAppMenu';
+import PublicAppLayout from './Layout/PublicAppLayout'
+import PublicAppMenu from './Layout/PublicAppMenu'
 
 import InternalRouter, {
     BreadCrumb,
     InternalRouterProvider,
-} from './Components/InternalRouter/InternalRouter';
+} from './Components/InternalRouter/InternalRouter'
 
-import Map from './Pages/Map/Map';
-import Location from './Pages/Location/Location';
-import Water from './Pages/Water/Water';
+import Map from './Pages/Map/Map'
+import Location from './Pages/Location/Location'
+import Water from './Pages/Water/Water'
 
 export default function Index({ locations }) {
-
     const internalRouterConfig = {
         defaultViewName: 'map',
         breadCrumb: [{ name: 'map', content: 'New Brunswick' }],
-    };
+    }
 
     return (
         <InternalRouterProvider config={internalRouterConfig}>
@@ -57,16 +56,16 @@ export default function Index({ locations }) {
                 </main>
             </PublicAppLayout>
         </InternalRouterProvider>
-    );
+    )
 }
 
 const api = {
     limitsByLocation: (id, waterNameQuery) => {
         return route('public-app.limitsByLocation.rest', id, {
             waterNameQuery,
-        });
+        })
     },
     limitsByWater: (id, fishNameQuery) => {
-        return route('public-app.limitsByWater.rest', id, { fishNameQuery });
+        return route('public-app.limitsByWater.rest', id, { fishNameQuery })
     },
-};
+}

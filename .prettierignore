@@ -1,11 +1,14 @@
+# from .gitignore
+/ignored/
 /.phpunit.cache
+node_modules/
 /public/hot
 /public/storage
 /public/build
+/public/storybook-static
 /storage/*.key
 /storage/pail
-node_modules
-vendor
+vendor/
 .env
 .env.backup
 .env.production
@@ -20,3 +23,9 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+
+# additional settings (not from .gitignore)
+
+artisan
+/storage/framework/views/
+/public/index.php

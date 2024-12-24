@@ -33,8 +33,8 @@ class LimitsController extends Controller
         ]);
     }
 
-    public function fishLimitsData() {
-
+    public function fishLimitsData()
+    {
         $filters = request()['filters'];
 
         $fish_limits_query = FishLimit::query();
@@ -44,7 +44,10 @@ class LimitsController extends Controller
         }
 
         if ($filters['fish_category_id'] ?? null) {
-            $fish_limits_query->where('fish_category_id', $filters['fish_category_id']);
+            $fish_limits_query->where(
+                'fish_category_id',
+                $filters['fish_category_id']
+            );
         }
 
         if ($filters['fish_id'] ?? null) {
@@ -56,21 +59,34 @@ class LimitsController extends Controller
         }
 
         if ($filters['water_category_id'] ?? null) {
-            $fish_limits_query->where('water_category_id', $filters['water_category_id']);
+            $fish_limits_query->where(
+                'water_category_id',
+                $filters['water_category_id']
+            );
         }
-        
+
         if ($filters['tidal_category_id'] ?? null) {
-            $fish_limits_query->where('tidal_category_id', $filters['tidal_category_id']);
+            $fish_limits_query->where(
+                'tidal_category_id',
+                $filters['tidal_category_id']
+            );
         }
 
         if ($filters['water_id'] ?? null) {
             $fish_limits_query->where('water_id', $filters['water_id']);
         }
-        
+
+        if ($filters['fishing_method_id'] ?? null) {
+            $fish_limits_query->where(
+                'fishing_method_id',
+                $filters['fishing_method_id']
+            );
+        }
+
         $fish_limits = $fish_limits_query->get();
 
         return [
-            'fishLimits' => $fish_limits
+            'fishLimits' => $fish_limits,
         ];
     }
 
@@ -79,18 +95,20 @@ class LimitsController extends Controller
         $location = Location::find($id);
 
         $breadcrumb = [
-            $location->name => route('wizard.location.page', ['id' => $location->id])
+            $location->name => route('wizard.location.page', [
+                'id' => $location->id,
+            ]),
         ];
 
         return Inertia::render('App/Wizard/Location', [
             'wizardBreadcrumb' => $breadcrumb,
             'location' => $location,
-            'watersCategories' => WatersCategory::all()
+            'watersCategories' => WatersCategory::all(),
         ]);
     }
 
-    public function watersCategory($id) {
-        
+    public function watersCategory($id)
+    {
         $waters_category = WatersCategory::find($id);
 
         $location = Location::find(request('location_id'));
@@ -98,14 +116,15 @@ class LimitsController extends Controller
         $fish_limits = FishLimit::query()
             ->where('location_id', $location->id)
             ->where(function ($query) use ($waters_category) {
-                $query->where('waters_category_id', '=', $waters_category->id)
+                $query
+                    ->where('waters_category_id', '=', $waters_category->id)
                     ->orWhereNull('waters_category_id');
             })
             ->get();
 
         $fish_categories = [];
 
-        foreach($fish_limits as $fish_limit) {
+        foreach ($fish_limits as $fish_limit) {
             $fish_category = $fish_limit->fish_category;
             if (!($fish_categories[$fish_category->id] ?? null)) {
                 $fish_categories[$fish_category->id] = $fish_category;
@@ -113,15 +132,20 @@ class LimitsController extends Controller
         }
 
         $breadcrumb = [
-            $location->name => route('wizard.location.page', ['id' => $location->id]),
-            $waters_category->name => route('wizard.watersCategory.page', ['id' => $waters_category->id, 'location_id' => $location->id])
+            $location->name => route('wizard.location.page', [
+                'id' => $location->id,
+            ]),
+            $waters_category->name => route('wizard.watersCategory.page', [
+                'id' => $waters_category->id,
+                'location_id' => $location->id,
+            ]),
         ];
 
         return Inertia::render('App/Wizard/WatersCategory', [
             'wizardBreadcrumb' => $breadcrumb,
             'location' => $location,
             'watersCategory' => $waters_category,
-            'fishCategories' => Indexer::deIndex($fish_categories)
+            'fishCategories' => Indexer::deIndex($fish_categories),
         ]);
     }
 
@@ -139,21 +163,30 @@ class LimitsController extends Controller
             ->where('fish_category_id', $id)
             ->where('location_id', $location->id)
             ->where(function ($query) use ($waters_category) {
-                $query->where('waters_category_id', '=', $waters_category->id)
+                $query
+                    ->where('waters_category_id', '=', $waters_category->id)
                     ->orWhereNull('waters_category_id');
             })
             ->get();
 
         $breadcrumb = [
-            $location->name => route('wizard.location.page', ['id' => $location->id]),
-            $waters_category->name => route('wizard.watersCategory.page', ['id' => $waters_category->id, 'location_id' => $location->id]),
-            $fish_category->name => route('wizard.fishCategory.page', ['id' => $fish_category->id, 'waters_category_id' => $waters_category->id, 'location_id' => $location->id]) 
+            $location->name => route('wizard.location.page', [
+                'id' => $location->id,
+            ]),
+            $waters_category->name => route('wizard.watersCategory.page', [
+                'id' => $waters_category->id,
+                'location_id' => $location->id,
+            ]),
+            $fish_category->name => route('wizard.fishCategory.page', [
+                'id' => $fish_category->id,
+                'waters_category_id' => $waters_category->id,
+                'location_id' => $location->id,
+            ]),
         ];
 
         return Inertia::render('App/Wizard/FishCategory', [
             'wizardBreadcrumb' => $breadcrumb,
-            'fishLimits' => $fish_limits
+            'fishLimits' => $fish_limits,
         ]);
     }
-
 }

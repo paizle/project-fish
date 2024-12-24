@@ -1,5 +1,5 @@
-import React from 'react';
-import NewBrunswickMap, { pathSelectorToLocationName } from './NewBrunswickMap';
+import React from 'react'
+import NewBrunswickMap, { pathSelectorToLocationName } from './NewBrunswickMap'
 
 export default function NewBrunswickMapWeb({
     containerRef = null,
@@ -7,34 +7,34 @@ export default function NewBrunswickMapWeb({
     onMouseLeaveLocation,
     onClickLocation,
 }) {
-    const containerRefLocal = containerRef || React.createRef(null);
+    const containerRefLocal = containerRef || React.createRef(null)
 
     React.useEffect(() => {
         if (containerRefLocal.current) {
-            const svg = containerRefLocal.current.querySelector('svg');
+            const svg = containerRefLocal.current.querySelector('svg')
 
             Object.keys(pathSelectorToLocationName).forEach((key) => {
-                const locationPath = svg.querySelector('#' + key);
-                locationPath.classList.add('location');
+                const locationPath = svg.querySelector('#' + key)
+                locationPath.classList.add('location')
                 if (onMouseEnterLocation) {
                     locationPath.addEventListener('mouseenter', (event) => {
-                        console.log(key);
-                        onMouseEnterLocation(event, key);
-                    });
+                        console.log(key)
+                        onMouseEnterLocation(event, key)
+                    })
                 }
                 if (onMouseLeaveLocation) {
                     locationPath.addEventListener('mouseleave', (event) =>
                         onMouseLeaveLocation(event, key),
-                    );
+                    )
                 }
                 if (onClickLocation) {
                     locationPath.addEventListener('click', (event) =>
                         onClickLocation(event, key),
-                    );
+                    )
                 }
-            });
+            })
         }
-    }, [containerRefLocal.current]);
+    }, [containerRefLocal.current])
 
-    return <NewBrunswickMap containerRef={containerRefLocal} />;
+    return <NewBrunswickMap containerRef={containerRefLocal} />
 }

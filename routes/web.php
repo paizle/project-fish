@@ -22,48 +22,108 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name(
+        'profile.edit'
+    );
+    Route::patch('/profile', [ProfileController::class, 'update'])->name(
+        'profile.update'
+    );
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name(
+        'profile.destroy'
+    );
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/data-health', [AdminController::class, 'dataHealth'])->name('admin.data-health');
-    Route::get('/admin/style-guide', [AdminController::class, 'styleGuide'])->name('admin.style-guide');
+    Route::get('/admin', [AdminController::class, 'index'])->name(
+        'admin.index'
+    );
+    Route::get('/admin/data-health', [
+        AdminController::class,
+        'dataHealth',
+    ])->name('admin.data-health');
+    Route::get('/admin/style-guide', [
+        AdminController::class,
+        'styleGuide',
+    ])->name('admin.style-guide');
     Route::get('/admin/storybook', function () {
         return Inertia::render('Admin/Storybook/Storybook');
     })->name('admin.storybook');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/data', [FishDataController::class, 'index'])->name('data.index');
-    Route::get('/data/limits', [FishDataController::class, 'limits'])->name('data.limits');
-    Route::get('/data/locations', [FishDataController::class, 'locations'])->name('data.locations');
-    Route::get('/data/fish-categories', [FishDataController::class, 'fishCategories'])->name('data.fish-categories');
-    Route::get('/data/fishes', [FishDataController::class, 'fishes'])->name('data.fishes');
-    Route::get('/data/boundaries', [FishDataController::class, 'boundaries'])->name('data.boundaries');
-    Route::get('/data/water-categories', [FishDataController::class, 'waterCategories'])->name('data.water-categories');
-    Route::get('/data/waters', [FishDataController::class, 'waters'])->name('data.waters');
+    Route::get('/data', [FishDataController::class, 'index'])->name(
+        'data.index'
+    );
+    Route::get('/data/limits', [FishDataController::class, 'limits'])->name(
+        'data.limits'
+    );
+    Route::get('/data/locations', [
+        FishDataController::class,
+        'locations',
+    ])->name('data.locations');
+    Route::get('/data/fish-categories', [
+        FishDataController::class,
+        'fishCategories',
+    ])->name('data.fish-categories');
+    Route::get('/data/fishes', [FishDataController::class, 'fishes'])->name(
+        'data.fishes'
+    );
+    Route::get('/data/boundaries', [
+        FishDataController::class,
+        'boundaries',
+    ])->name('data.boundaries');
+    Route::get('/data/water-categories', [
+        FishDataController::class,
+        'waterCategories',
+    ])->name('data.water-categories');
+    Route::get('/data/waters', [FishDataController::class, 'waters'])->name(
+        'data.waters'
+    );
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/wizard', [WizardController::class, 'index'])->name('wizard.page');
-    Route::get('/wizard/location/{id}', [WizardController::class, 'location'])->name('wizard.location.page');
-    Route::get('/wizard/waters-category/{id}', [WizardController::class, 'watersCategory'])->name('wizard.watersCategory.page');
-    Route::get('/wizard/fish-category/{id}', [WizardController::class, 'fishCategory'])->name('wizard.fishCategory.page');
+    Route::get('/wizard', [WizardController::class, 'index'])->name(
+        'wizard.page'
+    );
+    Route::get('/wizard/location/{id}', [
+        WizardController::class,
+        'location',
+    ])->name('wizard.location.page');
+    Route::get('/wizard/waters-category/{id}', [
+        WizardController::class,
+        'watersCategory',
+    ])->name('wizard.watersCategory.page');
+    Route::get('/wizard/fish-category/{id}', [
+        WizardController::class,
+        'fishCategory',
+    ])->name('wizard.fishCategory.page');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/fish-limits', [LimitsController::class, 'index'])->name('fishLimits.page');
-    Route::post('/fish-limits-data', [LimitsController::class, 'fishLimitsData'])->name('fishLimits.data');
+    Route::get('/fish-limits', [LimitsController::class, 'index'])->name(
+        'fishLimits.page'
+    );
+    Route::post('/fish-limits-data', [
+        LimitsController::class,
+        'fishLimitsData',
+    ])->name('fishLimits.data');
 });
 
-Route::get('/public-app', [PublicAppController::class, 'index'])->name('public-app.page');
-Route::get('/public-app/limitsByLocation/{id}', [PublicAppController::class, 'limitsByLocation'])->name('public-app.limitsByLocation.rest');
-Route::get('/public-app/limitsByWater/{id}', [PublicAppController::class, 'limitsByWater'])->name('public-app.limitsByWater.rest');
+Route::get('/public-app', [PublicAppController::class, 'index'])->name(
+    'public-app.page'
+);
+Route::get('/public-app/limitsByLocation/{id}', [
+    PublicAppController::class,
+    'limitsByLocation',
+])->name('public-app.limitsByLocation.rest');
+Route::get('/public-app/limitsByWater/{id}', [
+    PublicAppController::class,
+    'limitsByWater',
+])->name('public-app.limitsByWater.rest');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -1,4 +1,4 @@
-/ignored
+/ignored/
 /.phpunit.cache
 /public/hot
 /public/storage
@@ -20,4 +20,4 @@ yarn-error.log
 /.zed
 
 *storybook.log
-/storybook-static
+/storybook-static/

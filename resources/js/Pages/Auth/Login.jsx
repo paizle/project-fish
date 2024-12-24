@@ -80,7 +80,7 @@ export default function Login({ status, canResetPassword, canRegister }) {
                     </label>
                 </div>
                 <div className="mt-4 flex items-center justify-between gap-4">
-                    <div className="flex items-center justify-start gap-2 flex-wrap">
+                    <div className="flex items-center justify-end grow gap-2 flex-wrap">
                         {canRegister && (
                             <Link
                                 href={route('register')}

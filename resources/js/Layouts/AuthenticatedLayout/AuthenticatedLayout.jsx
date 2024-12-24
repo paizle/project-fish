@@ -1,11 +1,11 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink/NavLink';
-import NewIndicator from '@/Components/NewIndicator/NewIndicator';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink/ResponsiveNavLink';
-import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
-import './AuthenticatedLayout.scss';
+import ApplicationLogo from '@/Components/ApplicationLogo'
+import Dropdown from '@/Components/Dropdown'
+import NavLink from '@/Components/NavLink/NavLink'
+import NewIndicator from '@/Components/NewIndicator/NewIndicator'
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink/ResponsiveNavLink'
+import { Link, usePage } from '@inertiajs/react'
+import { useState } from 'react'
+import './AuthenticatedLayout.scss'
 
 export default function AuthenticatedLayout({ header, children }) {
     const navigation = [
@@ -34,12 +34,12 @@ export default function AuthenticatedLayout({ header, children }) {
             active: route().current('data.*'),
             content: 'Other Data',
         },
-    ];
+    ]
 
-    const user = usePage().props.auth.user;
+    const user = usePage().props.auth.user
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
+        useState(false)
 
     return (
         <div className="AuthenticatedLayout">
@@ -53,20 +53,32 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="flex sm:hidden grow mx-4 justify-center">
-                                {navigation.map(({ content, active, ...rest }, index) => (
-                                    active 
-                                        ? <h1 key={index} className="page-title">{content}</h1>
-                                        : null
-                                ))}
+                            <div className="mx-4 flex grow justify-center sm:hidden">
+                                {navigation.map(
+                                    ({ content, active, ...rest }, index) =>
+                                        active ? (
+                                            <h1
+                                                key={index}
+                                                className="page-title"
+                                            >
+                                                {content}
+                                            </h1>
+                                        ) : null,
+                                )}
                             </div>
 
                             <div className="hidden grow sm:mx-2 sm:flex sm:gap-2 lg:mx-4 lg:gap-6">
-                                {navigation.map(({ content, ...rest }, index) => (
-                                    <NavLink key={index} className="nav-item" {...rest}>
-                                        {content}
-                                    </NavLink>
-                                ))}
+                                {navigation.map(
+                                    ({ content, ...rest }, index) => (
+                                        <NavLink
+                                            key={index}
+                                            className="nav-item"
+                                            {...rest}
+                                        >
+                                            {content}
+                                        </NavLink>
+                                    ),
+                                )}
                             </div>
                         </div>
 
@@ -193,5 +205,5 @@ export default function AuthenticatedLayout({ header, children }) {
 
             <main>{children}</main>
         </div>
-    );
+    )
 }
