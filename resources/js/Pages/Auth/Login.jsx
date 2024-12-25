@@ -1,25 +1,25 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import Checkbox from '@/Components/Checkbox'
+import InputError from '@/Components/InputError'
+import InputLabel from '@/Components/InputLabel'
+import PrimaryButton from '@/Components/PrimaryButton'
+import TextInput from '@/Components/TextInput'
+import GuestLayout from '@/Layouts/GuestLayout'
+import { Head, Link, useForm } from '@inertiajs/react'
 
 export default function Login({ status, canResetPassword, canRegister }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
         remember: false,
-    });
+    })
 
     const submit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         post(route('login'), {
             onFinish: () => reset('password'),
-        });
-    };
+        })
+    }
 
     return (
         <GuestLayout>
@@ -80,7 +80,7 @@ export default function Login({ status, canResetPassword, canRegister }) {
                     </label>
                 </div>
                 <div className="mt-4 flex items-center justify-between gap-4">
-                    <div className="flex items-center justify-end grow gap-2 flex-wrap">
+                    <div className="flex grow flex-wrap items-center justify-end gap-2">
                         {canRegister && (
                             <Link
                                 href={route('register')}
@@ -99,11 +99,14 @@ export default function Login({ status, canResetPassword, canRegister }) {
                         )}
                     </div>
 
-                    <PrimaryButton className="whitespace-nowrap" disabled={processing}>
+                    <PrimaryButton
+                        className="whitespace-nowrap"
+                        disabled={processing}
+                    >
                         Log in
                     </PrimaryButton>
                 </div>
             </form>
         </GuestLayout>
-    );
+    )
 }
