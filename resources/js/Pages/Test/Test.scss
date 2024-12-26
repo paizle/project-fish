@@ -1,0 +1,90 @@
+@use '/resources/css/app.scss';
+.Test {
+    height: 100%;
+
+    .box {
+        height: 100%;
+    }
+
+    .fishes {
+        display: grid;
+        
+
+        &.one-up {
+            grid-template-columns: 100%;
+            > div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img {
+                    margin: 1em;
+                    max-width: 200px;
+                }
+                strong {
+                    
+                }
+            }
+        }
+
+        &.two-up {
+
+            grid-template-columns: 50% 50%;
+            
+            > div {
+                display: flex;
+                flex-direction: column;
+                &:nth-child(odd) {
+                    img {
+                        transform: scaleX(-1);
+                    }
+                }
+
+                img {
+                    margin: 1em;
+                }
+                strong {
+                    text-align: center;
+                    padding: 1em;
+                }
+            }
+        }
+
+        &.three-up {
+
+            grid-template-columns: 33% 33% 33%;
+            
+            > div {
+                display: flex;
+                flex-direction: column;
+                
+                img {
+                    margin: 1em;
+                }
+                strong {
+                    text-align: center;
+                    padding: 1em;
+                }
+            }
+        }
+
+        &.four-up {
+
+            grid-template-columns: 25% 25% 25% 25%;
+            
+            > div {
+                display: flex;
+                flex-direction: column;
+                
+                img {
+                    margin: 1em;
+
+                }
+                strong {
+                    text-align: center;
+                    padding: 1em;
+                }
+            }
+        }
+
+    }
+}

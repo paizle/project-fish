@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WizardController;
 use App\Http\Controllers\PublicAppController;
 use App\Http\Controllers\FishDataController;
+use App\Http\Controllers\TestController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -112,6 +113,13 @@ Route::middleware('auth')->group(function () {
         LimitsController::class,
         'fishLimitsData',
     ])->name('fishLimits.data');
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/test', [TestController::class, 'test'])->name(
+        'test.test'
+    );
 });
 
 Route::get('/public-app', [PublicAppController::class, 'index'])->name(
