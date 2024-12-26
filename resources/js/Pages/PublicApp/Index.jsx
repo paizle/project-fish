@@ -2,6 +2,7 @@ import './Index.scss'
 
 import PublicAppLayout from './Layout/PublicAppLayout'
 import PublicAppMenu from './Layout/PublicAppMenu'
+import SectionTabs from './Layout/SectionTabs'
 
 import InternalRouter, {
     BreadCrumb,
@@ -24,6 +25,7 @@ export default function Index({ locations }) {
                 {/* <Head title="Project: FISH" /> */}
                 <header>
                     <PublicAppMenu />
+                    <SectionTabs />
                     <BreadCrumb />
                 </header>
 

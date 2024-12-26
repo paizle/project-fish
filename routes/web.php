@@ -125,13 +125,20 @@ Route::middleware('auth')->group(function () {
 Route::get('/public-app', [PublicAppController::class, 'index'])->name(
     'public-app.page'
 );
+
 Route::get('/public-app/limitsByLocation/{id}', [
     PublicAppController::class,
     'limitsByLocation',
 ])->name('public-app.limitsByLocation.rest');
+
 Route::get('/public-app/limitsByWater/{id}', [
     PublicAppController::class,
     'limitsByWater',
 ])->name('public-app.limitsByWater.rest');
+
+Route::get('/public-app/fishes', [
+    PublicAppController::class,
+    'fishes',
+])->name('public-app.fishes.rest');
 
 require __DIR__ . '/auth.php';
