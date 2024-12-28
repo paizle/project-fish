@@ -5,13 +5,18 @@ use App\Models\FishLimit;
 use App\Models\Location;
 use App\Models\Fish;
 
-use App\Util\Indexer;
 use Inertia\Inertia;
 
 use Illuminate\Database\Eloquent\Builder;
 
 class PublicAppController extends Controller
 {
+
+    public function fishes()
+    {
+        return ['fishes' => Fish::all()];
+    }
+
     public function index()
     {
         return Inertia::render('PublicApp/Index', [

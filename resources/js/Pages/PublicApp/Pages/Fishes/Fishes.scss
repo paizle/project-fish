@@ -1,0 +1,82 @@
+.Fishes {
+    width: 100%;
+    text-align: center;
+    .fishes-list {
+        display: inline-grid;
+        margin: auto;
+        &.one-up {
+            grid-template-columns: 100%;
+            > .InternalLink {
+                display: flex;
+                align-items: center;
+                img {
+                    margin: 1em;
+                    max-width: 200px;
+                }
+                strong {
+                    
+                }
+            }
+        }
+
+        &.two-up {
+
+            grid-template-columns: 50% 50%;
+            
+            > .InternalLink {
+                display: flex;
+                flex-direction: column;
+                &:nth-child(even) {
+                    img {
+                        transform: scaleX(-1);
+                    }
+                }
+
+                img {
+                    margin: 1em;
+                }
+                strong {
+                    text-align: center;
+                    padding: 1em;
+                }
+            }
+        }
+
+        &.three-up {
+
+            grid-template-columns: 33% 33% 33%;
+            
+            > .InternalLink {
+                display: flex;
+                flex-direction: column;
+                
+                img {
+                    margin: 1em;
+                }
+                strong {
+                    text-align: center;
+                    padding: 1em;
+                }
+            }
+        }
+
+        &.four-up {
+
+            grid-template-columns: 25% 25% 25% 25%;
+            
+            > .InternalLink {
+                display: flex;
+                flex-direction: column;
+                
+                img {
+                    margin: 1em;
+
+                }
+                strong {
+                    text-align: center;
+                    padding: 1em;
+                }
+            }
+        }
+    }
+}

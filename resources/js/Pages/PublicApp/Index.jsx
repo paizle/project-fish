@@ -12,6 +12,7 @@ import InternalRouter, {
 import Map from './Pages/Map/Map'
 import Location from './Pages/Location/Location'
 import Water from './Pages/Water/Water'
+import Fishes from './Pages/Fishes/Fishes'
 
 export default function Index({ locations }) {
     const internalRouterConfig = {
@@ -53,6 +54,9 @@ export default function Index({ locations }) {
                             water: (params) => (
                                 <Water {...params} route={api.limitsByWater} />
                             ),
+                            fishes: (params) => (
+                                <Fishes {...params} route={api.fishes} />
+                            ),
                         }}
                     </InternalRouter>
                 </main>
@@ -70,4 +74,7 @@ const api = {
     limitsByWater: (id, fishNameQuery) => {
         return route('public-app.limitsByWater.rest', id, { fishNameQuery })
     },
+    fishes: () => {
+        return route('public-app.fishes.rest')
+    }
 }

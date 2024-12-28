@@ -1,5 +1,13 @@
 @use '/resources/css/app.scss';
 
+.InternalLink {
+    &:hover {
+        span {
+            text-decoration: underline;
+        }
+    }
+}
+
 .loader {
     position: absolute;
     display: flex;
@@ -37,11 +45,14 @@
 }
 
 .SectionTabs {
+
+    
+
     display: flex;
     
     .tab {
         overflow: hidden;
-        padding-top: 6px;
+        padding-top: 4px;
         margin: 0;
         display: flex;
         &:before, &::after {
