@@ -6,32 +6,45 @@
 
     .fish-grid {
         display: grid;
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
+        grid-template-rows: auto 1fr;
+
+        grid-template-areas:
+            'header'
+            'body';
 
         .column-header {
-            font-weight: bold;
+            font-weight: bold;   
+        }
+
+        .header {
+            grid-area: header;
+            display: contents;
+        }
+
+        .limits {
+            display: contents;
             
         }
 
-        > * {
-            padding: .25em .5em 0 .5em;
-        }
-
-        .alert {
-            margin: 0 .25em;
-        }
-
-
-        > *:nth-child(4n+0) {
-            transition: 300ms ease-in-out;
+        .fish-name {
             grid-column: span 3;
-            width: 100%;
-            justify-self: left;
-            max-height: 0;
-            overflow: hidden;
-            padding: 0 0 .25em 0;
-            &.open {
-                max-height: 1000px;
+        }
+
+        .body {
+            grid-area: body;
+            display: contents;   
+            & > *:nth-child(4n+0) {
+                transition: 300ms ease-in-out;
+                grid-column: span 3;
+                width: 100%;
+                justify-self: left;
+                max-height: 0;
+                overflow: hidden;
+                padding: 0 0 .25em 0;
+                &.open {
+                    max-height: 1000px;
+                }
             }
         }
 
@@ -41,6 +54,14 @@
 
         .odd {
             background-color: var(--background-color);
+        }
+
+        > * {
+            padding: .25em .5em 0 .5em;
+        }
+
+        .alert {
+            margin: 0 .25em;
         }
 
         svg {
@@ -62,12 +83,7 @@
             }
         }
 
-        .limits {
-            padding-left: 2em;
-            display: inline-grid;
-            grid-template-columns: auto auto auto auto auto;
-            gap: 0 1em;
-        }
+        
     }
 
     .DataTable {

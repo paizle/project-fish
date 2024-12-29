@@ -173,38 +173,40 @@ export default function Water({ children, id, route, ...rest }) {
         <div className="Water">
 
             <div className="fish-grid">
-                
-                <div className="column-header">Fish</div>
-                <div className="column-header">Season</div>
-                <div className="column-header"></div>
-                <div></div>
-                
-                {Object.keys(test ?? {}).map((fishName, index) => (
-                    <>
-                        <div className={`${index % 2 === 0 ? 'even' : 'odd'} column-header`}>
-                            {fishName}
-                        </div>
-                        <div className={index % 2 === 0 ? 'even' : 'odd'}>
-                            {`${test[fishName].season}`}
-                            {test[fishName].limits.length > 1 
-                                ? <ExclamationTriangleIcon className="alert" title="Restrictions" />
-                                : null
-                            }
-                        </div>
-                        <div className={`${index % 2 === 0 ? 'even' : 'odd'}`}>
-                            <button onClick={openDetail} value={fishName}>
-                                <div className={`opener ${detailsOpen?.[fishName] ? 'open' : ''}`}>
-                                    &#9650;
-                                </div>
-                            </button>
-                        </div>
-                        <div className={`${index % 2 === 0 ? 'even' : 'odd'} ${detailsOpen?.[fishName] ? 'open' : ''}`}>
-                            <div className="limits">
-                                <div className="column-header">Season</div>
+
+                <div className="header">
+                    <div className="column-header">Season</div>
+                    <div className="column-header fish-name">Fish</div>
+                    <div>!</div>
+                    <div className="column-header">Season</div>
                                 <div className="column-header">Bag Limit</div>
                                 <div className="column-header">Min. Size</div>
                                 <div className="column-header">Max. Size</div>
                                 <div className="column-header">Restrictions</div>
+                </div>
+                
+                <div className="body">
+                    {Object.keys(test ?? {}).map((fishName, index) => (
+                        <>
+                            <div className={index % 2 === 0 ? 'even' : 'odd'}>
+                                {`${test[fishName].season}`}
+                                {test[fishName].limits.length > 1 
+                                    ? <ExclamationTriangleIcon className="alert" title="Restrictions" />
+                                    : null
+                                }
+                            </div>
+                            <div className={`fish-name ${index % 2 === 0 ? 'even' : 'odd'}`}>
+                                {fishName}
+                            </div>
+                            <div className={`${index % 2 === 0 ? 'even' : 'odd'}`}>
+                                <button onClick={openDetail} value={fishName}>
+                                    <div className={`opener ${detailsOpen?.[fishName] ? 'open' : ''}`}>
+                                        &#9650;
+                                    </div>
+                                </button>
+                            </div>
+                            <div className="limits">
+                                
                                 {test[fishName].limits.map((limit) => (
                                     <>
                                         <div>{renderSeasonDateSpan(limit)}</div>
@@ -215,9 +217,10 @@ export default function Water({ children, id, route, ...rest }) {
                                     </>
                                 ))}
                             </div>
-                        </div>
-                    </>
-                ))}
+                            
+                        </>
+                    ))}
+                </div>
             </div>
 
 
