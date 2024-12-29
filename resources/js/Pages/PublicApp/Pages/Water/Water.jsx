@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
 import './Water.scss'
+import React, { useState } from 'react'
 
 import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter'
-
-import DataTable from '@/Components/DataTable/DataTable'
 
 import config from '@/Util/config'
 import { format, isBefore, compareAsc  } from 'date-fns'
 import parseMySqlDate from '@/Util/parseMySqlDate'
 
-import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import LoadingSpinner from '@/Components/LoadingSpinner/LoadingSpinner'
+import Tooltip from '@/Components/Tooltip/Tooltip'
 
 export default function Water({ children, id, route, ...rest }) {
     const [results, setResults] = useState([])
@@ -51,20 +51,7 @@ export default function Water({ children, id, route, ...rest }) {
         return extra
     }
 
-    const renderFishColumn = (row) => {
-        const fishName = row.fish.name
-
-        return (
-            <>
-                {fishName}
-                {getExtraFishDetail(row).map((text) => (
-                    <span className="extra">({text})</span>
-                ))}
-            </>
-        )
-    }
-
-    const test = formatResults(results)
+    const fishes = formatResults(results)
         
 
     function formatResults(results) {
@@ -114,8 +101,8 @@ export default function Water({ children, id, route, ...rest }) {
                 }
                 return a
             }, {seasonStart: null, seasonEnd: null})
-            fish[fishName].season = format(season.seasonStart, config.displayDayMonthFormat)
-                + ' - ' + format(season.seasonEnd, config.displayDayMonthFormat)
+            fish[fishName].season = format(season.seasonStart, config.displayDayMonthShortFormat)
+                + ' - ' + format(season.seasonEnd, config.displayDayMonthShortFormat)
         })
 
         return fish
@@ -135,12 +122,13 @@ export default function Water({ children, id, route, ...rest }) {
 
     }
 
-    const renderSeasonDateSpan = (limit) => {
-        let season = format(parseMySqlDate(limit.season_start), config.displayDayMonthFormat)
-        season += ' - '
-        season += format(parseMySqlDate(limit.season_end), config.displayDayMonthFormat)
-        return season
-    }
+    const renderSeasonDateSpan = (limit) => (
+        <>
+            {format(parseMySqlDate(limit.season_start), config.displayDayMonthShortFormat)}
+            <wbr /> -
+            {format(parseMySqlDate(limit.season_end), config.displayDayMonthShortFormat)}
+        </>
+    )
 
     const renderExtraFishDetail = (limit) => {
         let text = ''
@@ -169,83 +157,69 @@ export default function Water({ children, id, route, ...rest }) {
         return size ?? 'N/A'
     }
 
+    const renderNumberOrUnlimited= (number) => {
+        if (number === null) {
+            return ' - '
+        }
+        return number
+    }
+
     return (
         <div className="Water">
 
             <div className="fish-grid">
 
                 <div className="header">
-                    <div className="column-header">Season</div>
-                    <div className="column-header fish-name">Fish</div>
-                    <div>!</div>
-                    <div className="column-header">Season</div>
-                                <div className="column-header">Bag Limit</div>
-                                <div className="column-header">Min. Size</div>
-                                <div className="column-header">Max. Size</div>
-                                <div className="column-header">Restrictions</div>
+                    <div className="column-header">Fish/Season</div>
+                    <div className="column-header">Bag Limit</div>
+                    <div className="column-header">Min. Size</div>
+                    <div className="column-header">Max. Size</div>
+                    <div className="column-header">Restrictions</div>
                 </div>
                 
                 <div className="body">
-                    {Object.keys(test ?? {}).map((fishName, index) => (
-                        <>
-                            <div className={index % 2 === 0 ? 'even' : 'odd'}>
-                                {`${test[fishName].season}`}
-                                {test[fishName].limits.length > 1 
-                                    ? <ExclamationTriangleIcon className="alert" title="Restrictions" />
-                                    : null
-                                }
-                            </div>
-                            <div className={`fish-name ${index % 2 === 0 ? 'even' : 'odd'}`}>
-                                {fishName}
-                            </div>
-                            <div className={`${index % 2 === 0 ? 'even' : 'odd'}`}>
-                                <button onClick={openDetail} value={fishName}>
-                                    <div className={`opener ${detailsOpen?.[fishName] ? 'open' : ''}`}>
-                                        &#9650;
+
+                    {isLoading
+                        ? <div className="loading-spinner-container"><LoadingSpinner /></div>
+                        : Object.keys(fishes ?? {}).map((fishName, index) => (
+                            <>
+                                <button onClick={openDetail} value={fishName} className={`fish-name ${index % 2 === 0 ? 'even' : 'odd'} ${detailsOpen?.[fishName] ? 'open' : ''}`}>
+                                    <strong>{fishName}</strong>
+                                    <div className="flex">
+                                        
+                                        <em className="text-sm">
+                                            ({`${fishes[fishName].season}`})
+                                        </em>
+                                        {fishes[fishName].limits.length > 1 
+                                            ? (
+                                                <Tooltip message="Some Restrictions">
+                                                    <ExclamationTriangleIcon className="alert" />
+                                                </Tooltip>
+                                            ) : null
+                                        }    
+                                        <div className="open-indicator">
+                                            &#9650;
+                                        </div>
                                     </div>
+                                    
+                                    
                                 </button>
-                            </div>
-                            <div className="limits">
                                 
-                                {test[fishName].limits.map((limit) => (
-                                    <>
-                                        <div>{renderSeasonDateSpan(limit)}</div>
-                                        <div>{limit.bag_limit}</div>
-                                        <div>{renderSizeOrNa(limit.minimum_size)}</div>
-                                        <div>{renderSizeOrNa(limit.maximum_size)}</div>
-                                        <div>{renderExtraFishDetail(limit)}</div>
-                                    </>
-                                ))}
-                            </div>
-                            
-                        </>
+                                <div className={`limits ${index % 2 === 0 ? 'even' : 'odd'} ${detailsOpen?.[fishName] ? 'open' : ''}`}>
+                                    {fishes[fishName].limits.map((limit) => (
+                                        <>
+                                            <div>{renderSeasonDateSpan(limit)}</div>
+                                            <div>{renderNumberOrUnlimited(limit.bag_limit)}</div>
+                                            <div>{renderSizeOrNa(limit.minimum_size)}</div>
+                                            <div>{renderSizeOrNa(limit.maximum_size)}</div>
+                                            <div>{renderExtraFishDetail(limit)}</div>
+                                        </>
+                                    ))}
+                                </div>
+                            </>
                     ))}
                 </div>
             </div>
-
-
-
-            <DataTable
-                isLoading={isLoading}
-                data={results}
-                uniqueKey="id"
-                schema={{
-                    Fish: renderFishColumn,
-                    'Min Size': (row) => row.minimum_size ?? 'N/A',
-                    'Max Size': (row) => row.maximum_size ?? 'N/A',
-                    Limit: (row) => row.bag_limit ?? 'Unlimited',
-                    'Season Start': (row) =>
-                        format(
-                            parseMySqlDate(row.season_start),
-                            config.displayDayMonthFormat,
-                        ),
-                    'Season End': (row) =>
-                        format(
-                            parseMySqlDate(row.season_end),
-                            config.displayDayMonthFormat,
-                        ),
-                }}
-            />
         </div>
     )
 }

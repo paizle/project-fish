@@ -4,6 +4,7 @@
 
 $heading-color: #1a2b48; // headers, tabs, and accents
 $icon-color: #70b9b0; // highlights and icons
+$icon-color-lighter: #e2f1ef;
 $background-color: #ffffff; // background
 $card-background-color: #f4f4f4; //card backgrounds and dividers
 $text-color: #7d8799; // text or secondary elements
@@ -16,6 +17,7 @@ $actionable-color: #f4d03f; // highlight actionable items
 
     --icon-color: #{$icon-color};
     --highlight-color: #{$icon-color};
+    --highlight-color-lighter: #{$icon-color-lighter};
     --highlight-color-transparent: #{rgba($icon-color, 0.2)};
     --highlight-color-translucent: #{rgba($icon-color, 0.7)};
     --highlight-color-contrast: var(--background-color);
