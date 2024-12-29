@@ -1,5 +1,74 @@
+@use '/resources/css/app.scss';
+
 .Water {
     width: 100%;
+
+
+    .fish-grid {
+        display: grid;
+        grid-template-columns: auto auto auto;
+
+        .column-header {
+            font-weight: bold;
+            
+        }
+
+        > * {
+            padding: .25em .5em 0 .5em;
+        }
+
+        .alert {
+            margin: 0 .25em;
+        }
+
+
+        > *:nth-child(4n+0) {
+            transition: 300ms ease-in-out;
+            grid-column: span 3;
+            width: 100%;
+            justify-self: left;
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 0 .25em 0;
+            &.open {
+                max-height: 1000px;
+            }
+        }
+
+        .even {
+            background-color: var(--highlight-color-transparent);
+        }
+
+        .odd {
+            background-color: var(--background-color);
+        }
+
+        svg {
+            width: 1em;
+            height: 1em;
+            display: inline-block;
+        }
+
+        button {
+            display: flex;
+            div.opener {
+                font-size: 1em;
+                line-height: 1em;
+                transform: rotate(270deg);
+                transition: 300ms ease;
+                &.open {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .limits {
+            padding-left: 2em;
+            display: inline-grid;
+            grid-template-columns: auto auto auto auto auto;
+            gap: 0 1em;
+        }
+    }
 
     .DataTable {
         td {
