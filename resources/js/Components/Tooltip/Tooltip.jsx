@@ -2,14 +2,13 @@ import React, { useState, useRef, useLayoutEffect } from 'react'
 import './Tooltip.scss'
 
 const Tooltip = ({ message, children }) => {
-
     const [hoverAndPosition, setHoverAndPosition] = useState({
         hover: false,
-        flowLeft: false
+        flowLeft: false,
     })
 
     const messageRef = useRef(null)
-    
+
     const setIsHovering = (value) => (event) => {
         event.preventDefault()
         event.stopPropagation()
@@ -17,42 +16,41 @@ const Tooltip = ({ message, children }) => {
         setHoverAndPosition(() => {
             return {
                 hover: value,
-                flowLeft: false
+                flowLeft: false,
             }
         })
     }
 
     useLayoutEffect(() => {
-
         if (messageRef.current) {
             const bounds = messageRef.current.getBoundingClientRect()
             if (bounds.x + bounds.width > window.innerWidth) {
                 setHoverAndPosition((hoverAndPosition) => {
                     return {
                         hover: hoverAndPosition.hover,
-                        flowLeft: true
+                        flowLeft: true,
                     }
                 })
             } else {
                 setHoverAndPosition((hoverAndPosition) => {
                     return {
                         hover: hoverAndPosition.hover,
-                        flowLeft: false
+                        flowLeft: false,
                     }
                 })
             }
         }
     }, [hoverAndPosition.hover])
-    
+
     return (
-        <div 
+        <div
             className={`Tooltip ${hoverAndPosition.hover ? 'hovering' : ''}`}
             onMouseEnter={setIsHovering(true)}
             onMouseLeave={setIsHovering(false)}
             onClick={(e) => e.stopPropagation()}
         >
             {children}
-            <div 
+            <div
                 ref={messageRef}
                 className={`message ${hoverAndPosition.flowLeft ? 'flow-left' : ''}`}
             >

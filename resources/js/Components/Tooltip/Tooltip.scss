@@ -9,8 +9,8 @@
     .message {
         text-align: left;
         position: absolute;
-        top: -.5em;
-        right: -.25em;
+        top: -0.5em;
+        right: -0.25em;
         transform: translateX(100%);
         z-index: 0;
         pointer-events: none;
@@ -26,12 +26,12 @@
             background-color: var(--background-color);
             border-radius: 0.25rem;
             @apply shadow;
-            padding: .5em 1em;
+            padding: 0.5em 1em;
         }
 
         &.flow-left {
             right: auto;
-            left: -.25em;
+            left: -0.25em;
             transform: translateX(-100%);
             justify-content: end;
         }
