@@ -111,7 +111,12 @@ export default function Water({ children, id, route, ...rest }) {
     const [detailsOpen, setDetailsOpen] = useState({})
 
     const openDetail = (event) => {
-        
+        console.log(event)
+        if (event.defaultPrevented) {
+            debugger
+            return
+        }
+
         const fishName = event.currentTarget.value
 
         setDetailsOpen((oldDetailsOpen) => {
@@ -124,33 +129,45 @@ export default function Water({ children, id, route, ...rest }) {
 
     const renderSeasonDateSpan = (limit) => (
         <>
-            {format(parseMySqlDate(limit.season_start), config.displayDayMonthShortFormat)}
-            <wbr /> -
-            {format(parseMySqlDate(limit.season_end), config.displayDayMonthShortFormat)}
+            <span>{format(parseMySqlDate(limit.season_start), config.displayDayMonthShortFormat)} </span>
+            <span>- {format(parseMySqlDate(limit.season_end), config.displayDayMonthShortFormat)}</span>
         </>
     )
 
-    const renderExtraFishDetail = (limit) => {
+    const renderExtraFishDetail = (limit, shortCircuit = false) => {
         let text = ''
-        if (limit.fishing_method) {
-            if (
-                limit.fishing_method.name ===
-                'May only be angled by artificial fly or baited barbless hook with a single point'
-            ) {
-                text = 'Fly Fishing'
-            } else {
-                text = limit.fishing_method.name
+        if (shortCircuit || !limit.water_description) {       
+            if (limit.fishing_method) {
+                if (
+                    limit.fishing_method.name ===
+                    'May only be angled by artificial fly or baited barbless hook with a single point'
+                ) {
+                    text = 'Fly Fishing'
+                } else {
+                    text = limit.fishing_method.name
+                }
             }
-        }
 
-        if (limit.tidal_category) {
-            if (text) {
-                text += ' in '
+            if (limit.tidal_category) {
+                if (text) {
+                    text += ' in '
+                }
+                text += limit.tidal_category.name + ' waters'
             }
-            text += limit.tidal_category.name + ' waters'
         }
 
         return text
+    }
+
+    const renderWaterStretch = (limit) => {
+        const extraDetail = renderExtraFishDetail(limit, true)
+        return limit.water_description
+            ? (
+                <div className="water-description">
+                    {extraDetail ? extraDetail + ' ' : limit.water.name + ' '}
+                    {limit.water_description}
+                </div>
+            ) : null
     }
 
     const renderSizeOrNa = (size) => {
@@ -170,11 +187,10 @@ export default function Water({ children, id, route, ...rest }) {
             <div className="fish-grid">
 
                 <div className="header">
-                    <div className="column-header">Fish/Season</div>
+                    <div className="column-header date-range">Season/Restrictions</div>
                     <div className="column-header">Bag Limit</div>
                     <div className="column-header">Min. Size</div>
                     <div className="column-header">Max. Size</div>
-                    <div className="column-header">Restrictions</div>
                 </div>
                 
                 <div className="body">
@@ -183,36 +199,44 @@ export default function Water({ children, id, route, ...rest }) {
                         ? <div className="loading-spinner-container"><LoadingSpinner /></div>
                         : Object.keys(fishes ?? {}).map((fishName, index) => (
                             <>
-                                <button onClick={openDetail} value={fishName} className={`fish-name ${index % 2 === 0 ? 'even' : 'odd'} ${detailsOpen?.[fishName] ? 'open' : ''}`}>
-                                    <strong>{fishName}</strong>
-                                    <div className="flex">
-                                        
-                                        <em className="text-sm">
+                                <button
+                                    onClick={openDetail}
+                                    value={fishName}
+                                    className={`fish-name ${index % 2 === 0 ? 'even' : 'odd'} ${detailsOpen?.[fishName] ? 'open' : ''}`}
+                                >
+                                    <div className="fish-season">
+                                        <strong>
+                                            <div className="open-indicator" />
+                                            {fishName}
+                                        </strong>
+                                        <em>
                                             ({`${fishes[fishName].season}`})
                                         </em>
+                                    </div>
+                                    <div className="flex">
                                         {fishes[fishName].limits.length > 1 
                                             ? (
                                                 <Tooltip message="Some Restrictions">
                                                     <ExclamationTriangleIcon className="alert" />
                                                 </Tooltip>
                                             ) : null
-                                        }    
-                                        <div className="open-indicator">
-                                            &#9650;
-                                        </div>
+                                        }
+                                        
                                     </div>
-                                    
                                     
                                 </button>
                                 
                                 <div className={`limits ${index % 2 === 0 ? 'even' : 'odd'} ${detailsOpen?.[fishName] ? 'open' : ''}`}>
                                     {fishes[fishName].limits.map((limit) => (
                                         <>
-                                            <div>{renderSeasonDateSpan(limit)}</div>
+                                            <div className="season-exception">
+                                                <div className="season-date-span">{renderSeasonDateSpan(limit)}</div>
+                                                <div className="exception">{renderExtraFishDetail(limit)}</div>
+                                            </div>
                                             <div>{renderNumberOrUnlimited(limit.bag_limit)}</div>
                                             <div>{renderSizeOrNa(limit.minimum_size)}</div>
                                             <div>{renderSizeOrNa(limit.maximum_size)}</div>
-                                            <div>{renderExtraFishDetail(limit)}</div>
+                                            {renderWaterStretch(limit)}
                                         </>
                                     ))}
                                 </div>

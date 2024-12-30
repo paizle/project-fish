@@ -10,24 +10,30 @@
         text-align: left;
         position: absolute;
         top: -.5em;
-        right: .25em;
+        right: -.25em;
         transform: translateX(100%);
         z-index: 0;
         pointer-events: none;
         visibility: hidden;
         opacity: 0;
         transition: opacity 300ms;
-        background-color: var(--background-color);
-        border-radius: 0.25rem;
-        @apply shadow;
-        padding: .5em 1em;
         transition-delay: 500ms;
         width: 13em;
+
+        display: flex;
+
+        .message-content {
+            background-color: var(--background-color);
+            border-radius: 0.25rem;
+            @apply shadow;
+            padding: .5em 1em;
+        }
 
         &.flow-left {
             right: auto;
             left: -.25em;
             transform: translateX(-100%);
+            justify-content: end;
         }
     }
     &.hovering {

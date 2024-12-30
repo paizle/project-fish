@@ -10,7 +10,10 @@ const Tooltip = ({ message, children }) => {
 
     const messageRef = useRef(null)
     
-    function setIsHovering(value) {
+    const setIsHovering = (value) => (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+        console.log('test', event)
         setHoverAndPosition(() => {
             return {
                 hover: value,
@@ -42,13 +45,18 @@ const Tooltip = ({ message, children }) => {
     }, [hoverAndPosition.hover])
     
     return (
-        <div className={`Tooltip ${hoverAndPosition.hover ? 'hovering' : ''}`} onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
+        <div 
+            className={`Tooltip ${hoverAndPosition.hover ? 'hovering' : ''}`}
+            onMouseEnter={setIsHovering(true)}
+            onMouseLeave={setIsHovering(false)}
+            onClick={(e) => e.stopPropagation()}
+        >
             {children}
             <div 
                 ref={messageRef}
                 className={`message ${hoverAndPosition.flowLeft ? 'flow-left' : ''}`}
             >
-                {message}
+                <div className="message-content">{message}</div>
             </div>
         </div>
     )
