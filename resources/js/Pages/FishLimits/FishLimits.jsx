@@ -31,6 +31,18 @@ export default function FishLimits({
             })
     }
 
+    const renderFishingMethodRow = (row) => {
+        const flyFishing =
+            'May only be angled by artificial fly or baited barbless hook with a single point'
+        const test = fishingMethods[row.fishing_method_id]?.name ?? '(all)'
+
+        if (test === flyFishing) {
+            return <Tooltip message={flyFishing}>Fly Fishing</Tooltip>
+        } else {
+            return test
+        }
+    }
+
     return (
         <AuthenticatedLayout>
             <div className="FishLimits">
@@ -59,10 +71,13 @@ export default function FishLimits({
                                 '(all)',
                             Waterbody: (row) =>
                                 waters[row.water_id]?.name ?? '(all)',
-                            'Water Stretch': (row) => row.water_description,
-                            'Fishing Method': (row) =>
-                                fishingMethods[row.fishing_method_id]?.name ??
-                                '(all)',
+                            'Water Stretch': (row) =>
+                                row.water_description ? (
+                                    <Tooltip message={row.water_description}>
+                                        &nbsp;*&nbsp;
+                                    </Tooltip>
+                                ) : null,
+                            'Fishing Method': renderFishingMethodRow,
                             Note: (row) => row.note,
                             Limit: (row) => {
                                 return row.note ? (

@@ -2,11 +2,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 1em 0 1em 0;
+    padding: 1em 0 0.25em 0;
     transition: 300ms ease;
     gap: 0.5em 0;
 
-    @media (min-width: 920px) {
+    @screen sm {
+        padding: 1em 0 1em 0;
+    }
+
+    @screen md {
         font-size: 2rem;
     }
 
@@ -16,7 +20,7 @@
         &:before {
             content: '>';
             margin: 0 0.5em;
-            border-bottom: none;
+            border-bottom: 1px solid transparent;
         }
         &:first-child {
             &:before {
@@ -27,12 +31,12 @@
 
         &:last-child {
             font-weight: 600;
-            border-bottom: none;
+            border-bottom: 1px solid transparent;
             &:before {
                 font-weight: normal;
             }
             .InternalLink {
-                border-bottom: none;
+                border-bottom: 1px solid transparent;
                 cursor: auto;
             }
         }
