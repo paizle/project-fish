@@ -1,7 +1,8 @@
 import './Index.scss'
 
-import PublicAppLayout from './Layout/PublicAppLayout'
+import PublicAppPrototype1Layout from './Layout/PublicAppPrototype1Layout'
 import PublicAppMenu from './Layout/PublicAppMenu'
+import SectionTabs from './Layout/SectionTabs'
 
 import InternalRouter, {
     BreadCrumb,
@@ -11,19 +12,23 @@ import InternalRouter, {
 import Map from './Pages/Map/Map'
 import Location from './Pages/Location/Location'
 import Water from './Pages/Water/Water'
+import Fishes from './Pages/Fishes/Fishes'
+import LimitsByFish from './Pages/LimitsByFish/LimitsByFish'
 
 export default function Index({ locations }) {
     const internalRouterConfig = {
-        defaultViewName: 'map',
+        defaultViewName: 'fishes',
+        defaultBreadCrumb: [{ name: 'map', content: 'New Brunswick' }],
         breadCrumb: [{ name: 'map', content: 'New Brunswick' }],
     }
 
     return (
         <InternalRouterProvider config={internalRouterConfig}>
-            <PublicAppLayout>
+            <PublicAppPrototype1Layout>
                 {/* <Head title="Project: FISH" /> */}
                 <header>
                     <PublicAppMenu />
+                    <SectionTabs />
                     <BreadCrumb />
                 </header>
 
@@ -51,10 +56,16 @@ export default function Index({ locations }) {
                             water: (params) => (
                                 <Water {...params} route={api.limitsByWater} />
                             ),
+                            fishes: (params) => (
+                                <Fishes {...params} route={api.fishes} />
+                            ),
+                            limitsByFish: (params) => (
+                                <LimitsByFish {...params} route={api.limitsByFish} />
+                            )
                         }}
                     </InternalRouter>
                 </main>
-            </PublicAppLayout>
+            </PublicAppPrototype1Layout>
         </InternalRouterProvider>
     )
 }
@@ -68,4 +79,10 @@ const api = {
     limitsByWater: (id, fishNameQuery) => {
         return route('public-app.limitsByWater.rest', id, { fishNameQuery })
     },
+    fishes: () => {
+        return route('public-app.fishes.rest')
+    },
+    limitsByFish: (id) => {
+        return route('public-app.limitsByFish.rest', id)
+    }
 }

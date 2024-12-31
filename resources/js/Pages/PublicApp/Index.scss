@@ -1,13 +1,5 @@
 @use '/resources/css/app.scss';
 
-.InternalLink {
-    &:hover {
-        span {
-            text-decoration: underline;
-        }
-    }
-}
-
 .loader {
     position: absolute;
     display: flex;
@@ -41,55 +33,5 @@
     }
     50% {
         transform: scale(1.5);
-    }
-}
-
-.SectionTabs {
-
-    
-
-    display: flex;
-    
-    .tab {
-        overflow: hidden;
-        padding-top: 4px;
-        margin: 0;
-        display: flex;
-        &:before, &::after {
-            content: '';
-            display: block;
-            border-bottom: 1px solid black;
-            flex-grow: 0;
-            flex-shrink: 1;
-            min-width: .25em;
-        }
-
-        &:last-child {
-            flex-grow: 1;
-            &::after {
-                flex-grow: 1;
-                flex-shrink: 0;
-            }
-        }
-
-        &.selected {
-            .tab-inner {
-                border-bottom: 0;
-                box-shadow: 2px -2px 3px rgba(0, 0, 0, 0.3);
-            }
-        }
-
-        .tab-inner {
-            box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.3);
-
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
-            border-radius: .35rem .35rem 0 0;
-            padding: .25em .5em;
-
-            font-weight: bold;
-        }
     }
 }

@@ -2,15 +2,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 1em 0 0.25em 0;
+    padding: 1em 0 1em 0;
     transition: 300ms ease;
     gap: 0.5em 0;
 
-    @screen sm {
-        padding: 1em 0 1em 0;
-    }
-
-    @screen md {
+    @media (min-width: 920px) {
         font-size: 2rem;
     }
 
@@ -20,7 +16,7 @@
         &:before {
             content: '>';
             margin: 0 0.5em;
-            border-bottom: 1px solid transparent;
+            border-bottom: none;
         }
         &:first-child {
             &:before {
@@ -30,13 +26,14 @@
         }
 
         &:last-child {
+            pointer-events: none;
             font-weight: 600;
-            border-bottom: 1px solid transparent;
+            border-bottom: none;
             &:before {
                 font-weight: normal;
             }
             .InternalLink {
-                border-bottom: 1px solid transparent;
+                border-bottom: none;
                 cursor: auto;
             }
         }
@@ -53,7 +50,7 @@
         display: flex;
         align-items: center;
         svg {
-            height: 1.1em;
+            height: 1em;
             color: var(--heading-color);
         }
     }

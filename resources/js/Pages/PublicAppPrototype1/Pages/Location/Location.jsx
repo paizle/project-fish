@@ -13,7 +13,7 @@ export default function Location({ children, id, route, ...rest }) {
 
     const [waterName, setWaterName] = React.useState('')
 
-    const resultsRef = React.useRef(null)
+    const listRef = React.useRef(null)
 
     const changeWaterName = (e) => {
         const value = e.target.value
@@ -34,12 +34,12 @@ export default function Location({ children, id, route, ...rest }) {
     }
 
     React.useEffect(() => {
-        if (resultsRef.current) {
+        if (listRef.current) {
             const size = 28
             if (waterName && filteredResults.length === 0) {
-                //resultsRef.current.style.height = size + 'px'
+                //listRef.current.style.height = size + 'px'
             } else {
-                //resultsRef.current.style.height = filteredResults.length * size + 'px'
+                //listRef.current.style.height = filteredResults.length * size + 'px'
             }
         }
     }, [filteredResults, waterName])
@@ -70,7 +70,7 @@ export default function Location({ children, id, route, ...rest }) {
                     </label>
                 </header>
                 <ul
-                    ref={resultsRef}
+                    ref={listRef}
                     className={`results ${filteredResults.length || waterName ? 'has-results' : null}`}
                 >
                     {filteredResults.length ? (

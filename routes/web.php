@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/storybook', function () {
         return Inertia::render('Admin/Storybook/Storybook');
     })->name('admin.storybook');
+    Route::get('/admin/prototypes', function () {
+        return Inertia::render('Admin/Prototypes');
+    })->name('admin.prototypes');
 });
 
 Route::middleware('auth')->group(function () {
@@ -126,6 +129,10 @@ Route::get('/public-app', [PublicAppController::class, 'index'])->name(
     'public-app.page'
 );
 
+Route::get('/public-app-prototype-1', [PublicAppController::class, 'prototype1'])->name(
+    'public-app-prototype-1.page'
+);
+
 Route::get('/public-app/limitsByLocation/{id}', [
     PublicAppController::class,
     'limitsByLocation',
@@ -140,5 +147,10 @@ Route::get('/public-app/fishes', [
     PublicAppController::class,
     'fishes',
 ])->name('public-app.fishes.rest');
+
+Route::get('/public-app/limitsByFish/{id}', [
+    PublicAppController::class,
+    'limitsByFish',
+])->name('public-app.limitsByFish.rest');
 
 require __DIR__ . '/auth.php';

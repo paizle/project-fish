@@ -24,6 +24,13 @@ class PublicAppController extends Controller
         ]);
     }
 
+    public function prototype1()
+    {
+        return Inertia::render('PublicAppPrototype1/Index', [
+            'locations' => Location::all(),
+        ]);
+    }
+
     public function limitsByLocation($id)
     {
         $limits = FishLimit::query()
@@ -102,5 +109,15 @@ class PublicAppController extends Controller
             ->toArray();
 
         return ['limits' => $limits_by_water];
+    }
+
+    public function limitsByFish($id)
+    {
+        $limits = FishLimit::query()
+            ->where('fish_id', $id)
+            ->with(['location', 'boundary', 'water', 'waters_category', 'tidal_category', 'fishing_method'])
+            ->get();
+
+        return ['limits' => $limits];
     }
 }

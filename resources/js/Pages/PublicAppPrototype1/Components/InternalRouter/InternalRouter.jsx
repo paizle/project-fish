@@ -36,6 +36,7 @@ export function InternalRouterProvider({ config, children = {} }) {
         setView,
         breadCrumb,
         updateBreadCrumb,
+        setBreadCrumb,
         loading,
         setLoading,
     }
@@ -65,15 +66,16 @@ export function BreadCrumb() {
                 <HomeIcon />
             </Link>
             {routing.breadCrumb.map((item, index) => (
-                <div>
+                
                     <InternalLink
+                        key={index}
                         name={item.name}
                         params={item?.params || null}
                         breadCrumb={{ position: index }}
                     >
-                        {item.content}
+                        <span>{item.content}</span>
                     </InternalLink>
-                </div>
+                
             ))}
         </div>
     )

@@ -24,6 +24,13 @@ export default function AdminSubMenu() {
             >
                 Storybook
             </NavLink>
+
+            <NavLink
+                href={route('admin.prototypes')}
+                active={route().current('admin.prototypes')}
+            >
+                Prototypes
+            </NavLink>
         </div>
     )
 }
