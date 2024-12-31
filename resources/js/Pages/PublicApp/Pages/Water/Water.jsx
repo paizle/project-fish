@@ -7,6 +7,7 @@ import config from '@/Util/config'
 import { format, isBefore, compareAsc } from 'date-fns'
 import parseMySqlDate from '@/Util/parseMySqlDate'
 
+import { PlayIcon } from '@heroicons/react/24/solid'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import LoadingSpinner from '@/Components/LoadingSpinner/LoadingSpinner'
 import Tooltip from '@/Components/Tooltip/Tooltip'
@@ -29,27 +30,6 @@ export default function Water({ children, id, route, ...rest }) {
     React.useEffect(() => {
         internalRouting.setLoading(false)
     }, [])
-
-    const getExtraFishDetail = (row) => {
-        let extra = []
-
-        if (row.tidal_category) {
-            extra.push(row.tidal_category.name + ' waters')
-        }
-
-        if (row.fishing_method) {
-            if (
-                row.fishing_method.name ===
-                'May only be angled by artificial fly or baited barbless hook with a single point'
-            ) {
-                extra.push('Fly Fishing')
-            } else {
-                extra.push(row.fishing_method.name)
-            }
-        }
-
-        return extra
-    }
 
     const fishes = formatResults(results)
 
@@ -194,7 +174,7 @@ export default function Water({ children, id, route, ...rest }) {
 
     const renderNumberOrUnlimited = (number) => {
         if (number === null) {
-            return ' - '
+            return (<span className="text-lg leading-4">&#8734;</span>)
         }
         return number
     }
@@ -226,7 +206,7 @@ export default function Water({ children, id, route, ...rest }) {
                                 >
                                     <div className="fish-season">
                                         <strong>
-                                            <div className="open-indicator" />
+                                            <PlayIcon className="open-indicator" />
                                             {fishName}
                                         </strong>
                                         <em>
@@ -248,7 +228,7 @@ export default function Water({ children, id, route, ...rest }) {
                                     {fishes[fishName].limits.map((limit) => (
                                         <>
                                             <div className="season-exception">
-                                                <div className="season-date-span">
+                                                <div className="date-span">
                                                     {renderSeasonDateSpan(
                                                         limit,
                                                     )}

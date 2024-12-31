@@ -55,6 +55,7 @@ main:has(.Water) {
                 text-align: center;
                 display: flex;
                 align-items: end;
+                color: var(--heading-color);
                 &:first-child {
                     text-align: left;
                     font-size: 1.2em;
@@ -66,18 +67,15 @@ main:has(.Water) {
         }
 
         button.fish-name {
+            grid-column: span 4;
             cursor: pointer;
             user-select: text;
             border: 1px solid transparent;
             border-radius: 0.5em;
-
             display: flex;
             align-items: center;
-
-            grid-column: span 4;
-            padding: 0.25em 0.5em;
-            display: flex;
             justify-content: space-between;
+            padding: 0.25em 0.5em;
             margin: 0.25em 0 0 0;
 
             &:hover {
@@ -86,25 +84,23 @@ main:has(.Water) {
 
             .fish-season {
                 display: flex;
-                align-items: baseline;
+                align-items: center;
+                text-align: left;
                 gap: 0 0.5em;
-            }
 
-            strong {
-                display: flex;
-                font-size: 1.2em;
+                strong {
+                    display: flex;
+                    font-size: 1.2em;
+                }
             }
 
             .open-indicator {
-                margin-right: 1em;
+                margin: .25em .75em 0 0;
                 width: 1em;
                 height: 1em;
                 transform: rotate(0deg);
-                transform-origin: 50% 75%;
+                transform-origin: 50% 50%;
                 transition: 300ms ease;
-                &:after {
-                    content: '\25B6';
-                }
             }
             &.open {
                 border-radius: 0.5em 0.5em 0 0;
@@ -116,31 +112,32 @@ main:has(.Water) {
 
         .limits {
             display: contents;
-            .season-exception {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0 0.5em;
-                .exception {
-                    font-style: italic;
-                    text-align: left;
-                }
-                .season-date-span {
-                    :nth-child(2) {
-                        display: inline-block;
-                        min-width: 4.5em;
-                    }
-                }
-            }
-
+            
             > * {
                 padding: 0 0.5em 0 0.5em;
-                border: none;
-                &.season-date-span,
-                &.exception {
+                text-align: center;
+                transition: opacity, max-height 300ms ease;
+                max-height: 0;
+                overflow: hidden;
+
+                &.season-exception {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0 0.5em;
                     text-align: left;
+                    .exception {
+                        font-style: italic;
+                    }
+                    .date-span {
+                        :nth-child(2) {
+                            display: inline-block;
+                            min-width: 4.5em;
+                        }
+                    }
                 }
                 &.exception {
                     font-style: italic;
+                    text-align: left;
                 }
                 &.water-description {
                     grid-column: span 4;
@@ -156,12 +153,7 @@ main:has(.Water) {
                 &:nth-last-child(-4n + 4) {
                     border-radius: 0 0 0 0.5em;
                 }
-                text-align: center;
-                max-height: 0;
-                transition:
-                    opacity,
-                    max-height 300ms ease;
-                overflow: hidden;
+                
             }
 
             &.open {
