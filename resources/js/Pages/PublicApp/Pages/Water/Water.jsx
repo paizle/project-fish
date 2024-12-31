@@ -31,27 +31,6 @@ export default function Water({ children, id, route, ...rest }) {
         internalRouting.setLoading(false)
     }, [])
 
-    const getExtraFishDetail = (row) => {
-        let extra = []
-
-        if (row.tidal_category) {
-            extra.push(row.tidal_category.name + ' waters')
-        }
-
-        if (row.fishing_method) {
-            if (
-                row.fishing_method.name ===
-                'May only be angled by artificial fly or baited barbless hook with a single point'
-            ) {
-                extra.push('Fly Fishing')
-            } else {
-                extra.push(row.fishing_method.name)
-            }
-        }
-
-        return extra
-    }
-
     const fishes = formatResults(results)
 
     function formatResults(results) {
@@ -195,7 +174,7 @@ export default function Water({ children, id, route, ...rest }) {
 
     const renderNumberOrUnlimited = (number) => {
         if (number === null) {
-            return ' - '
+            return (<span className="text-lg leading-4">&#8734;</span>)
         }
         return number
     }

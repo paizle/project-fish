@@ -95,15 +95,12 @@ main:has(.Water) {
             }
 
             .open-indicator {
-                margin: .25em 1em 0 0;
+                margin: .25em .75em 0 0;
                 width: 1em;
                 height: 1em;
                 transform: rotate(0deg);
                 transform-origin: 50% 50%;
                 transition: 300ms ease;
-                &:after {
-                    content: '\25B6';
-                }
             }
             &.open {
                 border-radius: 0.5em 0.5em 0 0;
