@@ -1,27 +1,43 @@
 @use '/resources/css/app.scss';
 
 .Tooltip {
+    display: inline-block;
     position: relative;
     cursor: help;
     text-decoration: underline;
+    text-decoration-style: dotted;
     .message {
         text-align: left;
         position: absolute;
-        top: 1em;
-        left: 1em;
+        top: -0.5em;
+        right: -0.25em;
+        transform: translateX(100%);
         z-index: 0;
         pointer-events: none;
         visibility: hidden;
         opacity: 0;
-        transition: 300ms;
-        background-color: var(--background-color);
-        border-radius: 0.25rem;
-        @apply p-4 shadow;
+        transition: opacity 300ms;
         transition-delay: 500ms;
-        width: 16em;
+        width: 13em;
+
+        display: flex;
+
+        .message-content {
+            background-color: var(--background-color);
+            border-radius: 0.25rem;
+            @apply shadow;
+            padding: 0.5em 1em;
+        }
+
+        &.flow-left {
+            right: auto;
+            left: -0.25em;
+            transform: translateX(-100%);
+            justify-content: end;
+        }
     }
-    &:hover {
-        text-decoration-style: dotted;
+    &.hovering {
+        text-decoration-style: solid;
         .message {
             z-index: 1;
             visibility: visible;
