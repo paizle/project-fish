@@ -5,16 +5,28 @@ use App\Models\FishLimit;
 use App\Models\Location;
 use App\Models\Fish;
 
-use App\Util\Indexer;
 use Inertia\Inertia;
 
 use Illuminate\Database\Eloquent\Builder;
 
 class PublicAppController extends Controller
 {
+
+    public function fishes()
+    {
+        return ['fishes' => Fish::all()];
+    }
+
     public function index()
     {
         return Inertia::render('PublicApp/Index', [
+            'locations' => Location::all(),
+        ]);
+    }
+
+    public function prototype1()
+    {
+        return Inertia::render('PublicAppPrototype1/Index', [
             'locations' => Location::all(),
         ]);
     }
@@ -97,5 +109,15 @@ class PublicAppController extends Controller
             ->toArray();
 
         return ['limits' => $limits_by_water];
+    }
+
+    public function limitsByFish($id)
+    {
+        $limits = FishLimit::query()
+            ->where('fish_id', $id)
+            ->with(['location', 'boundary', 'water', 'waters_category', 'tidal_category', 'fishing_method'])
+            ->get();
+
+        return ['limits' => $limits];
     }
 }
