@@ -1,26 +1,26 @@
 @use '/resources/css/app.scss';
 
 .Tooltip {
-    display: inline-block;
-    position: relative;
     cursor: help;
+    position: relative;
+    display: inline-block;
     text-decoration: underline;
     text-decoration-style: dotted;
+
     .message {
-        text-align: left;
+        pointer-events: none;
         position: absolute;
+        z-index: 0;
         top: -0.5em;
         right: -0.25em;
+        display: flex;
+        text-align: left;
         transform: translateX(100%);
-        z-index: 0;
-        pointer-events: none;
         visibility: hidden;
         opacity: 0;
         transition: opacity 300ms;
         transition-delay: 500ms;
         width: 13em;
-
-        display: flex;
 
         .message-content {
             background-color: var(--background-color);
@@ -36,7 +36,8 @@
             justify-content: end;
         }
     }
-    &.hovering {
+
+    &.show {
         text-decoration-style: solid;
         .message {
             z-index: 1;

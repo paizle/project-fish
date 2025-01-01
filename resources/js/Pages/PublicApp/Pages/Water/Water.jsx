@@ -174,7 +174,7 @@ export default function Water({ children, id, route, ...rest }) {
 
     const renderNumberOrUnlimited = (number) => {
         if (number === null) {
-            return (<span className="text-lg leading-4">&#8734;</span>)
+            return (<span className="text-md leading-4">&#8734;</span>)
         }
         return number
     }
