@@ -34,11 +34,6 @@ export default function AuthenticatedLayout({ header, children }) {
             active: route().current('data.*'),
             content: 'Other Data',
         },
-        {
-            href: route('test.test'),
-            active: route().current('test.*'),
-            content: 'Test',
-        },
     ]
 
     const user = usePage().props.auth.user
