@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter'
 
 import config from '@/Util/config'
-import { format, isBefore, compareAsc } from 'date-fns'
+import { format, isBefore, compareAsc, isEqual } from 'date-fns'
 import parseMySqlDate from '@/Util/parseMySqlDate'
 
 import { PlayIcon } from '@heroicons/react/24/solid'
@@ -14,7 +14,13 @@ import Tooltip from '@/Components/Tooltip/Tooltip'
 
 export default function Water({ children, id, route, ...rest }) {
     const [results, setResults] = useState([])
+    const [fishes, setFishes] = useState({})
     const [isLoading, setIsLoading] = useState(false)
+
+    const internalRouting = useInternalRouting()
+    React.useEffect(() => {
+        internalRouting.setLoading(false)
+    }, [])
 
     React.useEffect(() => {
         setIsLoading(true)
@@ -26,12 +32,47 @@ export default function Water({ children, id, route, ...rest }) {
             .finally(() => setIsLoading(false))
     }, [])
 
-    const internalRouting = useInternalRouting()
     React.useEffect(() => {
-        internalRouting.setLoading(false)
-    }, [])
+        setFishes(formatResults(results))
+    }, [results])
 
-    const fishes = formatResults(results)
+    function formatFishingMethod(limit) {
+        let fishingMethod = ''
+
+        if (limit?.fishing_method?.name ===
+                'May only be angled by artificial fly or baited barbless hook with a single point'
+        ) {
+            fishingMethod = 'Fly Fishing'
+        } else {
+            fishingMethod = limit?.fishing_method?.name ?? ''
+        }
+        return fishingMethod
+    }
+
+    function formatTidal(limit) {
+        let text = ''
+        if (limit.tidal_category) {
+            if (text) {
+                text += ' in '
+            }
+            text += limit.tidal_category.name + ' waters'
+        }
+        return text
+    }
+
+    function convertLimit(limit) {
+        return {
+            seasonStart: parseMySqlDate(limit.season_start),
+            seasonEnd: parseMySqlDate(limit.season_end),
+            bagLimit: limit.bag_limit,
+            minSize: limit.minimum_size,
+            maxSize: limit.maximum_size,
+            fishingMethod: formatFishingMethod(limit),
+            tidal: formatTidal(limit),
+            water: limit?.water?.name ?? '',
+            waterDescription: limit.water_description ?? ''
+        }
+    }
 
     function formatResults(results) {
         if (!results.length) {
@@ -42,56 +83,94 @@ export default function Water({ children, id, route, ...rest }) {
             const fishName = v?.fish?.name ?? null
             if (!a[fishName]) {
                 const entry = {
-                    season: null,
+                    seasonStart: null,
+                    seasonEnd: null,
                     limits: [],
                 }
                 a[fishName] = entry
             }
-
-            a[fishName].limits.push(v)
+            a[fishName].limits.push(convertLimit(v))
             return a
         }, {})
 
         Object.keys(fish).forEach((fishName) => {
+
+            // normalize duplicates
+            fish[fishName].limits = fish[fishName].limits.reduce((a, v) => {
+                let i = 0;
+                let duplicate = false
+                while (!duplicate && i < a.length) {
+                    if (!a[i].waterDescription
+                        && isEqual(v.seasonStart, a[i].seasonStart) 
+                        && isEqual(v.seasonEnd, a[i].seasonEnd)
+                        && v.bagLimit === a[i].bagLimit
+                        && v.minimumSize === a[i].minimumSize
+                        && v.maximumSize === a[i].maximumSize) {
+                            duplicate = true
+                            if (v.fishingMethod !== a[i].fishingMethod) {
+                                a[i].fishingMethod = ''
+                            }
+                            if (v.tidal !== a[i].tidal) {
+                                a[i].tidal = ''
+                            }
+                    }
+                    i++
+                }
+                if (!duplicate) {
+                    a.push(v)
+                }
+                return a
+            }, [])
+
+
+            // sort by start date and end date
             fish[fishName].limits = fish[fishName].limits.sort((a, b) => {
-                const startComparison = compareAsc(
-                    parseMySqlDate(a.season_start),
-                    parseMySqlDate(b.season_start),
-                )
+                const startComparison = compareAsc(a.seasonStart, b.seasonStart)
                 if (startComparison === 0) {
-                    return compareAsc(
-                        parseMySqlDate(a.season_end),
-                        parseMySqlDate(b.season_end),
-                    )
+                    return compareAsc(b.seasonEnd, a.seasonEnd)
                 }
                 return startComparison
             })
-            const season = fish[fishName].limits.reduce(
-                (a, v) => {
-                    if (!a.seasonStart) {
-                        a.seasonStart = parseMySqlDate(v.season_start)
-                    } else {
-                        const seasonStart = parseMySqlDate(v.season_start)
-                        if (isBefore(seasonStart, a.seasonStart)) {
-                            a.seasonStart = seasonStart
-                        }
+
+            // find start and end dates for all seasons
+            fish[fishName].limits.forEach((limit) => {
+                if (!fish[fishName].seasonStart) {
+                    fish[fishName].seasonStart = limit.seasonStart
+                } else {
+                    if (isBefore(limit.seasonStart, fish[fishName].seasonStart)) {
+                        fish[fishName].seasonStart = limit.seasonStart
                     }
-                    if (!a.seasonEnd) {
-                        a.seasonEnd = parseMySqlDate(v.season_end)
-                    } else {
-                        const seasonEnd = parseMySqlDate(v.season_end)
-                        if (!isBefore(seasonEnd, a.seasonEnd)) {
-                            a.seasonEnd = seasonEnd
-                        }
+                }
+                if (!fish[fishName].seasonEnd) {
+                    fish[fishName].seasonEnd = limit.seasonEnd
+                } else {
+                    if (!isBefore(limit.seasonEnd, fish[fishName].seasonEnd)) {
+                        fish[fishName].seasonEnd = limit.seasonEnd
                     }
-                    return a
-                },
-                { seasonStart: null, seasonEnd: null },
-            )
-            fish[fishName].season =
-                format(season.seasonStart, config.displayDayMonthShortFormat) +
-                ' - ' +
-                format(season.seasonEnd, config.displayDayMonthShortFormat)
+                }
+            })
+
+            /*
+            const objectMap = {};
+            let i = 0;
+            while (i < fish[fishName].limits.length) {
+                const obj = fish[fishName].limits[i];
+                const key = `${obj.fishingMethod}-${obj.tidal}-${obj.description}`; // Create a unique key using name and description
+
+                if (objectMap[key]) {
+                    // If a duplicate is found, add it to the `group` property of the original object
+                    if (!objectMap[key].group) {
+                        objectMap[key].group = [];
+                    }
+                    objectMap[key].group.push(obj); // Add duplicate to group
+                    fish[fishName].limits.splice(i, 1); // Remove duplicate from the array
+                } else {
+                    // Mark this object as the original for its key
+                    objectMap[key] = obj;
+                    i++; // Move to the next element
+                }
+            }
+            */
         })
 
         return fish
@@ -115,57 +194,43 @@ export default function Water({ children, id, route, ...rest }) {
         })
     }
 
-    const renderSeasonDateSpan = (limit) => (
+    const renderSeasonDateSpan = (o) => {
+        console.log(format(o.seasonStart, config.displayDayMonthShortFormat))
+        return (
         <>
             <span>
-                {format(
-                    parseMySqlDate(limit.season_start),
-                    config.displayDayMonthShortFormat,
-                )}{' '}
+                {format(o.seasonStart, config.displayDayMonthShortFormat)}
+                {' '}
             </span>
             <span>
                 -{' '}
-                {format(
-                    parseMySqlDate(limit.season_end),
-                    config.displayDayMonthShortFormat,
-                )}
+                {format(o.seasonEnd, config.displayDayMonthShortFormat)}
             </span>
-        </>
-    )
-
-    const renderExtraFishDetail = (limit, shortCircuit = false) => {
-        let text = ''
-        if (shortCircuit || !limit.water_description) {
-            if (limit.fishing_method) {
-                if (
-                    limit.fishing_method.name ===
-                    'May only be angled by artificial fly or baited barbless hook with a single point'
-                ) {
-                    text = 'Fly Fishing'
-                } else {
-                    text = limit.fishing_method.name
-                }
-            }
-
-            if (limit.tidal_category) {
-                if (text) {
-                    text += ' in '
-                }
-                text += limit.tidal_category.name + ' waters'
-            }
-        }
-
-        return text
+        </>)
     }
 
     const renderWaterStretch = (limit) => {
-        const extraDetail = renderExtraFishDetail(limit, true)
         return limit.water_description ? (
             <div className="water-description">
-                {extraDetail ? extraDetail + ' ' : limit.water.name + ' '}
+                {limit.tidal || limit.fishingMethod ? ' ' : limit.water.name + ' '}
                 {limit.water_description}
             </div>
         ) : null
+    }
+
+    const renderExceptionDetail = (limit) => {
+        let text = limit.fishingMethod
+        if (limit.tidal) {
+            if (text) {
+                text += ' in '
+            }
+            text += limit.tidal
+        }
+        if (!text) {
+            text += limit.water
+        }
+        text += ' ' + limit.waterDescription
+        return text
     }
 
     const renderSizeOrNa = (size) => {
@@ -210,7 +275,7 @@ export default function Water({ children, id, route, ...rest }) {
                                             {fishName}
                                         </strong>
                                         <em>
-                                            ({`${fishes[fishName].season}`})
+                                            ({renderSeasonDateSpan(fishes[fishName])})
                                         </em>
                                     </div>
                                     <div className="flex">
@@ -234,24 +299,22 @@ export default function Water({ children, id, route, ...rest }) {
                                                     )}
                                                 </div>
                                                 <div className="exception">
-                                                    {renderExtraFishDetail(
-                                                        limit,
-                                                    )}
+                                                    {renderExceptionDetail(limit)}
                                                 </div>
                                             </div>
                                             <div>
                                                 {renderNumberOrUnlimited(
-                                                    limit.bag_limit,
+                                                    limit.bagLimit,
                                                 )}
                                             </div>
                                             <div>
                                                 {renderSizeOrNa(
-                                                    limit.minimum_size,
+                                                    limit.minSize,
                                                 )}
                                             </div>
                                             <div>
                                                 {renderSizeOrNa(
-                                                    limit.maximum_size,
+                                                    limit.maxSize,
                                                 )}
                                             </div>
                                             {renderWaterStretch(limit)}
