@@ -17,12 +17,12 @@
         flex-basis: 10em;
         flex-grow: 1;
         transition: 300ms ease-in;
-        padding: 1em;
+        padding: 0 1em 1em 1em;
         display: flex;
         flex-direction: column;
         align-items: center;
         overflow-y: auto;
-        justify-content: space-around;
+        justify-content: space-between;
         ul {
             display: contents;
             li {
@@ -54,8 +54,8 @@
 
                 em {
                     display: block;
-                    max-height: 0px;
-                    transition: 1000ms ease-in;
+                    max-height: .5em;
+                    transition: 1000ms ease-in-out;
                     overflow: hidden;
                     opacity: 0;
                 }
