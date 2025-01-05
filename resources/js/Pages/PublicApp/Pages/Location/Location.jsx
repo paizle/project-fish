@@ -1,5 +1,5 @@
-import React from 'react'
 import './Location.scss'
+import React, {useState, useRef, useEffect} from 'react'
 
 import {
     InternalLink,
@@ -7,13 +7,21 @@ import {
 } from '../../Components/InternalRouter/InternalRouter'
 
 export default function Location({ children, id, route, ...rest }) {
-    const [results, setResults] = React.useState([])
+    const [results, setResults] = useState([])
 
-    const [filteredResults, setFilteredResults] = React.useState([])
+    const [filteredResults, setFilteredResults] = useState([])
 
-    const [waterName, setWaterName] = React.useState('')
+    const [waterName, setWaterName] = useState('')
 
-    const resultsRef = React.useRef(null)
+    const searchRef = useRef(null)
+
+    const resultsRef = useRef(null)
+
+    useEffect(() => {
+        if (searchRef.current) {
+            searchRef.current.focus()
+        }
+    }, [searchRef.current])
 
     const changeWaterName = (e) => {
         const value = e.target.value
@@ -33,7 +41,7 @@ export default function Location({ children, id, route, ...rest }) {
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (resultsRef.current) {
             const size = 28
             if (waterName && filteredResults.length === 0) {
@@ -44,7 +52,7 @@ export default function Location({ children, id, route, ...rest }) {
         }
     }, [filteredResults, waterName])
 
-    React.useEffect(() => {
+    useEffect(() => {
         console.log({ route })
 
         axios.get(route(id, '')).then((result) => {
@@ -53,7 +61,7 @@ export default function Location({ children, id, route, ...rest }) {
     }, [])
 
     const internalRouting = useInternalRouting()
-    React.useEffect(() => {
+    useEffect(() => {
         internalRouting.setLoading(false)
     }, [])
 
@@ -64,6 +72,7 @@ export default function Location({ children, id, route, ...rest }) {
                     <label>
                         <span>Search by Waters</span>
                         <input
+                            ref={searchRef}
                             onChange={changeWaterName}
                             placeholder='hint: Try searching "lake" or "stream"'
                         />
