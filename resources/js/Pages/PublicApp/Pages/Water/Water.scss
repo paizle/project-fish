@@ -11,18 +11,18 @@ main:has(.Water) {
     overflow-y: hidden;
 
     .fish-grid {
-        padding: 0 0.25em;
         display: grid;
-        grid-template-columns: 1fr 4em 4em 4em;
+        grid-template-columns: 1fr 1fr 4em 4em 4em;
         overflow-y: auto;
         position: relative;
+        padding: 0 0.25em;
         max-height: 100%;
         font-size: 0.8em;
 
         @screen sm {
+            grid-template-columns: 1fr 1fr auto auto auto;
             padding: 0 1em;
             font-size: 1em;
-            grid-template-columns: 1fr auto auto auto;
             .header {
                 br {
                     display: none;
@@ -31,19 +31,26 @@ main:has(.Water) {
         }
 
         .loading-spinner-container {
-            grid-column: span 4;
-            padding: 2em;
+            grid-column: span 5;
             display: flex;
             justify-content: center;
+            padding: 2em;
             .LoadingSpinner {
                 height: 50px;
                 width: 50px;
             }
         }
 
-        .header {
-            grid-area: header;
+        .body {
             display: contents;
+        }
+
+        .header {
+            display: contents;
+
+            .date-range {
+                grid-column: span 2;
+            }
 
             > * {
                 position: sticky;
@@ -67,7 +74,7 @@ main:has(.Water) {
         }
 
         button.fish-name {
-            grid-column: span 4;
+            grid-column: span 5;
             cursor: pointer;
             user-select: text;
             border: 1px solid transparent;
@@ -113,54 +120,52 @@ main:has(.Water) {
         .limits {
             display: contents;
             
-            > * {
-                padding: 0 0.5em 0 0.5em;
+            .limit > *, .water-description {
                 text-align: center;
                 transition: opacity, max-height 300ms ease;
                 max-height: 0;
                 overflow: hidden;
+            }
 
-                &.season-exception {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 0 0.5em;
-                    text-align: left;
-                    .exception {
-                        font-style: italic;
-                    }
-                    .date-span {
-                        :nth-child(2) {
+            .water-description {
+                grid-column: span 5;
+                text-align: left;
+                &:last-child {
+                    border-radius: 0 0 0.5em 0.5em;
+                }
+            }
+
+            .limit {
+                display: contents; 
+                
+                > * {
+                    &.season-exception {
+                        grid-column: span 2;
+                        text-align: left;
+                        .date-span:nth-child(2) {
                             display: inline-block;
                             min-width: 4.5em;
                         }
                     }
-                }
-                &.exception {
-                    font-style: italic;
-                    text-align: left;
-                }
-                &.water-description {
-                    grid-column: span 4;
-                    text-align: left;
-                    font-style: italic;
-                    &:last-child {
-                        border-radius: 0 0 0.5em 0.5em;
+                    .invalid {
+                        text-decoration: line-through;
+                        text-decoration-color: var(--error);
                     }
                 }
-                &:nth-last-child(-n + 1) {
-                    border-radius: 0 0 0.5em 0;
+
+                &:last-child {
+                    :nth-last-child(-n + 1) {
+                        border-radius: 0 0 0.5em 0;
+                    }
+                    :nth-last-child(-4n + 4) {
+                        border-radius: 0 0 0 0.5em;
+                    }
                 }
-                &:nth-last-child(-4n + 4) {
-                    border-radius: 0 0 0 0.5em;
-                }
-                
             }
 
+
             &.open {
-                > * {
-                    &.water-description {
-                        border-top: 1px solid transparent;
-                    }
+                .limit > *, .water-description {
                     padding: 0 0.5em 0.25em 0.5em;
                     border-top: 1px solid var(--highlight-color-transparent);
                     opacity: 1;
@@ -168,21 +173,21 @@ main:has(.Water) {
                     max-height: 8em;
                     overflow: visible;
                 }
+                .limit.group > *, .water-description {
+                    border-top: 0;
+                }
             }
         }
 
-        .body {
-            grid-area: body;
-            display: contents;
-        }
-
         .even,
-        .even > * {
+        .even .water-description,
+        .even .limit > * {
             background-color: var(--background-color);
         }
 
         .odd,
-        .odd > * {
+        .odd .water-description,
+        .odd .limit > * {
             background-color: var(--highlight-color-lighter);
         }
 

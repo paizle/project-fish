@@ -10,6 +10,7 @@ $card-background-color: #f4f4f4; //card backgrounds and dividers
 $text-color: #7d8799; // text or secondary elements
 $hover-color: #34b8d9; // hover-effects
 $actionable-color: #f4d03f; // highlight actionable items
+$error: #ba3232;
 
 :root {
     --heading-color: #{$heading-color};
@@ -21,7 +22,7 @@ $actionable-color: #f4d03f; // highlight actionable items
     --highlight-color-transparent: #{rgba($icon-color, 0.2)};
     --highlight-color-translucent: #{rgba($icon-color, 0.7)};
     --highlight-color-contrast: var(--background-color);
-
+    
     --background-color: #{$background-color};
 
     --card-background-color: #{$card-background-color};
@@ -35,6 +36,8 @@ $actionable-color: #f4d03f; // highlight actionable items
 
     --actionable-color: #{$actionable-color};
     --actionable-color-translucent: #{rgba($actionable-color, 0.7)};
+
+    --error: #{$error};
 
     --yellow-highlighter: 253, 255, 50;
 

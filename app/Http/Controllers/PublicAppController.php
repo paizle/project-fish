@@ -84,9 +84,8 @@ class PublicAppController extends Controller
                         ->where('boundary_id', $limit['boundary_id'])
                         ->orWhereNull('boundary_id');
                 });
-            } else {
-                $test = true;
             }
+            
             $related_limits = $related_limits->get();
 
             foreach ($related_limits->toArray() as $related_limit) {
