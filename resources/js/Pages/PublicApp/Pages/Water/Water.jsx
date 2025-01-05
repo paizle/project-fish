@@ -1,10 +1,11 @@
 import './Water.scss'
+import { formatResults } from './WaterTransformers'
 import React, { useState } from 'react'
 
 import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter'
 
 import config from '@/Util/config'
-import { format, isBefore, compareAsc } from 'date-fns'
+import { format, isBefore, compareAsc, isEqual } from 'date-fns'
 import parseMySqlDate from '@/Util/parseMySqlDate'
 
 import { PlayIcon } from '@heroicons/react/24/solid'
@@ -14,7 +15,15 @@ import Tooltip from '@/Components/Tooltip/Tooltip'
 
 export default function Water({ children, id, route, ...rest }) {
     const [results, setResults] = useState([])
+    const [fishes, setFishes] = useState({})
     const [isLoading, setIsLoading] = useState(false)
+
+    const internalRouting = useInternalRouting()
+    React.useEffect(() => {
+        internalRouting.setLoading(false)
+    }, [])
+
+    const isMobile = true
 
     React.useEffect(() => {
         setIsLoading(true)
@@ -26,83 +35,15 @@ export default function Water({ children, id, route, ...rest }) {
             .finally(() => setIsLoading(false))
     }, [])
 
-    const internalRouting = useInternalRouting()
     React.useEffect(() => {
-        internalRouting.setLoading(false)
-    }, [])
-
-    const fishes = formatResults(results)
-
-    function formatResults(results) {
-        if (!results.length) {
-            return
-        }
-
-        const fish = results.reduce((a, v) => {
-            const fishName = v?.fish?.name ?? null
-            if (!a[fishName]) {
-                const entry = {
-                    season: null,
-                    limits: [],
-                }
-                a[fishName] = entry
-            }
-
-            a[fishName].limits.push(v)
-            return a
-        }, {})
-
-        Object.keys(fish).forEach((fishName) => {
-            fish[fishName].limits = fish[fishName].limits.sort((a, b) => {
-                const startComparison = compareAsc(
-                    parseMySqlDate(a.season_start),
-                    parseMySqlDate(b.season_start),
-                )
-                if (startComparison === 0) {
-                    return compareAsc(
-                        parseMySqlDate(a.season_end),
-                        parseMySqlDate(b.season_end),
-                    )
-                }
-                return startComparison
-            })
-            const season = fish[fishName].limits.reduce(
-                (a, v) => {
-                    if (!a.seasonStart) {
-                        a.seasonStart = parseMySqlDate(v.season_start)
-                    } else {
-                        const seasonStart = parseMySqlDate(v.season_start)
-                        if (isBefore(seasonStart, a.seasonStart)) {
-                            a.seasonStart = seasonStart
-                        }
-                    }
-                    if (!a.seasonEnd) {
-                        a.seasonEnd = parseMySqlDate(v.season_end)
-                    } else {
-                        const seasonEnd = parseMySqlDate(v.season_end)
-                        if (!isBefore(seasonEnd, a.seasonEnd)) {
-                            a.seasonEnd = seasonEnd
-                        }
-                    }
-                    return a
-                },
-                { seasonStart: null, seasonEnd: null },
-            )
-            fish[fishName].season =
-                format(season.seasonStart, config.displayDayMonthShortFormat) +
-                ' - ' +
-                format(season.seasonEnd, config.displayDayMonthShortFormat)
-        })
-
-        return fish
-    }
+        setFishes(formatResults(results))
+    }, [results])
 
     const [detailsOpen, setDetailsOpen] = useState({})
 
     const openDetail = (event) => {
         console.log(event)
         if (event.defaultPrevented) {
-            debugger
             return
         }
 
@@ -115,69 +56,112 @@ export default function Water({ children, id, route, ...rest }) {
         })
     }
 
-    const renderSeasonDateSpan = (limit) => (
+    const renderSeasonDateSpan = (o) => {
+        console.log(format(o.seasonStart, config.displayDayMonthShortFormat))
+        return (
         <>
             <span>
-                {format(
-                    parseMySqlDate(limit.season_start),
-                    config.displayDayMonthShortFormat,
-                )}{' '}
+                {format(o.seasonStart, config.displayDayMonthShortFormat)}
+                {' '}
             </span>
             <span>
                 -{' '}
-                {format(
-                    parseMySqlDate(limit.season_end),
-                    config.displayDayMonthShortFormat,
-                )}
+                {format(o.seasonEnd, config.displayDayMonthShortFormat)}
             </span>
-        </>
-    )
-
-    const renderExtraFishDetail = (limit, shortCircuit = false) => {
-        let text = ''
-        if (shortCircuit || !limit.water_description) {
-            if (limit.fishing_method) {
-                if (
-                    limit.fishing_method.name ===
-                    'May only be angled by artificial fly or baited barbless hook with a single point'
-                ) {
-                    text = 'Fly Fishing'
-                } else {
-                    text = limit.fishing_method.name
-                }
-            }
-
-            if (limit.tidal_category) {
-                if (text) {
-                    text += ' in '
-                }
-                text += limit.tidal_category.name + ' waters'
-            }
-        }
-
-        return text
+        </>)
     }
 
     const renderWaterStretch = (limit) => {
-        const extraDetail = renderExtraFishDetail(limit, true)
-        return limit.water_description ? (
-            <div className="water-description">
-                {extraDetail ? extraDetail + ' ' : limit.water.name + ' '}
-                {limit.water_description}
-            </div>
+        return limit.waterDescription ? (
+            <em className="water-description">
+                {renderExceptionDetail(limit, false)}
+            </em>
         ) : null
     }
 
-    const renderSizeOrNa = (size) => {
-        return size ?? 'N/A'
+    const renderExceptionDetail = (limit, hasDescription = true) => {
+        if (hasDescription && limit.waterDescription) {
+            return ''
+        }
+        let text = limit.fishingMethod
+        if (limit.tidal) {
+            if (text) {
+                text += ' in '
+            }
+            text += limit.tidal
+        }
+        if (!text) {
+            text += limit.water
+        }
+        text += ' ' + limit.waterDescription
+        return text
     }
 
-    const renderNumberOrUnlimited = (number) => {
-        if (number === null) {
+    const renderMinSize = (limit) => {
+        
+        const text = limit?.minSize ?? 'N/A'
+        if (limit.bagLimit === 0) {
+            return (<span className="invalid">{text}</span>)
+        }
+        return text
+    }
+
+    const renderMaxSize = (limit) => {
+        const text = limit?.maxSize ?? 'N/A'
+        if (limit.bagLimit === 0) {
+            return (<span className="invalid">{text}</span>)
+        }
+        return text
+    }
+
+    const renderBagLimit = (limit) => {
+        if (limit.bagLimit === null) {
             return (<span className="text-md leading-4">&#8734;</span>)
         }
-        return number
+        return limit.bagLimit
     }
+
+    const renderFishLimit = (limit, group = false) => {
+        return (
+            <div className={`limit ${group ? 'group' : ''}`}>
+                <div className="season-exception">
+                    <span className="date-span">
+                        {renderSeasonDateSpan(limit)}
+                    </span>
+                    <em className="exception">
+                        &nbsp;{renderExceptionDetail(limit)}
+                    </em>
+                </div>
+                <div>
+                    {renderBagLimit(limit)}
+                </div>
+                <div>
+                    {renderMinSize(limit)}
+                </div>
+                <div>
+                    {renderMaxSize(limit)}
+                </div>
+            </div>
+        )
+    }
+
+    const renderFishLimits = (limits, group = false) => (
+        limits.map((limit, index) => (
+            limit?.group
+                ? (
+                    <>
+                    {renderFishLimit(limit)}
+                    {renderFishLimits(limit.group, true)}
+                    {renderWaterStretch(limit)}
+                    </>
+                )
+                : (<>
+                    {renderFishLimit(limit, group)}
+                    {group ? null : renderWaterStretch(limit)}
+                </>)
+    )))
+
+    
 
     return (
         <div className="Water">
@@ -210,7 +194,7 @@ export default function Water({ children, id, route, ...rest }) {
                                             {fishName}
                                         </strong>
                                         <em>
-                                            ({`${fishes[fishName].season}`})
+                                            ({renderSeasonDateSpan(fishes[fishName])})
                                         </em>
                                     </div>
                                     <div className="flex">
@@ -225,38 +209,7 @@ export default function Water({ children, id, route, ...rest }) {
                                 <div
                                     className={`limits ${index % 2 === 0 ? 'even' : 'odd'} ${detailsOpen?.[fishName] ? 'open' : ''}`}
                                 >
-                                    {fishes[fishName].limits.map((limit) => (
-                                        <>
-                                            <div className="season-exception">
-                                                <div className="date-span">
-                                                    {renderSeasonDateSpan(
-                                                        limit,
-                                                    )}
-                                                </div>
-                                                <div className="exception">
-                                                    {renderExtraFishDetail(
-                                                        limit,
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                {renderNumberOrUnlimited(
-                                                    limit.bag_limit,
-                                                )}
-                                            </div>
-                                            <div>
-                                                {renderSizeOrNa(
-                                                    limit.minimum_size,
-                                                )}
-                                            </div>
-                                            <div>
-                                                {renderSizeOrNa(
-                                                    limit.maximum_size,
-                                                )}
-                                            </div>
-                                            {renderWaterStretch(limit)}
-                                        </>
-                                    ))}
+                                    {renderFishLimits(fishes[fishName].limits)}
                                 </div>
                             </>
                         ))
