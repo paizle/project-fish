@@ -56,7 +56,7 @@ export default function Water({ children, id, route, ...rest }) {
         })
     }
 
-    const renderSeasonDateSpan = (o) => {
+    const renderSeasonDateSpan = (o, inGroup = false) => {
         console.log(format(o.seasonStart, config.displayDayMonthShortFormat))
         return (
         <>
@@ -67,6 +67,7 @@ export default function Water({ children, id, route, ...rest }) {
             <span>
                 -{' '}
                 {format(o.seasonEnd, config.displayDayMonthShortFormat)}
+                {inGroup ? ',' : ''}
             </span>
         </>)
     }
@@ -121,12 +122,12 @@ export default function Water({ children, id, route, ...rest }) {
         return limit.bagLimit
     }
 
-    const renderFishLimit = (limit, group = false) => {
+    const renderFishLimit = (limit, inGroup = false) => {
         return (
-            <div className={`limit ${group ? 'group' : ''}`}>
+            <div className={`limit ${inGroup ? 'group' : ''} ${limit.group ? 'group-start' : ''}`}>
                 <div className="season-exception">
                     <span className="date-span">
-                        {renderSeasonDateSpan(limit)}
+                        {renderSeasonDateSpan(limit, limit.group || inGroup)}
                     </span>
                     <em className="exception">
                         &nbsp;{renderExceptionDetail(limit)}
