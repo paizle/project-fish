@@ -249,7 +249,7 @@ export default function DataTableWithOperations({
     function sortColumn(column) {}
 
     return (
-        <div className={`DataTableWithOperations ${className}`}>
+        <div ref={forwardRef ? forwardRef : null} className={`DataTableWithOperations ${className}`}>
             <table>
                 <thead>
                     <tr className="caption">

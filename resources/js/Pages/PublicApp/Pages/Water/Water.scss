@@ -19,8 +19,6 @@ main:has(.Water) {
         padding: 0 0.25em;
         max-height: 100%;
         font-size: 0.8em;
-        width: 1080px;
-        margin: auto;
 
         @screen sm {
             grid-template-columns: 1fr 1fr auto auto auto;
