@@ -8,7 +8,6 @@
 
     .fishes {
         display: grid;
-        
 
         &.one-up {
             grid-template-columns: 100%;
@@ -21,15 +20,13 @@
                     max-width: 200px;
                 }
                 strong {
-                    
                 }
             }
         }
 
         &.two-up {
-
             grid-template-columns: 50% 50%;
-            
+
             > div {
                 display: flex;
                 flex-direction: column;
@@ -50,13 +47,12 @@
         }
 
         &.three-up {
-
             grid-template-columns: 33% 33% 33%;
-            
+
             > div {
                 display: flex;
                 flex-direction: column;
-                
+
                 img {
                     margin: 1em;
                 }
@@ -68,16 +64,14 @@
         }
 
         &.four-up {
-
             grid-template-columns: 25% 25% 25% 25%;
-            
+
             > div {
                 display: flex;
                 flex-direction: column;
-                
+
                 img {
                     margin: 1em;
-
                 }
                 strong {
                     text-align: center;
@@ -85,6 +79,5 @@
                 }
             }
         }
-
     }
 }

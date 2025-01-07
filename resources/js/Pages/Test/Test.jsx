@@ -2,26 +2,21 @@ import './Test.scss'
 import DataTableWithOperations from '@/Components/DataTableWithOperations/DataTableWithOperations'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import formatDate from '@/Util/formatDate'
 import parseMySqlDate from '@/Util/parseMySqlDate'
 import Tooltip from '@/Components/Tooltip/Tooltip'
 
-
 import { Squares2X2Icon } from '@heroicons/react/24/outline'
 
-export default function FishLimits({fishes}) {
-
+export default function FishLimits({ fishes }) {
     const [view, setView] = useState(0)
-    
+
     const views = ['one-up', 'two-up', 'three-up', 'four-up']
 
     const getFileName = (fishName) => {
-        return fishName
-            .toLowerCase()
-            .replaceAll(' ', '-')
-            + '.png'
+        return fishName.toLowerCase().replaceAll(' ', '-') + '.png'
     }
 
     const changeView = (e) => {
@@ -46,12 +41,13 @@ export default function FishLimits({fishes}) {
                     <div class={`fishes ${views[view]}`}>
                         {fishes.map((fish) => (
                             <div>
-                                <img src={`/images/fish/${getFileName(fish.name)}`} />
+                                <img
+                                    src={`/images/fish/${getFileName(fish.name)}`}
+                                />
                                 <strong>{fish.name}</strong>
                             </div>
                         ))}
                     </div>
-                    
                 </div>
             </div>
         </AuthenticatedLayout>

@@ -45,23 +45,21 @@
 }
 
 .SectionTabs {
-
-    
-
     display: flex;
-    
+
     .tab {
         overflow: hidden;
         padding-top: 4px;
         margin: 0;
         display: flex;
-        &:before, &::after {
+        &:before,
+        &::after {
             content: '';
             display: block;
             border-bottom: 1px solid black;
             flex-grow: 0;
             flex-shrink: 1;
-            min-width: .25em;
+            min-width: 0.25em;
         }
 
         &:last-child {
@@ -86,8 +84,8 @@
             border-left: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            border-radius: .35rem .35rem 0 0;
-            padding: .25em .5em;
+            border-radius: 0.35rem 0.35rem 0 0;
+            padding: 0.25em 0.5em;
 
             font-weight: bold;
         }

@@ -17,7 +17,9 @@ export default function Map({ locations }) {
     const internalRouting = useInternalRouting()
 
     React.useEffect(() => {
-        internalRouting.setBreadCrumb([{ name: 'map', content: 'New Brunswick' }])
+        internalRouting.setBreadCrumb([
+            { name: 'map', content: 'New Brunswick' },
+        ])
         internalRouting.setLoading(false)
     }, [])
 

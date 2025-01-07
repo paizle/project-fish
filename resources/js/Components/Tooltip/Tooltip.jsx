@@ -1,8 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from 'react'
 import './Tooltip.scss'
 
-const Tooltip = ({ message = null, children }) => {
-    
+const Tooltip = ({ message = null, containerRef = null, children }) => {
     const messageRef = useRef(null)
 
     const [hoverAndPosition, setHoverAndPosition] = useState({
@@ -26,11 +25,24 @@ const Tooltip = ({ message = null, children }) => {
             setHoverAndPosition(() => {
                 return {
                     hover: hoverAndPosition.hover,
-                    flowLeft: shouldFlowLeft(messageRef.current)
+                    flowLeft: shouldFlowLeft(messageRef.current),
                 }
             })
         }
     }, [hoverAndPosition.hover])
+
+    function shouldFlowLeft(element) {
+        const bounds = element.getBoundingClientRect()
+        if (containerRef?.current) {
+            const containerBounds = containerRef.current.getBoundingClientRect()
+            return (
+                bounds.x + bounds.width >
+                containerBounds.x + containerBounds.width
+            )
+        } else {
+            return bounds.x + bounds.width > window.innerWidth
+        }
+    }
 
     return (
         <div
@@ -48,11 +60,6 @@ const Tooltip = ({ message = null, children }) => {
             </div>
         </div>
     )
-}
-
-function shouldFlowLeft(element) {
-    const bounds = element.getBoundingClientRect()
-    return bounds.x + bounds.width > window.innerWidth
 }
 
 export default Tooltip

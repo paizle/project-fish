@@ -1,5 +1,5 @@
 import './DataTableWithOperations.scss'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import {
     FunnelIcon,
@@ -10,6 +10,7 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 export default function DataTableWithOperations({
     children,
+    forwardRef,
     className = '',
     data = null,
     loadData = () => Promise.resolve(),
@@ -249,7 +250,10 @@ export default function DataTableWithOperations({
     function sortColumn(column) {}
 
     return (
-        <div ref={forwardRef ? forwardRef : null} className={`DataTableWithOperations ${className}`}>
+        <div
+            ref={forwardRef}
+            className={`DataTableWithOperations ${className}`}
+        >
             <table>
                 <thead>
                     <tr className="caption">
