@@ -1,5 +1,5 @@
 import './LimitsByFish.scss'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import {
     InternalLink,
@@ -11,7 +11,6 @@ import { format } from 'date-fns'
 import parseMySqlDate from '@/Util/parseMySqlDate'
 
 export default function LimitsByFish({ id, route }) {
-    
     const [results, setResults] = useState([])
     const [isLoading, setIsLoading] = useState(null)
 
@@ -27,7 +26,6 @@ export default function LimitsByFish({ id, route }) {
     }, [])
 
     const renderWaterColumn = (row) => {
-
         let extra = []
 
         if (row.location) {

@@ -9,18 +9,24 @@ main:has(.Water) {
     height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
+    padding-bottom: 1em;
 
     .fish-grid {
         display: grid;
         grid-template-columns: 1fr 1fr 4em 4em 4em;
+        justify-content: center;
         overflow-y: auto;
         position: relative;
         padding: 0 0.25em;
         max-height: 100%;
         font-size: 0.8em;
+        width: 100%;
+        margin: auto;
 
         @screen sm {
-            grid-template-columns: 1fr 1fr auto auto auto;
+            grid-template-columns:
+                minmax(auto, 362px) minmax(auto, 362px)
+                minmax(4em, 100px) minmax(4em, 100px) minmax(4em, 100px);
             padding: 0 1em;
             font-size: 1em;
             .header {
@@ -102,7 +108,7 @@ main:has(.Water) {
             }
 
             .open-indicator {
-                margin: .25em .75em 0 0;
+                margin: 0.25em 0.75em 0 0;
                 width: 1em;
                 height: 1em;
                 transform: rotate(0deg);
@@ -119,10 +125,13 @@ main:has(.Water) {
 
         .limits {
             display: contents;
-            
-            .limit > *, .water-description {
+
+            .limit > *,
+            .water-description {
                 text-align: center;
-                transition: opacity, max-height 300ms ease;
+                transition:
+                    opacity,
+                    max-height 300ms ease;
                 max-height: 0;
                 overflow: hidden;
             }
@@ -136,8 +145,8 @@ main:has(.Water) {
             }
 
             .limit {
-                display: contents; 
-                
+                display: contents;
+
                 > * {
                     &.season-exception {
                         grid-column: span 2;
@@ -163,17 +172,18 @@ main:has(.Water) {
                 }
             }
 
-
             &.open {
-                .limit > *, .water-description {
-                    padding: 0 0.5em 0.25em 0.5em;
-                    border-top: 1px solid var(--highlight-color-transparent);
+                .limit > *,
+                .water-description {
+                    padding: 0.2em 0.5em 0.2em 0.5em;
+                    border-top: 1px solid var(--highlight-color-translucent);
                     opacity: 1;
                     visibility: visible;
                     max-height: 8em;
                     overflow: visible;
                 }
-                .limit.group > *, .water-description {
+                .limit.group > *,
+                .water-description {
                     border-top: 0;
                 }
             }

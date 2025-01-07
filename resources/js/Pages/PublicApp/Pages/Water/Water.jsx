@@ -1,12 +1,11 @@
 import './Water.scss'
 import { formatResults } from './WaterTransformers'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { useInternalRouting } from '../../Components/InternalRouter/InternalRouter'
 
 import config from '@/Util/config'
 import { format, isBefore, compareAsc, isEqual } from 'date-fns'
-import parseMySqlDate from '@/Util/parseMySqlDate'
 
 import { PlayIcon } from '@heroicons/react/24/solid'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
@@ -14,18 +13,18 @@ import LoadingSpinner from '@/Components/LoadingSpinner/LoadingSpinner'
 import Tooltip from '@/Components/Tooltip/Tooltip'
 
 export default function Water({ children, id, route, ...rest }) {
+    const dataTableRef = useRef(null)
+
     const [results, setResults] = useState([])
     const [fishes, setFishes] = useState({})
     const [isLoading, setIsLoading] = useState(false)
 
     const internalRouting = useInternalRouting()
-    React.useEffect(() => {
+    useEffect(() => {
         internalRouting.setLoading(false)
     }, [])
 
-    const isMobile = true
-
-    React.useEffect(() => {
+    useEffect(() => {
         setIsLoading(true)
         axios
             .get(route(id, ''))
@@ -35,7 +34,7 @@ export default function Water({ children, id, route, ...rest }) {
             .finally(() => setIsLoading(false))
     }, [])
 
-    React.useEffect(() => {
+    useEffect(() => {
         setFishes(formatResults(results))
     }, [results])
 
@@ -56,19 +55,19 @@ export default function Water({ children, id, route, ...rest }) {
         })
     }
 
-    const renderSeasonDateSpan = (o) => {
+    const renderSeasonDateSpan = (o, inGroup = false) => {
         console.log(format(o.seasonStart, config.displayDayMonthShortFormat))
         return (
-        <>
-            <span>
-                {format(o.seasonStart, config.displayDayMonthShortFormat)}
-                {' '}
-            </span>
-            <span>
-                -{' '}
-                {format(o.seasonEnd, config.displayDayMonthShortFormat)}
-            </span>
-        </>)
+            <>
+                <span>
+                    {format(o.seasonStart, config.displayDayMonthShortFormat)}{' '}
+                </span>
+                <span>
+                    - {format(o.seasonEnd, config.displayDayMonthShortFormat)}
+                    {inGroup ? ',' : ''}
+                </span>
+            </>
+        )
     }
 
     const renderWaterStretch = (limit) => {
@@ -98,10 +97,9 @@ export default function Water({ children, id, route, ...rest }) {
     }
 
     const renderMinSize = (limit) => {
-        
         const text = limit?.minSize ?? 'N/A'
         if (limit.bagLimit === 0) {
-            return (<span className="invalid">{text}</span>)
+            return <span className="invalid">{text}</span>
         }
         return text
     }
@@ -109,63 +107,57 @@ export default function Water({ children, id, route, ...rest }) {
     const renderMaxSize = (limit) => {
         const text = limit?.maxSize ?? 'N/A'
         if (limit.bagLimit === 0) {
-            return (<span className="invalid">{text}</span>)
+            return <span className="invalid">{text}</span>
         }
         return text
     }
 
     const renderBagLimit = (limit) => {
         if (limit.bagLimit === null) {
-            return (<span className="text-md leading-4">&#8734;</span>)
+            return <span className="text-md leading-4">&#8734;</span>
         }
         return limit.bagLimit
     }
 
-    const renderFishLimit = (limit, group = false) => {
+    const renderFishLimit = (limit, inGroup = false) => {
         return (
-            <div className={`limit ${group ? 'group' : ''}`}>
+            <div
+                className={`limit ${inGroup ? 'group' : ''} ${limit.group ? 'group-start' : ''}`}
+            >
                 <div className="season-exception">
                     <span className="date-span">
-                        {renderSeasonDateSpan(limit)}
+                        {renderSeasonDateSpan(limit, limit.group || inGroup)}
                     </span>
                     <em className="exception">
                         &nbsp;{renderExceptionDetail(limit)}
                     </em>
                 </div>
-                <div>
-                    {renderBagLimit(limit)}
-                </div>
-                <div>
-                    {renderMinSize(limit)}
-                </div>
-                <div>
-                    {renderMaxSize(limit)}
-                </div>
+                <div>{renderBagLimit(limit)}</div>
+                <div>{renderMinSize(limit)}</div>
+                <div>{renderMaxSize(limit)}</div>
             </div>
         )
     }
 
-    const renderFishLimits = (limits, group = false) => (
-        limits.map((limit, index) => (
-            limit?.group
-                ? (
-                    <>
+    const renderFishLimits = (limits, group = false) =>
+        limits.map((limit, index) =>
+            limit?.group ? (
+                <>
                     {renderFishLimit(limit)}
                     {renderFishLimits(limit.group, true)}
                     {renderWaterStretch(limit)}
-                    </>
-                )
-                : (<>
+                </>
+            ) : (
+                <>
                     {renderFishLimit(limit, group)}
                     {group ? null : renderWaterStretch(limit)}
-                </>)
-    )))
-
-    
+                </>
+            ),
+        )
 
     return (
         <div className="Water">
-            <div className="fish-grid">
+            <div className="fish-grid" ref={dataTableRef}>
                 <div className="header">
                     <div className="column-header date-range">
                         Season/Restrictions
@@ -194,12 +186,19 @@ export default function Water({ children, id, route, ...rest }) {
                                             {fishName}
                                         </strong>
                                         <em>
-                                            ({renderSeasonDateSpan(fishes[fishName])})
+                                            (
+                                            {renderSeasonDateSpan(
+                                                fishes[fishName],
+                                            )}
+                                            )
                                         </em>
                                     </div>
                                     <div className="flex">
                                         {fishes[fishName].limits.length > 1 ? (
-                                            <Tooltip message="Some Restrictions">
+                                            <Tooltip
+                                                message="Some Restrictions"
+                                                containerRef={dataTableRef}
+                                            >
                                                 <ExclamationTriangleIcon className="alert" />
                                             </Tooltip>
                                         ) : null}

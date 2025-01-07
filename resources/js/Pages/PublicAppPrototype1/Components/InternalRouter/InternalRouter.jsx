@@ -66,16 +66,14 @@ export function BreadCrumb() {
                 <HomeIcon />
             </Link>
             {routing.breadCrumb.map((item, index) => (
-                
-                    <InternalLink
-                        key={index}
-                        name={item.name}
-                        params={item?.params || null}
-                        breadCrumb={{ position: index }}
-                    >
-                        <span>{item.content}</span>
-                    </InternalLink>
-                
+                <InternalLink
+                    key={index}
+                    name={item.name}
+                    params={item?.params || null}
+                    breadCrumb={{ position: index }}
+                >
+                    <span>{item.content}</span>
+                </InternalLink>
             ))}
         </div>
     )

@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PublicAppController extends Controller
 {
-
     public function fishes()
     {
         return ['fishes' => Fish::all()];
@@ -85,7 +84,7 @@ class PublicAppController extends Controller
                         ->orWhereNull('boundary_id');
                 });
             }
-            
+
             $related_limits = $related_limits->get();
 
             foreach ($related_limits->toArray() as $related_limit) {
@@ -114,7 +113,14 @@ class PublicAppController extends Controller
     {
         $limits = FishLimit::query()
             ->where('fish_id', $id)
-            ->with(['location', 'boundary', 'water', 'waters_category', 'tidal_category', 'fishing_method'])
+            ->with([
+                'location',
+                'boundary',
+                'water',
+                'waters_category',
+                'tidal_category',
+                'fishing_method',
+            ])
             ->get();
 
         return ['limits' => $limits];

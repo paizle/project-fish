@@ -118,20 +118,18 @@ Route::middleware('auth')->group(function () {
     ])->name('fishLimits.data');
 });
 
-
 Route::middleware('auth')->group(function () {
-    Route::get('/test', [TestController::class, 'test'])->name(
-        'test.test'
-    );
+    Route::get('/test', [TestController::class, 'test'])->name('test.test');
 });
 
 Route::get('/public-app', [PublicAppController::class, 'index'])->name(
     'public-app.page'
 );
 
-Route::get('/public-app-prototype-1', [PublicAppController::class, 'prototype1'])->name(
-    'public-app-prototype-1.page'
-);
+Route::get('/public-app-prototype-1', [
+    PublicAppController::class,
+    'prototype1',
+])->name('public-app-prototype-1.page');
 
 Route::get('/public-app/limitsByLocation/{id}', [
     PublicAppController::class,
@@ -143,10 +141,9 @@ Route::get('/public-app/limitsByWater/{id}', [
     'limitsByWater',
 ])->name('public-app.limitsByWater.rest');
 
-Route::get('/public-app/fishes', [
-    PublicAppController::class,
-    'fishes',
-])->name('public-app.fishes.rest');
+Route::get('/public-app/fishes', [PublicAppController::class, 'fishes'])->name(
+    'public-app.fishes.rest'
+);
 
 Route::get('/public-app/limitsByFish/{id}', [
     PublicAppController::class,

@@ -60,8 +60,11 @@ export default function Index({ locations }) {
                                 <Fishes {...params} route={api.fishes} />
                             ),
                             limitsByFish: (params) => (
-                                <LimitsByFish {...params} route={api.limitsByFish} />
-                            )
+                                <LimitsByFish
+                                    {...params}
+                                    route={api.limitsByFish}
+                                />
+                            ),
                         }}
                     </InternalRouter>
                 </main>
@@ -84,5 +87,5 @@ const api = {
     },
     limitsByFish: (id) => {
         return route('public-app.limitsByFish.rest', id)
-    }
+    },
 }

@@ -1,5 +1,5 @@
 import './Fishes.scss'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Squares2X2Icon } from '@heroicons/react/24/outline'
 
 import {
@@ -8,11 +8,10 @@ import {
 } from '../../Components/InternalRouter/InternalRouter'
 
 export default function Fishes({ route }) {
-    
     const [results, setResults] = React.useState([])
 
     const [columns, setColumns] = useState(1)
-    
+
     const columnLayout = ['one-up', 'two-up', 'three-up', 'four-up']
 
     const internalRouting = useInternalRouting()
@@ -24,10 +23,7 @@ export default function Fishes({ route }) {
     }, [])
 
     const getFileName = (fishName) => {
-        return fishName
-            .toLowerCase()
-            .replaceAll(' ', '-')
-            + '.png'
+        return fishName.toLowerCase().replaceAll(' ', '-') + '.png'
     }
 
     const changeColumns = (e) => {
@@ -44,7 +40,11 @@ export default function Fishes({ route }) {
         <div className="Fishes">
             <div className="fish-grid">
                 <header>
-                    <button className="icon" onClick={changeColumns} title={columnLayout[columns]}>
+                    <button
+                        className="icon"
+                        onClick={changeColumns}
+                        title={columnLayout[columns]}
+                    >
                         <Squares2X2Icon />
                     </button>
                 </header>
@@ -60,7 +60,9 @@ export default function Fishes({ route }) {
                                     label: fish.name,
                                 }}
                             >
-                                <img src={`/images/fish/${getFileName(fish.name)}`} />
+                                <img
+                                    src={`/images/fish/${getFileName(fish.name)}`}
+                                />
                                 <strong>{fish.name}</strong>
                             </InternalLink>
                         ))}

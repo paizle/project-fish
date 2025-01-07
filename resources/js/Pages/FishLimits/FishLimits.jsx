@@ -2,7 +2,7 @@ import './FishLimits.scss'
 import DataTableWithOperations from '@/Components/DataTableWithOperations/DataTableWithOperations'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
-import React from 'react'
+import React, { useRef } from 'react'
 
 import formatDate from '@/Util/formatDate'
 import parseMySqlDate from '@/Util/parseMySqlDate'
@@ -19,6 +19,8 @@ export default function FishLimits({
     waters,
     fishingMethods,
 }) {
+    const forwardRef = useRef(null)
+
     const loadFishLimitsData = (filters) => {
         return axios
             .post(route('fishLimits.data'), { filters })
@@ -37,7 +39,11 @@ export default function FishLimits({
         const test = fishingMethods[row.fishing_method_id]?.name ?? '(all)'
 
         if (test === flyFishing) {
-            return <Tooltip message={flyFishing}>Fly Fishing</Tooltip>
+            return (
+                <Tooltip message={flyFishing} containerRef={forwardRef}>
+                    Fly Fishing
+                </Tooltip>
+            )
         } else {
             return test
         }
@@ -48,6 +54,7 @@ export default function FishLimits({
             <div className="FishLimits">
                 <div className="box">
                     <DataTableWithOperations
+                        forwardRef={forwardRef}
                         className="sticky-headers"
                         data={fishLimits}
                         loadData={loadFishLimitsData}
@@ -73,7 +80,10 @@ export default function FishLimits({
                                 waters[row.water_id]?.name ?? '(all)',
                             'Water Stretch': (row) =>
                                 row.water_description ? (
-                                    <Tooltip message={row.water_description}>
+                                    <Tooltip
+                                        message={row.water_description}
+                                        containerRef={forwardRef}
+                                    >
                                         &nbsp;*&nbsp;
                                     </Tooltip>
                                 ) : null,
@@ -81,7 +91,10 @@ export default function FishLimits({
                             Note: (row) => row.note,
                             Limit: (row) => {
                                 return row.note ? (
-                                    <Tooltip message={row.note}>
+                                    <Tooltip
+                                        message={row.note}
+                                        containerRef={forwardRef}
+                                    >
                                         {row.bag_limit ?? 'Unlimited'}*
                                     </Tooltip>
                                 ) : (
