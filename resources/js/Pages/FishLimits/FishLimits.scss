@@ -21,12 +21,31 @@
             }
             th.Location,
             th.Boundary,
-            th.WatersCategory,
+            
             th.Tidal,
             th.Waterbody,
             th.WaterStretch,
             th.FishingMethod,
             th.Note {
+                @screen sm {
+                    span.heading-container {
+                        display: block;
+                        padding-right: 3em;
+                    }
+                }
+            }
+						th.WatersCategory {
+							@screen sm {
+								span.heading-container {
+										display: block;
+										padding-right: 2em;
+								}
+						}
+						}
+						th.MinSize,
+						th.MaxSize,
+						th.SeasonStart,
+						th.SeasonEnd {
                 @screen sm {
                     span.heading-container {
                         display: block;

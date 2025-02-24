@@ -1,12 +1,24 @@
 import './DataTableWithOperations.scss'
 import { useState, useEffect, useRef } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon, ChevronUpIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import {
     FunnelIcon,
     ChevronUpDownIcon,
     EyeSlashIcon,
 } from '@heroicons/react/24/outline'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import { getTime } from 'date-fns'
+
+export const SortingMethods = {
+	ALPHABETIC: 'alphabetic',
+	NUMERIC: 'numeric',
+	CHRONOLOGICAL: 'chronological'
+}
+
+export const SortDirection = {
+	DESC: 'desc',
+	ASC: 'asc'
+}
 
 export default function DataTableWithOperations({
     children,
@@ -16,7 +28,7 @@ export default function DataTableWithOperations({
     loadData = () => Promise.resolve(),
     onFiltersUpdate = () => Promise.resolve(),
     schema = {},
-    options: { filters = {}, sorting = false, toggleShow = {} } = {},
+    options: { filters = {}, sorting = true, toggleShow = {} } = {},
     uniqueKey = 'id',
 }) {
     const [innerData, setInnerData] = useState(data ?? [])
@@ -24,6 +36,8 @@ export default function DataTableWithOperations({
     const [isLoading, setIsLoading] = useState(null)
     const [hiddenColumns, setHiddenColumns] = useState([])
     const [selectingFilter, setSelectingFilter] = useState(null)
+		const [sortColumn, setSortColumn] = useState(null)
+		const [sortDirection, setSortDirection] = useState(null)
 
     useEffect(() => {
         if (data === null) {
@@ -117,12 +131,18 @@ export default function DataTableWithOperations({
                 <th key={column} className={column.replaceAll(' ', '')}>
                     <div className="cell-container">
                         <div className="action-container">
-                            {sorting && (
+                            {schema[column].sorting && (
                                 <button
                                     className="sorting"
-                                    onClick={(e) => sortColumn(column)}
+                                    onClick={(e) => selectSortColumn(column)}
                                 >
-                                    <ChevronUpDownIcon />
+																	{sortColumn === column 
+																		? sortDirection === SortDirection.DESC
+																			? <ChevronDownIcon />
+																			: <ChevronUpIcon />
+																		: <ChevronUpDownIcon />
+																	}
+                                    
                                 </button>
                             )}
                             {toggleShow.includes(column) && (
@@ -155,25 +175,25 @@ export default function DataTableWithOperations({
     }
 
     function renderTBody(innerData) {
-        switch (typeof children) {
-            case 'function':
-                return innerData.map((row, index) => children(row, index))
+			switch (typeof children) {
+				case 'function':
+					return innerData.map((row, index) => children(row, index))
 
-            default:
-                return innerData.map((row, index) => {
-                    const key =
-                        typeof schema[uniqueKey] === 'function'
-                            ? schema[uniqueKey](row, index)
-                            : row[uniqueKey]
+				default:
+					return innerData.map((row, index) => {
+							const key =
+									typeof schema[uniqueKey] === 'function'
+											? schema[uniqueKey](row, index)
+											: row[uniqueKey]
 
-                    return (
-                        <tr key={key}>
-                            {Object.keys(schema).map((column) =>
-                                renderTableDatum(column, row, index),
-                            )}
-                        </tr>
-                    )
-                })
+							return (
+									<tr key={key}>
+											{Object.keys(schema).map((column) =>
+													renderTableDatum(column, row, index),
+											)}
+									</tr>
+							)
+					})
         }
     }
 
@@ -181,13 +201,7 @@ export default function DataTableWithOperations({
         if (activeFilters[column] || hiddenColumns.includes(column)) {
             return
         }
-
-        switch (typeof schema[column]) {
-            case 'function':
-                return <td key={column}>{schema[column](row, index)}</td>
-            default:
-                return <td key={column}>{row[schema[column]]}</td>
-        }
+        return <td key={column}>{schema[column].render(row)}</td>
     }
 
     const renderActiveFilters = () => {
@@ -247,7 +261,80 @@ export default function DataTableWithOperations({
         }
     }
 
-    function sortColumn(column) {}
+    function selectSortColumn(column) {
+			if (sortColumn === column) {
+				if (sortDirection === SortDirection.DESC) {
+					setSortDirection(SortDirection.ASC)
+				} else {
+					setSortDirection(SortDirection.DESC)
+				}
+			} else {
+				setSortColumn(column)
+				setSortDirection(SortDirection.DESC)
+			}
+		}
+
+		const sortDataType = {
+			[SortingMethods.NUMERIC]: (value) => {
+				const test = parseInt(value)
+				if (Number.isNaN(test)) {
+					return Number.POSITIVE_INFINITY
+				}
+				return test
+			},
+			[SortingMethods.ALPHABETIC]: (value) => value,
+			[SortingMethods.CHRONOLOGICAL]: (value) => {
+				const test = new Date(value + ', 2024') // todo: get year
+				if (Number.isNaN(test?.getTime())) {
+					return null
+				}
+				return test
+			}
+		}
+
+		const columnIndexes = {}
+		let index = 0
+		Object.keys(schema).forEach((column) => {
+			if (!(hiddenColumns.length && hiddenColumns.includes(column))) {
+				columnIndexes[column] = index++
+			}
+		})
+
+		let rows = innerData
+			.map((row) => {
+				return Object.keys(columnIndexes)
+					.map((column) => {
+						if (column === sortColumn) {
+							const value = schema[column].render(row)
+							return {
+								value,
+								sortable: sortDataType[schema[column].sorting](value)
+							}
+						}
+						return schema[column].render(row)
+					})
+			})
+			.sort((a, b) => {
+				if (!sortColumn) {
+					return 1
+				}
+				const test1 = a[columnIndexes[sortColumn]].sortable 
+				const test2 = b[columnIndexes[sortColumn]].sortable
+					
+				if (test1 < test2) {
+					return 1  * (sortDirection === SortDirection.ASC ? 1 : -1)
+				} else if (test1 > test2) {
+					return -1 * (sortDirection === SortDirection.ASC ? 1 : -1)
+				}
+				return 0
+			})
+			.map((row) => {
+				if (sortColumn) {
+					row[columnIndexes[sortColumn]] = row[columnIndexes[sortColumn]].value
+				}
+				return row
+			})
+			
 
     return (
         <div
@@ -267,7 +354,19 @@ export default function DataTableWithOperations({
                         )}
                     </tr>
                 </thead>
-                <tbody>{renderTBody(innerData)}</tbody>
+                <tbody>
+									{rows.map((row, index) => (
+										<tr key={index}>
+											{Object.keys(columnIndexes).map((column, index) => (
+												<td key={column}>
+													{
+														row[index]
+													}
+												</td>
+											))}
+										</tr>
+									))}
+								</tbody>
                 <tfoot>{renderFooter()}</tfoot>
             </table>
 

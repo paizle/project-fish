@@ -1,5 +1,5 @@
 import './FishLimits.scss'
-import DataTableWithOperations from '@/Components/DataTableWithOperations/DataTableWithOperations'
+import DataTableWithOperations, { SortingMethods } from '@/Components/DataTableWithOperations/DataTableWithOperations'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
 import React, { useRef } from 'react'
@@ -49,6 +49,92 @@ export default function FishLimits({
         }
     }
 
+		const tableSchema = {
+			ID: {
+				render: (row) => row.id,
+				sorting: SortingMethods.NUMERIC
+			},
+			Location: {
+				render: (row) => locations[row.location_id]?.name ?? '(all)',
+				sorting: SortingMethods.ALPHABETIC
+			},
+			'Fish Category':{
+				render: (row) => fishCategories[row.fish_category_id]?.name ??
+					'(all)',
+				sorting: SortingMethods.ALPHABETIC
+			},
+			Fish: {
+				render: (row) => fishes[row.fish_id]?.name ?? '(all)',
+				sorting: SortingMethods.ALPHABETIC
+			},
+			Boundary: {
+					render: (row) => boundaries[row.boundary_id]?.name ?? '(all)',
+					sorting: SortingMethods.ALPHABETIC
+			},
+			'Waters Category': {
+				render: (row) => watersCategories[row.waters_category_id]?.name ?? '(all)',
+				sorting: SortingMethods.ALPHABETIC
+			},
+			Tidal: {
+				render: (row) => tidalCategories[row.tidal_category_id]?.name ?? '(all)',
+				sorting: SortingMethods.ALPHABETIC
+			},
+			Waterbody: {
+				render: (row) => waters[row.water_id]?.name ?? '(all)',
+				sorting: SortingMethods.ALPHABETIC,
+			},
+			'Water Stretch': {
+				render: (row) => row.water_description ? (
+							<Tooltip
+									message={row.water_description}
+									containerRef={forwardRef}
+							>
+									&nbsp;*&nbsp;
+							</Tooltip>
+					) : null,
+				sorting: false
+			},
+			'Fishing Method': {
+				render: renderFishingMethodRow,
+				sorting: SortingMethods.ALPHABETIC
+			},
+			Note: {
+				render: (row) => row.note,
+				sorting: false
+			},
+			Limit: {
+				render: (row) => {
+					return row.note ? (
+							<Tooltip
+									message={row.note}
+									containerRef={forwardRef}
+							>
+									{row.bag_limit ?? 'Unlimited'}*
+							</Tooltip>
+					) : (
+							(row.bag_limit ?? 'Unlimited')
+					)
+				},
+				sorting: SortingMethods.ALPHABETIC
+			},
+			'Min Size': {
+				render: (row) => row.minimum_size ?? 'N/A',
+				sorting: SortingMethods.NUMERIC
+			},
+			'Max Size': {
+				render: (row) => row.maximum_size ?? 'N/A',
+				sorting: SortingMethods.NUMERIC,
+			},
+			'Season Start': {
+				render: (row) => formatDate(parseMySqlDate(row.season_start)),
+				sorting: SortingMethods.CHRONOLOGICAL,
+			},
+			'Season End': {
+				render: (row) => formatDate(parseMySqlDate(row.season_end)),
+				sorting: SortingMethods.CHRONOLOGICAL,
+			}
+	} 
+
     return (
         <AuthenticatedLayout>
             <div className="FishLimits">
@@ -60,54 +146,7 @@ export default function FishLimits({
                         loadData={loadFishLimitsData}
                         onFiltersUpdate={loadFishLimitsData}
                         uniqueKey="id"
-                        schema={{
-                            ID: (row) => row.id,
-                            Location: (row) =>
-                                locations[row.location_id]?.name ?? '(all)',
-                            'Fish Category': (row) =>
-                                fishCategories[row.fish_category_id]?.name ??
-                                '(all)',
-                            Fish: (row) => fishes[row.fish_id]?.name ?? '(all)',
-                            Boundary: (row) =>
-                                boundaries[row.boundary_id]?.name ?? '(all)',
-                            'Waters Category': (row) =>
-                                watersCategories[row.waters_category_id]
-                                    ?.name ?? '(all)',
-                            Tidal: (row) =>
-                                tidalCategories[row.tidal_category_id]?.name ??
-                                '(all)',
-                            Waterbody: (row) =>
-                                waters[row.water_id]?.name ?? '(all)',
-                            'Water Stretch': (row) =>
-                                row.water_description ? (
-                                    <Tooltip
-                                        message={row.water_description}
-                                        containerRef={forwardRef}
-                                    >
-                                        &nbsp;*&nbsp;
-                                    </Tooltip>
-                                ) : null,
-                            'Fishing Method': renderFishingMethodRow,
-                            Note: (row) => row.note,
-                            Limit: (row) => {
-                                return row.note ? (
-                                    <Tooltip
-                                        message={row.note}
-                                        containerRef={forwardRef}
-                                    >
-                                        {row.bag_limit ?? 'Unlimited'}*
-                                    </Tooltip>
-                                ) : (
-                                    (row.bag_limit ?? 'Unlimited')
-                                )
-                            },
-                            'Min Size': (row) => row.minimum_size ?? 'N/A',
-                            'Max Size': (row) => row.maximum_size ?? 'N/A',
-                            'Season Start': (row) =>
-                                formatDate(parseMySqlDate(row.season_start)),
-                            'Sesason End': (row) =>
-                                formatDate(parseMySqlDate(row.season_end)),
-                        }}
+                        schema={tableSchema}
                         options={{
                             toggleShow: ['Water Stretch', 'Note'],
                             filters: {
