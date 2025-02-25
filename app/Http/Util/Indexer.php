@@ -12,6 +12,22 @@ class Indexer
         return $assoc_array;
     }
 
+		public static function indexEnum(string $enumClass): array
+		{
+			if (!enum_exists($enumClass)) {
+					throw new \InvalidArgumentException("The provided class is not a valid enum.");
+			}
+
+			return array_reduce(
+					$enumClass::cases(),
+					function ($carry, $case) {
+							$carry[$case->name] = $case->value;
+							return $carry;
+					},
+					[]
+			);
+		}
+
     public static function deIndex($array)
     {
         $newArray = [];

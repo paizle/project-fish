@@ -7,7 +7,6 @@ import {
     EyeSlashIcon,
 } from '@heroicons/react/24/outline'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
-import { getTime } from 'date-fns'
 
 export const SortingMethods = {
 	ALPHABETIC: 'alphabetic',
@@ -28,13 +27,13 @@ export default function DataTableWithOperations({
     loadData = () => Promise.resolve(),
     onFiltersUpdate = () => Promise.resolve(),
     schema = {},
-    options: { filters = {}, sorting = true, toggleShow = {} } = {},
+    options = {},
     uniqueKey = 'id',
 }) {
     const [innerData, setInnerData] = useState(data ?? [])
     const [activeFilters, setActiveFilters] = useState({})
     const [isLoading, setIsLoading] = useState(null)
-    const [hiddenColumns, setHiddenColumns] = useState([])
+    const [hiddenColumns, setHiddenColumns] = useState(options.hiddenColumns || [])
     const [selectingFilter, setSelectingFilter] = useState(null)
 		const [sortColumn, setSortColumn] = useState(null)
 		const [sortDirection, setSortDirection] = useState(null)
@@ -50,9 +49,8 @@ export default function DataTableWithOperations({
 
     useEffect(() => {
         const filtersQuery = {}
-
         Object.keys(activeFilters).forEach((name) => {
-            filtersQuery[filters[name].key] = activeFilters[name]
+            filtersQuery[options.filters[name].key] = activeFilters[name]
         })
 
         setIsLoading(true)
@@ -89,6 +87,8 @@ export default function DataTableWithOperations({
         setActiveFilters((activeFilters) => {
             const newActiveFilters = JSON.parse(JSON.stringify(activeFilters))
             if (value) {
+								setSortColumn(null)
+								setSortDirection(null)
                 newActiveFilters[name] = value
             } else {
                 delete newActiveFilters[name]
@@ -107,15 +107,15 @@ export default function DataTableWithOperations({
             filterName === selectingFilter && (
                 <select onChange={setActiveFilter} name={filterName}>
                     <option value="">(all)</option>
-                    {Object.keys(filters[filterName].options)
+                    {Object.keys(options.filters[filterName].options)
                         .sort(
                             (a, b) =>
-                                filters[filterName].options[a] >
-                                filters[filterName].options[b],
+															options.filters[filterName].options[a] >
+															options.filters[filterName].options[b],
                         )
                         .map((key) => (
                             <option key={key} value={key}>
-                                {filters[filterName].options[key]}
+                                {options.filters[filterName].options[key]}
                             </option>
                         ))}
                 </select>
@@ -145,7 +145,7 @@ export default function DataTableWithOperations({
                                     
                                 </button>
                             )}
-                            {toggleShow.includes(column) && (
+                            {options.toggleShow.includes(column) && (
                                 <button
                                     className="hide"
                                     name={column}
@@ -155,7 +155,7 @@ export default function DataTableWithOperations({
                                     <EyeSlashIcon />
                                 </button>
                             )}
-                            {filters?.[column] && (
+                            {options.filters?.[column] && (
                                 <button
                                     className="filter"
                                     onClick={(e) => selectFilter(column)}
@@ -207,16 +207,16 @@ export default function DataTableWithOperations({
     const renderActiveFilters = () => {
         return (
             <div className="filters">
-                {Object.keys(filters).map(
+                {Object.keys(options.filters).map(
                     (column) =>
                         activeFilters[column] && (
                             <label key={column}>
                                 <span>
                                     {column}:<wbr />{' '}
                                     {
-                                        filters[column].options[
-                                            activeFilters[column]
-                                        ]
+																			options.filters[column].options[
+																				activeFilters[column]
+																			]
                                     }
                                 </span>
                                 <button
@@ -295,7 +295,7 @@ export default function DataTableWithOperations({
 		const columnIndexes = {}
 		let index = 0
 		Object.keys(schema).forEach((column) => {
-			if (!(hiddenColumns.length && hiddenColumns.includes(column))) {
+			if (!(hiddenColumns.length && hiddenColumns.includes(column)) && ((activeFilters[column] ?? null) === null)) {
 				columnIndexes[column] = index++
 			}
 		})
@@ -350,7 +350,7 @@ export default function DataTableWithOperations({
                     </tr>
                     <tr>
                         {Object.keys(schema).map((column) =>
-                            renderColumnHeader(column, schema, filters),
+                            renderColumnHeader(column, schema, options.filters),
                         )}
                     </tr>
                 </thead>

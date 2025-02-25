@@ -11,7 +11,6 @@ import Tooltip from '@/Components/Tooltip/Tooltip'
 export default function FishLimits({
     fishLimits,
     locations,
-    fishCategories,
     fishes,
     boundaries,
     watersCategories,
@@ -36,7 +35,7 @@ export default function FishLimits({
     const renderFishingMethodRow = (row) => {
         const flyFishing =
             'May only be angled by artificial fly or baited barbless hook with a single point'
-        const test = fishingMethods[row.fishing_method_id]?.name ?? '(all)'
+        const test = row.method ?? '(all)'
 
         if (test === flyFishing) {
             return (
@@ -55,12 +54,7 @@ export default function FishLimits({
 				sorting: SortingMethods.NUMERIC
 			},
 			Location: {
-				render: (row) => locations[row.location_id]?.name ?? '(all)',
-				sorting: SortingMethods.ALPHABETIC
-			},
-			'Fish Category':{
-				render: (row) => fishCategories[row.fish_category_id]?.name ??
-					'(all)',
+				render: (row) => locations[row.region_id]?.name ?? '(all)',
 				sorting: SortingMethods.ALPHABETIC
 			},
 			Fish: {
@@ -68,15 +62,15 @@ export default function FishLimits({
 				sorting: SortingMethods.ALPHABETIC
 			},
 			Boundary: {
-					render: (row) => boundaries[row.boundary_id]?.name ?? '(all)',
+					render: (row) => row.boundary ?? '(all)',
 					sorting: SortingMethods.ALPHABETIC
 			},
 			'Waters Category': {
-				render: (row) => watersCategories[row.waters_category_id]?.name ?? '(all)',
+				render: (row) => row.water_type ?? '(all)',
 				sorting: SortingMethods.ALPHABETIC
 			},
 			Tidal: {
-				render: (row) => tidalCategories[row.tidal_category_id]?.name ?? '(all)',
+				render: (row) => row.tidal ?? '(all)',
 				sorting: SortingMethods.ALPHABETIC
 			},
 			Waterbody: {
@@ -102,7 +96,7 @@ export default function FishLimits({
 				render: (row) => row.note,
 				sorting: false
 			},
-			Limit: {
+			'Bag Limit': {
 				render: (row) => {
 					return row.note ? (
 							<Tooltip
@@ -115,7 +109,22 @@ export default function FishLimits({
 							(row.bag_limit ?? 'Unlimited')
 					)
 				},
-				sorting: SortingMethods.ALPHABETIC
+				sorting: SortingMethods.NUMERIC
+			},
+			'Hook Limit': {
+				render: (row) => {
+					return row.note ? (
+							<Tooltip
+									message={row.note}
+									containerRef={forwardRef}
+							>
+									{row.hook_limit ?? 'Unlimited'}*
+							</Tooltip>
+					) : (
+							(row.hook_limit ?? 'Unlimited')
+					)
+				},
+				sorting: SortingMethods.NUMERIC
 			},
 			'Min Size': {
 				render: (row) => row.minimum_size ?? 'N/A',
@@ -133,10 +142,95 @@ export default function FishLimits({
 				render: (row) => formatDate(parseMySqlDate(row.season_end)),
 				sorting: SortingMethods.CHRONOLOGICAL,
 			}
-	} 
+		}
+
+		function formatEnumOptions(object) {
+			return Object.keys(object).reduce(
+				(a, key) => {
+					a[object[key].id] = object[key].name
+					return a
+				},
+				{},
+			)
+		}
+
+		const tableFilters = {
+			Location: {
+				key: 'region_id',
+				options: Object.keys(locations).reduce(
+					(a, key) => {
+						a[locations[key].id] =
+							locations[key].name
+						return a
+					},
+					{},
+				),
+			},
+			Fish: {
+				key: 'fish_id',
+				options: Object.keys(fishes).reduce(
+					(a, key) => {
+						a[fishes[key].id] = fishes[key].name
+						return a
+					},
+					{},
+				),
+			},
+			Boundary: {
+				key: 'boundary',
+				options: Object.keys(boundaries).reduce(
+					(a, key) => {
+						a[key] = boundaries[key]
+						return a
+					},
+					{},
+				),
+			},
+			'Waters Category': {
+				key: 'water_type',
+				options: Object.keys(watersCategories).reduce(
+					(a, key) => {
+						a[key] = watersCategories[key]
+						return a
+					},
+					{},
+				),
+			},
+			Tidal: {
+				key: 'tidal',
+				options: Object.keys(tidalCategories).reduce(
+					(a, key) => {
+						a[key] = tidalCategories[key]
+						return a
+					},
+					{},
+				),
+			},
+			Waterbody: {
+				key: 'water_id',
+				options: Object.keys(waters).reduce(
+					(a, key) => {
+						a[waters[key].id] = waters[key].name
+						return a
+					},
+					{},
+				),
+			},
+			'Fishing Method': {
+				key: 'method',
+				options: Object.keys(fishingMethods).reduce(
+					(a, key) => {
+						a[key] = fishingMethods[key]
+						return a
+					},
+					{},
+				),
+			}
+		}
 
     return (
         <AuthenticatedLayout>
+					<Head title="Project: FISH - Fishing Restrictions Data" />
             <div className="FishLimits">
                 <div className="box">
                     <DataTableWithOperations
@@ -148,93 +242,9 @@ export default function FishLimits({
                         uniqueKey="id"
                         schema={tableSchema}
                         options={{
+														hiddenColumns: ['Note'],
                             toggleShow: ['Water Stretch', 'Note'],
-                            filters: {
-                                Location: {
-                                    key: 'location_id',
-                                    options: Object.keys(locations).reduce(
-                                        (a, key) => {
-                                            a[locations[key].id] =
-                                                locations[key].name
-                                            return a
-                                        },
-                                        {},
-                                    ),
-                                },
-                                'Fish Category': {
-                                    key: 'fish_category_id',
-                                    options: Object.keys(fishCategories).reduce(
-                                        (a, key) => {
-                                            a[fishCategories[key].id] =
-                                                fishCategories[key].name
-                                            return a
-                                        },
-                                        {},
-                                    ),
-                                },
-                                Fish: {
-                                    key: 'fish_id',
-                                    options: Object.keys(fishes).reduce(
-                                        (a, key) => {
-                                            a[fishes[key].id] = fishes[key].name
-                                            return a
-                                        },
-                                        {},
-                                    ),
-                                },
-                                Boundary: {
-                                    key: 'boundary_id',
-                                    options: Object.keys(boundaries).reduce(
-                                        (a, key) => {
-                                            a[boundaries[key].id] =
-                                                boundaries[key].name
-                                            return a
-                                        },
-                                        {},
-                                    ),
-                                },
-                                'Waters Category': {
-                                    key: 'waters_category_id',
-                                    options: Object.keys(
-                                        watersCategories,
-                                    ).reduce((a, key) => {
-                                        a[watersCategories[key].id] =
-                                            watersCategories[key].name
-                                        return a
-                                    }, {}),
-                                },
-                                Tidal: {
-                                    key: 'tidal_id',
-                                    options: Object.keys(
-                                        tidalCategories,
-                                    ).reduce((a, key) => {
-                                        a[tidalCategories[key].id] =
-                                            tidalCategories[key].name
-                                        return a
-                                    }, {}),
-                                },
-                                Waterbody: {
-                                    key: 'water_id',
-                                    options: Object.keys(waters).reduce(
-                                        (a, key) => {
-                                            a[waters[key].id] = waters[key].name
-                                            return a
-                                        },
-                                        {},
-                                    ),
-                                },
-                                'Fishing Method': {
-                                    key: 'fishing_method_id',
-                                    options: Object.keys(fishingMethods).reduce(
-                                        (a, key) => {
-                                            a[fishingMethods[key].id] =
-                                                fishingMethods[key].name
-                                            return a
-                                        },
-                                        {},
-                                    ),
-                                },
-                            },
+                            filters: tableFilters
                         }}
                     />
                 </div>

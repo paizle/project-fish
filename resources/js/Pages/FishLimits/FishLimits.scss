@@ -21,7 +21,7 @@
             }
             th.Location,
             th.Boundary,
-            
+            th.Fish,
             th.Tidal,
             th.Waterbody,
             th.WaterStretch,
@@ -42,6 +42,7 @@
 								}
 						}
 						}
+						th.ID,
 						th.MinSize,
 						th.MaxSize,
 						th.SeasonStart,

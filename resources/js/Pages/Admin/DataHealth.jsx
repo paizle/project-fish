@@ -4,17 +4,9 @@ import { Head } from '@inertiajs/react'
 import AdminSubMenu from './partials/AdminSubMenu'
 
 export default function Edit({ locations }) {
-    const sectionStatus = {
-        'Lower Saint John': {
-            hasData: true,
-        },
-        Southwest: {
-            hasData: true,
-        },
-    }
 
     const locationsHavingData = locations.filter((location) => {
-        return sectionStatus?.[location.name]?.hasData
+        return location.has_data
     })
 
     return (
@@ -39,7 +31,7 @@ export default function Edit({ locations }) {
 
                     <h4>
                         <span>Next Section to complete: </span>
-                        <strong>Upper Saint John</strong>
+                        <strong>Chaleur</strong>
                     </h4>
                 </div>
 

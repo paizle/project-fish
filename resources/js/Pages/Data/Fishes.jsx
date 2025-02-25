@@ -16,6 +16,7 @@ export default function Fishes({ data }) {
                     data={data}
                     schema={{
                         Name: 'name',
+												Category: 'fish_category',
                         Created: (row) =>
                             format(
                                 mySQLTimestampToDate(row.created_at),

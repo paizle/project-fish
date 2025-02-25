@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Boundary;
-use App\Models\FishCategory;
-use App\Models\FishingMethod;
-use App\Models\FishLimit;
-use App\Models\Location;
+use App\Models\FishingRestriction;
+use App\Models\FishingRestriction\Boundary;
+use App\Models\FishingRestriction\FishingMethod;
+use App\Models\FishingRestriction\Tidal;
+use App\Models\FishingRestriction\WaterType;
+use App\Models\Region;
 use App\Models\Fish;
-use App\Models\TidalCategory;
-use App\Models\WatersCategory;
+use App\Models\Fish\FishCategory;
 use App\Models\Water;
 
 use Inertia\Inertia;
@@ -21,15 +21,14 @@ class LimitsController extends Controller
     public function index()
     {
         return Inertia::render('FishLimits/FishLimits', [
-            'fishLimits' => FishLimit::all(),
-            'locations' => Indexer::indexBy(Location::all()),
-            'fishCategories' => Indexer::indexBy(FishCategory::all()),
+            'fishLimits' => FishingRestriction::all(),
+            'locations' => Indexer::indexBy(Region::all()),
             'fishes' => Indexer::indexBy(Fish::all()),
-            'boundaries' => Indexer::indexBy(Boundary::all()),
-            'watersCategories' => Indexer::indexBy(WatersCategory::all()),
-            'tidalCategories' => Indexer::indexBy(TidalCategory::all()),
+            'boundaries' => Indexer::indexEnum(Boundary::class),
+            'watersCategories' =>  Indexer::indexEnum(WaterType::class),
+            'tidalCategories' =>  Indexer::indexEnum(Tidal::class),
             'waters' => Indexer::indexBy(Water::all()),
-            'fishingMethods' => Indexer::indexBy(FishingMethod::all()),
+            'fishingMethods' =>  Indexer::indexEnum(FishingMethod::class)
         ]);
     }
 
@@ -37,38 +36,32 @@ class LimitsController extends Controller
     {
         $filters = request()['filters'];
 
-        $fish_limits_query = FishLimit::query();
+        $fish_limits_query = FishingRestriction::query();
 
-        if ($filters['location_id'] ?? null) {
-            $fish_limits_query->where('location_id', $filters['location_id']);
-        }
-
-        if ($filters['fish_category_id'] ?? null) {
-            $fish_limits_query->where(
-                'fish_category_id',
-                $filters['fish_category_id']
-            );
+        if ($filters['region_id'] ?? null) {
+            $fish_limits_query->where('region_id', $filters['region_id']);
         }
 
         if ($filters['fish_id'] ?? null) {
             $fish_limits_query->where('fish_id', $filters['fish_id']);
         }
 
-        if ($filters['boundary_id'] ?? null) {
-            $fish_limits_query->where('boundary_id', $filters['boundary_id']);
-        }
+				if ($filters['fish_category'] ?? null) {
+					$fish_limits_query->where('fish_category', Indexer::getValueFromEnum(FishCategory::class, $filters['fish_category']));
+				}
 
-        if ($filters['water_category_id'] ?? null) {
-            $fish_limits_query->where(
-                'water_category_id',
-                $filters['water_category_id']
-            );
+        if ($filters['boundary'] ?? null) {
+					$fish_limits_query->where('boundary', Indexer::getValueFromEnum(Boundary::class, $filters['boundary']));
         }
-
-        if ($filters['tidal_category_id'] ?? null) {
+				
+        if ($filters['water_type'] ?? null) {
+            $fish_limits_query->where('water_type', Indexer::getValueFromEnum(WaterType::class, $filters['water_type']));
+        }
+				
+        if ($filters['tidal'] ?? null) {
             $fish_limits_query->where(
-                'tidal_category_id',
-                $filters['tidal_category_id']
+                'tidal',
+                Indexer::getValueFromEnum(WaterType::class, $filters['tidal_category_id'])
             );
         }
 
@@ -76,10 +69,10 @@ class LimitsController extends Controller
             $fish_limits_query->where('water_id', $filters['water_id']);
         }
 
-        if ($filters['fishing_method_id'] ?? null) {
+        if ($filters['method'] ?? null) {
             $fish_limits_query->where(
-                'fishing_method_id',
-                $filters['fishing_method_id']
+                'method',
+                $filters['method']
             );
         }
 
@@ -90,103 +83,4 @@ class LimitsController extends Controller
         ];
     }
 
-    public function location($id)
-    {
-        $location = Location::find($id);
-
-        $breadcrumb = [
-            $location->name => route('wizard.location.page', [
-                'id' => $location->id,
-            ]),
-        ];
-
-        return Inertia::render('App/Wizard/Location', [
-            'wizardBreadcrumb' => $breadcrumb,
-            'location' => $location,
-            'watersCategories' => WatersCategory::all(),
-        ]);
-    }
-
-    public function watersCategory($id)
-    {
-        $waters_category = WatersCategory::find($id);
-
-        $location = Location::find(request('location_id'));
-
-        $fish_limits = FishLimit::query()
-            ->where('location_id', $location->id)
-            ->where(function ($query) use ($waters_category) {
-                $query
-                    ->where('waters_category_id', '=', $waters_category->id)
-                    ->orWhereNull('waters_category_id');
-            })
-            ->get();
-
-        $fish_categories = [];
-
-        foreach ($fish_limits as $fish_limit) {
-            $fish_category = $fish_limit->fish_category;
-            if (!($fish_categories[$fish_category->id] ?? null)) {
-                $fish_categories[$fish_category->id] = $fish_category;
-            }
-        }
-
-        $breadcrumb = [
-            $location->name => route('wizard.location.page', [
-                'id' => $location->id,
-            ]),
-            $waters_category->name => route('wizard.watersCategory.page', [
-                'id' => $waters_category->id,
-                'location_id' => $location->id,
-            ]),
-        ];
-
-        return Inertia::render('App/Wizard/WatersCategory', [
-            'wizardBreadcrumb' => $breadcrumb,
-            'location' => $location,
-            'watersCategory' => $waters_category,
-            'fishCategories' => Indexer::deIndex($fish_categories),
-        ]);
-    }
-
-    public function fishCategory($id)
-    {
-        $fish_category = FishCategory::find($id);
-
-        $location = Location::find(request('location_id'));
-        $waters_category = WatersCategory::find(request('waters_category_id'));
-
-        $fish_limits = FishLimit::query()
-            ->with('fish')
-            ->with('boundary')
-            ->with('water')
-            ->where('fish_category_id', $id)
-            ->where('location_id', $location->id)
-            ->where(function ($query) use ($waters_category) {
-                $query
-                    ->where('waters_category_id', '=', $waters_category->id)
-                    ->orWhereNull('waters_category_id');
-            })
-            ->get();
-
-        $breadcrumb = [
-            $location->name => route('wizard.location.page', [
-                'id' => $location->id,
-            ]),
-            $waters_category->name => route('wizard.watersCategory.page', [
-                'id' => $waters_category->id,
-                'location_id' => $location->id,
-            ]),
-            $fish_category->name => route('wizard.fishCategory.page', [
-                'id' => $fish_category->id,
-                'waters_category_id' => $waters_category->id,
-                'location_id' => $location->id,
-            ]),
-        ];
-
-        return Inertia::render('App/Wizard/FishCategory', [
-            'wizardBreadcrumb' => $breadcrumb,
-            'fishLimits' => $fish_limits,
-        ]);
-    }
 }

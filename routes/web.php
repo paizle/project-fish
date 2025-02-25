@@ -63,28 +63,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/data', [FishDataController::class, 'index'])->name(
         'data.index'
     );
+
     Route::get('/data/limits', [FishDataController::class, 'limits'])->name(
         'data.limits'
     );
+
     Route::get('/data/locations', [
         FishDataController::class,
         'locations',
     ])->name('data.locations');
-    Route::get('/data/fish-categories', [
-        FishDataController::class,
-        'fishCategories',
-    ])->name('data.fish-categories');
+		
     Route::get('/data/fishes', [FishDataController::class, 'fishes'])->name(
         'data.fishes'
     );
-    Route::get('/data/boundaries', [
-        FishDataController::class,
-        'boundaries',
-    ])->name('data.boundaries');
-    Route::get('/data/water-categories', [
-        FishDataController::class,
-        'waterCategories',
-    ])->name('data.water-categories');
+
     Route::get('/data/waters', [FishDataController::class, 'waters'])->name(
         'data.waters'
     );

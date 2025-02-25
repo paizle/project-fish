@@ -27,7 +27,7 @@ export default function AuthenticatedLayout({ header, children }) {
         {
             href: route('fishLimits.page'),
             active: route().current('fishLimits.page'),
-            content: 'Fish Limits Data',
+            content: 'Fishing Restrictions',
         },
         {
             href: route('data.index'),

@@ -7,14 +7,14 @@ export default function DataSubmenu() {
                 href={route('data.locations')}
                 active={route().current('data.locations')}
             >
-                Locations
+                Regions
             </NavLink>
 
-            <NavLink
-                href={route('data.fish-categories')}
-                active={route().current('data.fish-categories')}
+						<NavLink
+                href={route('data.waters')}
+                active={route().current('data.waters')}
             >
-                Fish Categories
+                Waters
             </NavLink>
 
             <NavLink
@@ -24,26 +24,6 @@ export default function DataSubmenu() {
                 Fishes
             </NavLink>
 
-            <NavLink
-                href={route('data.boundaries')}
-                active={route().current('data.boundaries')}
-            >
-                Boundaries
-            </NavLink>
-
-            <NavLink
-                href={route('data.water-categories')}
-                active={route().current('data.water-categories')}
-            >
-                Water Categories
-            </NavLink>
-
-            <NavLink
-                href={route('data.waters')}
-                active={route().current('data.waters')}
-            >
-                Waters
-            </NavLink>
         </div>
     )
 }

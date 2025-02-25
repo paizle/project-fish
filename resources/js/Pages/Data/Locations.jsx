@@ -9,7 +9,7 @@ import DataSubmenu from './Partials/DataSubmenu/DataSubmenu'
 export default function Locations({ data }) {
     return (
         <AuthenticatedLayout header={<DataSubmenu />}>
-            <Head title="Project: FISH - Locations Data" />
+            <Head title="Project: FISH - Regions Data" />
 
             <div className="box">
                 <DataTable
@@ -17,6 +17,7 @@ export default function Locations({ data }) {
                     schema={{
                         Name: 'name',
                         Description: 'description',
+												'Has Data': (row) => row.has_data ? 'Yes' : 'No',
                         Created: (row) =>
                             format(
                                 mySQLTimestampToDate(row.created_at),
