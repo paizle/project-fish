@@ -93,37 +93,22 @@ export default function FishLimits({
 				sorting: SortingMethods.ALPHABETIC
 			},
 			Note: {
-				render: (row) => row.note,
+				render: (row) => row.note ? (
+					<Tooltip
+						message={row.note}
+						containerRef={forwardRef}
+					>
+						*
+					</Tooltip>
+				) : null,
 				sorting: false
 			},
 			'Bag Limit': {
-				render: (row) => {
-					return row.note ? (
-							<Tooltip
-									message={row.note}
-									containerRef={forwardRef}
-							>
-									{row.bag_limit ?? 'Unlimited'}*
-							</Tooltip>
-					) : (
-							(row.bag_limit ?? 'Unlimited')
-					)
-				},
+				render: (row) => row.bag_limit ?? 'Unlimited',
 				sorting: SortingMethods.NUMERIC
 			},
 			'Hook Limit': {
-				render: (row) => {
-					return row.note ? (
-							<Tooltip
-									message={row.note}
-									containerRef={forwardRef}
-							>
-									{row.hook_limit ?? 'Unlimited'}*
-							</Tooltip>
-					) : (
-							(row.hook_limit ?? 'Unlimited')
-					)
-				},
+				render: (row) => row.hook_limit ?? 'Unlimited',
 				sorting: SortingMethods.NUMERIC
 			},
 			'Min Size': {
@@ -242,7 +227,6 @@ export default function FishLimits({
                         uniqueKey="id"
                         schema={tableSchema}
                         options={{
-														hiddenColumns: ['Note'],
                             toggleShow: ['Water Stretch', 'Note'],
                             filters: tableFilters
                         }}
