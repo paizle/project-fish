@@ -21,12 +21,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     <h1 className="py-8">Please Select</h1>
 
                     <div className="selection">
-                        <Link href="/public-app">
+                        <a href="/public-app">
                             <div className="box">
                                 <MapIcon className="icon-color" />
                                 <h3>Public App</h3>
                             </div>
-                        </Link>
+                        </a>
                         <div className="animate-bounce text-center">- or -</div>
                         <Link href="/dashboard">
                             <div className="box">
