@@ -1,5 +1,5 @@
 import './DataTableWithOperations.scss'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { ChevronDownIcon, ChevronUpIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import {
     FunnelIcon,
@@ -13,6 +13,8 @@ export const SortingMethods = {
 	NUMERIC: 'numeric',
 	CHRONOLOGICAL: 'chronological'
 }
+
+import { debounce } from 'lodash'
 
 export const SortDirection = {
 	DESC: 'desc',
@@ -37,6 +39,9 @@ export default function DataTableWithOperations({
     const [selectingFilter, setSelectingFilter] = useState(null)
 		const [sortColumn, setSortColumn] = useState(null)
 		const [sortDirection, setSortDirection] = useState(null)
+
+		forwardRef = forwardRef ? forwardRef : useRef()
+		const filtersRef = useRef()
 
     useEffect(() => {
         if (data === null) {
@@ -206,7 +211,7 @@ export default function DataTableWithOperations({
 
     const renderActiveFilters = () => {
         return (
-            <div className="filters">
+            <div ref={filtersRef} className="filters">
                 {Object.keys(options.filters).map(
                     (column) =>
                         activeFilters[column] && (
@@ -334,6 +339,19 @@ export default function DataTableWithOperations({
 				}
 				return row
 			})
+
+			useLayoutEffect(() => {
+				const handleScroll = debounce(() => {
+					filtersRef.current.style.left = forwardRef.current.scrollLeft + 'px';
+				}, 10);
+		
+				forwardRef.current.addEventListener("scroll", handleScroll);
+		
+				return () => {
+					window.removeEventListener("scroll", handleScroll);
+					handleScroll.cancel(); 
+				};
+			}, []);
 			
 
     return (

@@ -32,9 +32,10 @@
         caption,
         .caption {
             text-align: left;
-
             .filters {
-                display: flex;
+								position: relative;
+								transition: 100ms ease;
+                display: inline-flex;
                 flex-wrap: wrap;
                 align-items: baseline;
                 gap: 0.5em;

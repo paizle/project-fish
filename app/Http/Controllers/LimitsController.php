@@ -13,7 +13,6 @@ use App\Models\Water;
 
 use Inertia\Inertia;
 use Inertia\Response;
-
 use App\Util\Indexer;
 
 class LimitsController extends Controller
