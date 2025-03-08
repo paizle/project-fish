@@ -1,0 +1,1 @@
+import{j as s,x as l}from"./app-Cq2UBul7.js";function x({href:n,imageSrc:r,objectFit:a=null,children:d}){const e=a?{objectFit:a}:null;return s.jsxs(l,{style:e,className:"WizardCard max-w-md bg-white p-4 text-center shadow sm:rounded-lg sm:p-8 dark:bg-gray-800",href:n,children:[r?s.jsx("img",{src:r}):null,s.jsx("div",{children:d})]})}export{x as C};

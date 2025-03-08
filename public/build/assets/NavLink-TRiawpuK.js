@@ -1,0 +1,1 @@
+import{j as s,x as a}from"./app-Cq2UBul7.js";function x({active:e=!1,className:n="",children:t,...i}){return s.jsx(a,{...i,className:n+" NavLink inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none"+(e?" active":""),children:t})}export{x as N};

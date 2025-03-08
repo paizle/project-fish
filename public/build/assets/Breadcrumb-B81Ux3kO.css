@@ -1,0 +1,1 @@
+.BreadCrumb{display:flex;justify-content:center;gap:.5em;margin:2em auto}.BreadCrumb .item{font-size:1.5em}.BreadCrumb .item:before{content:">";margin-right:.5em;text-decoration:none}.BreadCrumb .item:first-child:before{content:"";margin-right:0}.BreadCrumb a.item{text-decoration:underline}
