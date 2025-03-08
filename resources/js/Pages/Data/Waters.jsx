@@ -17,6 +17,7 @@ export default function WaterCategories({ data }) {
                     schema={{
                         Name: 'name',
 												Region: (row) => row?.region?.name,
+												Type: (row) => row?.water_type,
                         Created: (row) =>
                             format(
                                 mySQLTimestampToDate(row.created_at),
